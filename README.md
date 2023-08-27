@@ -54,7 +54,7 @@ The -t 1 option generates a WG alignment output coordinate file (e.g., unweighte
 <pre>
 bin/gkm_align -t 2 -c unweighted_hg38_mm10.coord human_brain_enhancers.bed  -o ofiles/ -q hg38  -m -n human_brain_enhancers_mapped_to_mm10
 </pre>
--q hg38 specifies that the query enhancers are from the human genome (hg38). Adding -m allows mapping an enhancer to multiple loci in the target genome (equivalent to -multiple for LiftOVer).  
+-q hg38 specifies that the query enhancers are from the human genome (hg38). Adding -m allows mapping eacch enhancers to multiple loci in the target genome (equivalent to -multiple for LiftOVer).  
 
 
 
