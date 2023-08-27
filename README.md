@@ -23,15 +23,33 @@ In this section, we show how we can use gkm-align to run whole-genome alignment 
 bin/gkm_align -t 1 -d genomes/ -g genomic_background_models.txt  syntenic_loci.2align -o ofiles/ -n unweighted
 </pre>
 
-- **1)** genomes/ is a directory containing subdirectories hg38/ and mm10/, each containing .fa files for each chromosomes. These files can be downloaded using the instructions provided in:
+- **1)** genomes/ is a directory containing subdirectories hg38/ and mm10/, each containing .fa files for each of the chromosomes. These files can be downloaded using the instructions provided in:
 
   - https://hgdownload.cse.ucsc.edu/goldenPath/hg38/chromosomes/
   - https://hgdownload.cse.ucsc.edu/goldenPath/mm10/chromosomes/
 
-- **2)** genomic_background_models.txt contains two lines, each specifying the file name for human and mouse genome background model.
+- **2)** genomic_background_models.txt contains two lines, each specifying a file name for the human and mouse genome background model.
 
-- **3)** syntenic_loci.2align contains a list of human/mouse syntenic loci. gkm-align computes a gkm-similarity matrix (G) and an optimal alignment path along the matrix for each line of this file.
- 
+- **3)** syntenic_loci.2align contains the list of human/mouse syntenic loci. gkm-align computes a gkm-similarity matrix (G) and the optimal alignment path along the matrix for each line of the file.
+
+Option -G can be added to save the gkm-simialritiy matrices in a local directory specified by the -o option. gkm-align will automatially look for relevant pre-computed matrix G's in the local directory unless option -O is given. This substantially reduces the computation time required for cell-specific gkm-SVM weighted alignment (next section).
+
+For more detail,
+<pre>
+bin/gkm_align -h
+</pre>
+
+# Running gkm-align whole-genome alignment weighted by gkm-SVM enhancer models. 
+To run gkm-SVM weighted whole-genome alignment, add -W option followed by a selected magnitude of cell-specific weighting ("c" in Fig.4A ranging from 0 to 1) and the name of a file containing file names for human and mouse gkm-SVM enhancer models. 
+
+<pre>
+bin/gkm_align -t 1  -g  genomic_background_models.txt -d /mnt/data0/joh27/genomes/ ${ifile} -W ${w},model_file_${hsamp}_${msamp}.txt -p 80 -o ofiles/ -n V28_gkmsvm_${hsamp}_${msamp}_weighted_w_${w}
+</pre>  
+
+<pre>
+bin/gkm_align -t 1 -d genomes/ -g genomic_background_models.txt  syntenic_loci.2align -o ofiles/ -n unweighted
+</pre>
+
 # Authors
 - Jin Woo Oh 
 - Michael A. Beer
