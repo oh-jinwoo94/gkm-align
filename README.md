@@ -25,8 +25,8 @@ bin/gkm_align -t 1 -d genomes/ -g genomic_background_models.txt  syntenic_interg
 
 - **1)** genomes/ is a directory containing subdirectories hg38/ and mm10/, each containing .fa files for each chromosomes. These files can be downloaded using instructions provided in:
 
-- https://hgdownload.cse.ucsc.edu/goldenPath/hg38/chromosomes/
-- https://hgdownload.cse.ucsc.edu/goldenPath/mm10/chromosomes/
+  - https://hgdownload.cse.ucsc.edu/goldenPath/hg38/chromosomes/
+  - https://hgdownload.cse.ucsc.edu/goldenPath/mm10/chromosomes/
 
   
 # Authors
