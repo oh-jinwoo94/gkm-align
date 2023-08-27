@@ -19,4 +19,5 @@ Then, compile gkm-align by typing:
 
 # Authors
 Jin Woo Oh
+
 Michael A. Beer
