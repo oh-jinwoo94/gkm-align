@@ -5,5 +5,6 @@ Please cite the following paper if you use gkm-align:
 JW Oh, MA Beer  
 
 # Installation
-First, downl
+First, download the source code using the folowing command line:
+git clone https://github.com/oh-jinwoo94/gkm-align.git
 
