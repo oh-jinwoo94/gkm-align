@@ -49,6 +49,7 @@ bin/gkm_align -t 1  -g  genomic_background_models.txt -d /mnt/data0/joh27/genome
 The above command line generates the WG alignment output file: brain_weighted.coord.
 
 # Mapping human enhancers to the mouse genome using the whole-genome alignment output. 
+The -t 1 option generates an WG alignment output coordinate file (e.g., unweighted.coord), and -t 2 can be used to map human enhancers to the mouse genome (and vice versa) using the coordinate file (like LiftOver).
 <pre>
 bin/gkm_align -t 2 -c unweighted.coord human_brain_enhancers.bed  -o ofiles/ -q hg38  -m -n human_brain_enhancers_mapped_to_mm10
 </pre>
