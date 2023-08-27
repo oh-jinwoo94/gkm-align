@@ -40,15 +40,11 @@ bin/gkm_align -h
 </pre>
 
 # Running gkm-align whole-genome alignment weighted by gkm-SVM enhancer models. 
-To run gkm-SVM weighted whole-genome alignment, add -W option followed by a selected magnitude of cell-specific weighting ("c" in Fig.4A ranging from 0 to 1) and the name of a file containing file names for human and mouse gkm-SVM enhancer models. 
+To run gkm-SVM weighted whole-genome alignment, add -W option followed by a selected magnitude of cell-specific weighting ("c" in the manuscript Fig.4A, ranging from 0 to 1) and the name of a file containing file names for human and mouse gkm-SVM enhancer models. 
 
 <pre>
-bin/gkm_align -t 1  -g  genomic_background_models.txt -d /mnt/data0/joh27/genomes/ ${ifile} -W ${w},model_file_${hsamp}_${msamp}.txt -p 80 -o ofiles/ -n V28_gkmsvm_${hsamp}_${msamp}_weighted_w_${w}
+bin/gkm_align -t 1  -g  genomic_background_models.txt -d /mnt/data0/joh27/genomes/ syntenic_loci.2align -W 0.5,gkmSVM_human_mouse_brain_models.txt -o ofiles/ -n brain_weighted
 </pre>  
-
-<pre>
-bin/gkm_align -t 1 -d genomes/ -g genomic_background_models.txt  syntenic_loci.2align -o ofiles/ -n unweighted
-</pre>
 
 # Authors
 - Jin Woo Oh 
