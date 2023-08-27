@@ -20,9 +20,9 @@ Then, compile gkm-align by typing:
 In this section, we demonstrate how to use gkm-align to generate whole-genome (WG) alignment between human and mouse (option -t 1). WG alignment between other mammals can also be computed similarly. Running gkm-align requires input files containing **1)** the human and mouse genome  **2)** a list of human/mouse syntenic intergenic loci and **3)** gkm-SVM models for human/mouse genomic background. These files can be found in this repository, and we provide information on how they can be computed in later sections of this document. 
 
 <pre>
-bin/gkm_align -t 1 -d genomes/ -g genomic_background_models.txt  syntenic_loci.2align -o ofiles/ -n unweighted
+bin/gkm_align -t 1 -d genomes/ -g genomic_background_models.txt  syntenic_loci.2align -o ofiles/ -n unweighted_hg38_mm10
 </pre>
-The above command line generates the WG alignment output file: unweighted.coord.
+The above command line generates the WG alignment output file: unweighted_hg38_mm10.coord.
 
 - **1)** genomes/ is a directory containing subdirectories hg38/ and mm10/, each containing .fa files for each of the chromosomes. These files can be downloaded using the instructions provided in:
 
@@ -50,10 +50,14 @@ bin/gkm_align -t 1  -g  genomic_background_models.txt -d /mnt/data0/joh27/genome
 The above command line generates the WG alignment output file: brain_weighted.coord.
 
 # Mapping human enhancers to the mouse genome using the whole-genome alignment output. 
-The -t 1 option generates an WG alignment output coordinate file (e.g., unweighted.coord), and -t 2 can be used to map human enhancers to the mouse genome (and vice versa) using the coordinate file (like LiftOver).
+The -t 1 option generates a WG alignment output coordinate file (e.g., unweighted_hg38_mm10.coord), and -t 2 can be used to map human enhancers (e.g., those listed in human_brain_enhancers.bed) to the mouse genome (and vice versa) using the coordinate file (like LiftOver).
 <pre>
-bin/gkm_align -t 2 -c unweighted.coord human_brain_enhancers.bed  -o ofiles/ -q hg38  -m -n human_brain_enhancers_mapped_to_mm10
+bin/gkm_align -t 2 -c unweighted_hg38_mm10.coord human_brain_enhancers.bed  -o ofiles/ -q hg38  -m -n human_brain_enhancers_mapped_to_mm10
 </pre>
+-q hg38 specifies that the query enhancers are from the human genome (hg38). Adding -m allows mapping an enhancer to multiple loci in the target genome (equivalent to -multiple for LiftOVer).  
+
+
+
 
 # Authors
 - Jin Woo Oh 
