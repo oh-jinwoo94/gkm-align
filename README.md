@@ -1,5 +1,5 @@
 # gkm-align
-gkm-align is a whole-genome alignment algorithm specifically designed to identify distal enhancers conserved between distant mammals such as human and mouse. gkm-align discover orthologous enhancers by identifying optimal alignment paths with maximal similarities in gapped-kmer compositions along syntenic intergenic loci. gkm-align's performance can further be boosted by incorporating conserved enhancer vocabularies obtained using gkm-SVM sequence models trained on enhancers. 
+gkm-align is a whole-genome alignment algorithm specifically designed to identify distal enhancers conserved between distant mammals such as human and mouse. gkm-align discover orthologous enhancers by identifying the optimal alignment paths with maximal similarities in gapped-kmer compositions along syntenic intergenic loci. gkm-align's performance can further be boosted by incorporating conserved enhancer vocabularies obtained using gkm-SVM sequence models trained on enhancers. 
 
 Please cite the following paper if you use gkm-align:
 JW Oh, MA Beer  
@@ -16,11 +16,13 @@ Then, compile gkm-align by typing:
   make
 </pre>
 
-# Running gkm-align
+# Running gkm-align whole-genome alignment
 In this section, we show how we can use gkm-align to run whole-genome alignment between human and mouse. WG alignment between other mammals can also be computed similarly. Running gkm-align requires input files files containing **1)** the human and mouse genome  **2)** a list of human/mouse syntenic intergenic loci and **3)** gkm-SVM models for human/mouse genomic background. These files can be found in this repository, and we provide information on how they can be computed in later sections of this document. 
 
 <pre>
+bin/gkm_align -t 1 -d genomes/ -g genomic_background_models.txt  syntenic_intergenic_loci.2align -o ofiles/ -n unweighted
 </pre>
+
 # Authors
 - Jin Woo Oh 
 - Michael A. Beer
