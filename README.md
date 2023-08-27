@@ -6,5 +6,17 @@ JW Oh, MA Beer
 
 # Installation
 First, download the source code using the folowing command line:
+<pre>
 git clone https://github.com/oh-jinwoo94/gkm-align.git
+</pre>
 
+Then, compile gkm-align by typing:
+<pre>
+  cd src
+  make
+</pre>
+
+
+# Authors
+Jin Woo Oh
+Michael A. Beer
