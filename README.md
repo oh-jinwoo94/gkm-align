@@ -1,23 +1,23 @@
 # gkm-Align
-gkm-align is a whole-genome alignment algorithm specifically designed to identify distal enhancers conserved between distant mammals such as human and mouse. gkm-align discovers orthologous enhancers by identifying optimal alignment paths with maximal similarities in gapped-kmer compositions along syntenic loci. gkm-align's performance can further be boosted by incorporating conserved enhancer vocabularies obtained using gkm-SVM sequence models trained on enhancers. 
+gkm-Align is a whole-genome alignment algorithm specifically designed to identify distal enhancers conserved between distant mammals such as human and mouse. gkm-Align discovers orthologous enhancers by identifying optimal alignment paths with maximal similarities in gapped-kmer compositions along syntenic loci. gkm-Align's performance can further be boosted by incorporating conserved enhancer vocabularies obtained using gkm-SVM sequence models trained on enhancers. 
 
-Please cite the following paper if you use gkm-align:
+Please cite the following paper if you use gkm-Align:
 JW Oh, MA Beer  
 
 # Installation
 First, download the source code using the folowing command line:
 <pre>
-git clone https://github.com/oh-jinwoo94/gkm-align.git
+git clone https://github.com/oh-jinwoo94/gkm-Align.git
 </pre>
 
-Then, compile gkm-align by typing:
+Then, compile gkm-Align by typing:
 <pre>
   cd src
   make
 </pre>
 
-# Running gkm-align whole-genome alignment
-In this section, we demonstrate how to use gkm-align to generate whole-genome (WG) alignment between human and mouse (option -t 1). WG alignment between other mammals can also be computed similarly. Running gkm-align requires input files containing **1)** the human and mouse genome  **2)** a list of human/mouse syntenic intergenic loci and **3)** gkm-SVM models for human/mouse genomic background. These files can be found in this repository, and we provide information on how they can be computed in later sections of this document. 
+# Running gkm-Align whole-genome alignment
+In this section, we demonstrate how to use gkm-Align to generate whole-genome (WG) alignment between human and mouse (option -t 1). WG alignment between other mammals can also be computed similarly. Running gkm-Align requires input files containing **1)** the human and mouse genome  **2)** a list of human/mouse syntenic intergenic loci and **3)** gkm-SVM models for human/mouse genomic background. These files can be found in this repository, and we provide information on how they can be computed in later sections of this document. 
 
 <pre>
 bin/gkm_align -t 1 -d genomes/ -g genomic_background_models.txt  syntenic_loci.2align -o ofiles/ -n unweighted_hg38_mm10
@@ -31,17 +31,17 @@ The above command line generates the WG alignment output file: unweighted_hg38_m
 
 - **2)** genomic_background_models.txt contains two lines, each specifying a file name for the human or mouse genome background model.
 
-- **3)** syntenic_loci.2align contains the list of human/mouse syntenic loci. gkm-align computes a gkm-similarity matrix (G) and the optimal alignment path along the matrix for each line of the file.
+- **3)** syntenic_loci.2align contains the list of human/mouse syntenic loci. gkm-Align computes a gkm-similarity matrix (G) and the optimal alignment path along the matrix for each line of the file.
 
-Option -G can be added to save gkm-simialritiy matrices in a local directory specified by the -o option. gkm-align will automatially look for relevant pre-computed matrix G's in the local directory unless option -O is provided. This substantially reduces the computation time required for cell-specific gkm-SVM weighted alignment (next section).
+Option -G can be added to save gkm-simialritiy matrices in a local directory specified by the -o option. gkm-Align will automatially look for relevant pre-computed matrix G's in the local directory unless option -O is provided. This substantially reduces the computation time required for cell-specific gkm-SVM weighted alignment (next section).
 
 Details on other software options can be found by typing:
 <pre>
 bin/gkm_align -h
 </pre>
-For example, adding -p 10 option runs gkm-align with 10 parallel multithreads. 
+For example, adding -p 10 option runs gkm-Align with 10 parallel multithreads. 
 
-# Running gkm-align whole-genome alignment weighted by gkm-SVM enhancer models. 
+# Running gkm-Align whole-genome alignment weighted by gkm-SVM enhancer models. 
 To run gkm-SVM weighted whole-genome alignment, add -W option followed by a chosen magnitude of cell-specific weighting ("c" in the manuscript Fig.4A, ranging from 0 to 1) and the name of a file containing file names for human and mouse gkm-SVM enhancer models. 
 
 <pre>
