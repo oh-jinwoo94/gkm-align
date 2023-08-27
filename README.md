@@ -17,7 +17,7 @@ Then, compile gkm-align by typing:
 </pre>
 
 # Running gkm-align whole-genome alignment
-In this section, we show how we can use gkm-align to run whole-genome alignment between human and mouse. WG alignment between other mammals can also be computed similarly. Running gkm-align requires input files files containing **1)** the human and mouse genome  **2)** a list of human/mouse syntenic intergenic loci and **3)** gkm-SVM models for human/mouse genomic background. These files can be found in this repository, and we provide information on how they can be computed in later sections of this document. 
+In this section, we show how we can use gkm-align to run whole-genome alignment between human and mouse (option -t 1). WG alignment between other mammals can also be computed similarly. Running gkm-align requires input files files containing **1)** the human and mouse genome  **2)** a list of human/mouse syntenic intergenic loci and **3)** gkm-SVM models for human/mouse genomic background. These files can be found in this repository, and we provide information on how they can be computed in later sections of this document. 
 
 <pre>
 bin/gkm_align -t 1 -d genomes/ -g genomic_background_models.txt  syntenic_loci.2align -o ofiles/ -n unweighted
