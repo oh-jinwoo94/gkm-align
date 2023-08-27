@@ -17,11 +17,12 @@ Then, compile gkm-align by typing:
 </pre>
 
 # Running gkm-align whole-genome alignment
-In this section, we show how we can use gkm-align to run whole-genome alignment between human and mouse (option -t 1). WG alignment between other mammals can also be computed similarly. Running gkm-align requires input files files containing **1)** the human and mouse genome  **2)** a list of human/mouse syntenic intergenic loci and **3)** gkm-SVM models for human/mouse genomic background. These files can be found in this repository, and we provide information on how they can be computed in later sections of this document. 
+In this section, we show how we can use gkm-align to run whole-genome (WG) alignment between human and mouse (option -t 1). WG alignment between other mammals can also be computed similarly. Running gkm-align requires input files files containing **1)** the human and mouse genome  **2)** a list of human/mouse syntenic intergenic loci and **3)** gkm-SVM models for human/mouse genomic background. These files can be found in this repository, and we provide information on how they can be computed in later sections of this document. 
 
 <pre>
 bin/gkm_align -t 1 -d genomes/ -g genomic_background_models.txt  syntenic_loci.2align -o ofiles/ -n unweighted
 </pre>
+The above command line generates the WG alignment output file: unweighted.coord.
 
 - **1)** genomes/ is a directory containing subdirectories hg38/ and mm10/, each containing .fa files for each of the chromosomes. These files can be downloaded using the instructions provided in:
 
@@ -45,6 +46,12 @@ To run gkm-SVM weighted whole-genome alignment, add -W option followed by a chos
 <pre>
 bin/gkm_align -t 1  -g  genomic_background_models.txt -d /mnt/data0/joh27/genomes/ syntenic_loci.2align -W 0.5,gkmSVM_human_mouse_brain_models.txt -o ofiles/ -n brain_weighted
 </pre>  
+The above command line generates the WG alignment output file: brain_weighted.coord.
+
+# Mapping human enhancers to the mouse genome using the whole-genome alignment output. 
+<pre>
+bin/gkm_align -t 2 -c unweighted.coord human_brain_enhancers.bed  -o ofiles/ -q hg38  -m -n human_brain_enhancers_mapped_to_mm10
+</pre>
 
 # Authors
 - Jin Woo Oh 
