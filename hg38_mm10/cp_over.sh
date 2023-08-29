@@ -1,0 +1,14 @@
+#!/bin/sh
+
+cp /mnt/data0/joh27/projects/alignment_enhancer_conservation/gkm_align_input_generation/syntenic_intergenic/anchors_hg38-mm10_syntenic_intergenic.axt_indel_0.00001_maxdist_100k_rthresh_0.1_sthresh_0.chains_L_20k_E1_10k_E2_1k.2align syntenic_loci.2align
+
+
+
+
+cp /mnt/data0/joh27/projects/alignment_enhancer_conservation/methods/gkm_dynam/genome_kmer_weights/models/masker_model_hg38_outside_union_repr_kmer_cluster_threshold_pieces_p_0.1.out hg38_genome_background_model_p_0.1.out
+
+cp /mnt/data0/joh27/projects/alignment_enhancer_conservation/methods/gkm_dynam/genome_kmer_weights/models/masker_model_mm10_outside_union_repr_kmer_cluster_threshold_pieces_p_0.1.out mm10_genome_background_model_p_0.1.out
+
+printf "mm10_genome_background_model_p_0.1.out\n" > genomic_background_models.txt
+printf "hg38_genome_background_model_p_0.1.out" >> genomic_background_models.txt
+
