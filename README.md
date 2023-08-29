@@ -20,7 +20,8 @@ Then, compile gkm-Align by typing:
 In this section, we demonstrate how to use gkm-Align to generate whole-genome (WG) alignment between human and mouse (option -t 1). WG alignment between other mammals can also be computed similarly. Running gkm-Align requires input files containing **1)** the human and mouse genome  **2)** a list of human/mouse syntenic intergenic loci and **3)** gkm-SVM models for human/mouse genomic background. These files can be found in this repository, and we provide information on how they can be computed in later sections of this document. 
 
 <pre>
-bin/gkm_align -t 1 -d genomes/ -g genomic_background_models.txt  syntenic_loci.2align -o ofiles/ -n unweighted_hg38_mm10
+cd example
+../bin/gkm_align -t 1 -d genomes/ -g ../hg38_mm10/genomic_background_models.txt  ../hg38_mm10/syntenic_loci.2align -o ofiles/ -n unweighted_hg38_mm10
 </pre>
 The above command line generates the WG alignment output file: unweighted_hg38_mm10.coord.
 
@@ -37,7 +38,7 @@ Option -G can be added to save gkm-simialritiy matrices in a local directory spe
 
 Details on other software options can be found by typing:
 <pre>
-bin/gkm_align -h
+../bin/gkm_align -h
 </pre>
 For example, adding -p 10 option runs gkm-Align with 10 parallel multithreads. 
 
@@ -45,14 +46,14 @@ For example, adding -p 10 option runs gkm-Align with 10 parallel multithreads.
 To run gkm-SVM weighted whole-genome alignment, add -W option followed by a chosen magnitude of cell-specific weighting ("c" in the manuscript Fig.4A, ranging from 0 to 1) and the name of a file containing file names for human and mouse gkm-SVM enhancer models. 
 
 <pre>
-bin/gkm_align -t 1  -g  genomic_background_models.txt -d /mnt/data0/joh27/genomes/ syntenic_loci.2align -W 0.5,gkmSVM_human_mouse_brain_models.txt -o ofiles/ -n brain_weighted_hg38_mm10
+../bin/gkm_align -t 1  -g  ../hg38_mm10/genomic_background_models.txt -d genomes/ ../hg38_mm10/syntenic_loci.2align -W 0.5,gkmSVM_human_mouse_brain_models.txt -o ofiles/ -n brain_weighted_hg38_mm10
 </pre>  
 The above command line generates the WG alignment output file: brain_weighted_hg38_mm10.coord.
 
 # Mapping human enhancers to the mouse genome.
 The -t 1 option generates a WG alignment output coordinate file (e.g., unweighted_hg38_mm10.coord), and -t 2 is used to map human enhancers (e.g., those listed in human_brain_enhancers.bed) to the mouse genome (and vice versa) using the coordinate file (like LiftOver).
 <pre>
-bin/gkm_align -t 2 -c unweighted_hg38_mm10.coord human_brain_enhancers.bed  -o ofiles/ -q hg38  -m -n human_brain_enhancers_mapped_to_mm10
+../bin/gkm_align -t 2 -c unweighted_hg38_mm10.coord human_brain_enhancers.bed  -o ofiles/ -q hg38  -m -n human_brain_enhancers_mapped_to_mm10
 </pre>
 -q hg38 specifies that the query enhancers are from the human genome (hg38). Adding -m allows mapping each enhancers to multiple loci in the target genome (equivalent to -multiple for LiftOver).  
 
