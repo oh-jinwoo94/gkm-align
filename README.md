@@ -41,7 +41,7 @@ bin/gkm_align -h
 </pre>
 For example, adding -p 10 option runs gkm-Align with 10 parallel multithreads. 
 
-# Running gkm-Align whole-genome alignment weighted by gkm-SVM enhancer models. 
+# Incorporating gkm-SVM enhancer vocabularies to gkm-Align 
 To run gkm-SVM weighted whole-genome alignment, add -W option followed by a chosen magnitude of cell-specific weighting ("c" in the manuscript Fig.4A, ranging from 0 to 1) and the name of a file containing file names for human and mouse gkm-SVM enhancer models. 
 
 <pre>
