@@ -21,7 +21,7 @@ In this section, we demonstrate how to use gkm-Align to generate whole-genome (W
 
 <pre>
 cd example
-../bin/gkm_align -t 1 -d genomes/ -g ../hg38_mm10/genomic_background_models.txt  ../hg38_mm10/syntenic_loci.2align -o ofiles/ -n unweighted_hg38_mm10
+../bin/gkm_align -t 1 -d genomes/ -g ../hg38_mm10/genomic_background_models.txt  ../hg38_mm10/syntenic_loci.to_align -o ofiles/ -n unweighted_hg38_mm10
 </pre>
 The above command line generates the WG alignment output file: unweighted_hg38_mm10.coord.
 
@@ -32,7 +32,7 @@ The above command line generates the WG alignment output file: unweighted_hg38_m
 
 - **2)** genomic_background_models.txt contains two lines, each specifying a file name for the human or mouse genome background model.
 
-- **3)** syntenic_loci.2align contains the list of human/mouse syntenic loci. gkm-Align computes a gkm-similarity matrix (G) and the optimal alignment path along the matrix for each line of the file.
+- **3)** syntenic_loci.to_align contains the list of human/mouse syntenic loci. gkm-Align computes a gkm-similarity matrix (G) and the optimal alignment path along the matrix for each line of the file.
 
 Option -G can be added to save gkm-simialritiy matrices in a local directory specified by the -o option. gkm-Align will automatially look for relevant pre-computed matrix G's in the local directory unless option -O is provided. This substantially reduces the computation time required for cell-specific gkm-SVM weighted alignment (next section).
 
@@ -46,7 +46,7 @@ For example, adding -p 10 option runs gkm-Align with 10 parallel multithreads.
 To run gkm-SVM weighted whole-genome alignment, add -W option followed by a chosen magnitude of cell-specific weighting ("c" in the manuscript Fig.4A, ranging from 0 to 1) and the name of a file containing file names for human and mouse gkm-SVM enhancer models. 
 
 <pre>
-../bin/gkm_align -t 1  -g  ../hg38_mm10/genomic_background_models.txt -d genomes/ ../hg38_mm10/syntenic_loci.2align -W 0.5,gkmSVM_human_mouse_brain_models.txt -o ofiles/ -n brain_weighted_hg38_mm10
+../bin/gkm_align -t 1  -g  ../hg38_mm10/genomic_background_models.txt -d genomes/ ../hg38_mm10/syntenic_loci.to_align -W 0.5,gkmSVM_human_mouse_brain_models.txt -o ofiles/ -n brain_weighted_hg38_mm10
 </pre>  
 The above command line generates the WG alignment output file: brain_weighted_hg38_mm10.coord.
 
