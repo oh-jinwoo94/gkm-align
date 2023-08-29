@@ -60,5 +60,5 @@ bin/gkm_align -t 2 -c unweighted_hg38_mm10.coord human_brain_enhancers.bed  -o o
 
 
 # Authors
-- Jin Woo Oh 
-- Michael A. Beer
+- Jin Woo Oh *
+- Michael A. Beer *
