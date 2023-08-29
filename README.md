@@ -1,5 +1,5 @@
 # gkm-Align
-gkm-Align is a whole-genome alignment algorithm specifically designed to identify distal enhancers conserved between distant mammals such as human and mouse. gkm-Align discovers orthologous enhancers by identifying optimal alignment paths with maximal similarities in gapped-kmer compositions along syntenic loci. gkm-Align's performance can further be boosted by incorporating conserved enhancer vocabularies obtained using gkm-SVM sequence models trained on enhancers. 
+gkm-Align is a whole-genome alignment algorithm specifically designed to identify distal enhancers conserved between distant mammals (e.g., human and mouse). gkm-Align discovers orthologous enhancers by identifying optimal alignment paths with maximal similarities in gapped-kmer compositions along syntenic loci. gkm-Align's performance can further be boosted by incorporating conserved enhancer vocabularies obtained using gkm-SVM sequence models trained on enhancers. 
 
 Please cite the following paper if you use gkm-Align:
 JW Oh, MA Beer  
