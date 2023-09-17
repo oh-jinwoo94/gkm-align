@@ -33,7 +33,7 @@ void help(){
             cout << "  -k <int>            Number of non-gapped positions in the gapped kmers (default: 7; e.g., -TGA-TCAT--)" << endl;
             cout << "                      - must be smaller than or equal to l." << endl;
             cout << "  -w <int>            Width of the sliding windows (default: 300)" << endl;
-            cout << "  -s <int>            Sliding width of the sliding windows (default: 20)" << endl;
+            cout << "  -s <int>            Slide step size of the sliding windows (default: 20)" << endl;
             cout << "                      - w must be divisiable by s (e.g., w = 300 and s = 20)" << endl;
             cout << "  -i <float>          Indel penalty for insertion/deletion (default: 0; scale: Z-score)" << endl;
             cout << "  -p <int>            Number of parallel threads for multithreaded alignment. (default: 1)" <<endl;
