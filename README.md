@@ -8,7 +8,7 @@ Oh JW and Beer MA. Gapped-kmer sequence modeling robustly identifies regulatory 
 # Installation
 gkm-align has been compiled and tested for Linux based operating systems (such as Red Hat, Centos, and Rocky Linux, etc.)
 
-First, download the source code using the folowing command line:
+First, download the source code using the following command line:
 <pre>
 git clone https://github.com/oh-jinwoo94/gkm-align.git
 </pre>
