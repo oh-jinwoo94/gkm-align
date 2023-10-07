@@ -1,13 +1,13 @@
 # gkm-align
 gkm-align is a whole-genome alignment algorithm specifically designed to map distal enhancers conserved between distant mammals (e.g., human and mouse). gkm-align discovers orthologous enhancers by identifying optimal alignment paths with maximal similarities in gapped-kmer compositions along syntenic loci. gkm-align's performance can further be boosted by incorporating conserved enhancer vocabularies obtained using gkm-SVM sequence models trained on enhancers. 
 
-gkm-align has been compiled and tested for Linux based operating systems (such as Red Hat, Centos, and Rocky Linux, etc.)
-
 Please cite the following paper if you use gkm-align:
 Oh JW and Beer MA. Gapped-kmer sequence modeling robustly identifies regulatory vocabularies and distal enhancers conserved between evolutionarily distant mammals. 
 [bioRxiv](https://www.biorxiv.org/content/10.1101/2023.10.06.561128v1)
 
 # Installation
+gkm-align has been compiled and tested for Linux based operating systems (such as Red Hat, Centos, and Rocky Linux, etc.)
+
 First, download the source code using the folowing command line:
 <pre>
 git clone https://github.com/oh-jinwoo94/gkm-align.git
