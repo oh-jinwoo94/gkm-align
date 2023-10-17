@@ -38,30 +38,30 @@ Enter the following commands.
 
 'run_gkmalign.sh' script contains three parts.
 
-1) Setting gkm-align input file (specifying gkm-SVM genomic masker models to be used) and output directory. 
+* Setting gkm-align input file (specifying gkm-SVM genomic masker models to be used) and output directory. 
 <pre>
   echo "../../data/mouse_genomic_background_model_p_0.1.out" > masker_models.txt
   echo "../../data/human_genomic_background_model_p_0.1.out" >> masker_models.txt
   mkdir output_files
 </pre>
 
-2) Aligning human and mouse HBB-LCRs. 
+* Aligning human and mouse HBB-LCRs. 
 <pre>
   ../../bin/gkm_align  -t 1  HBB.to_align -d ../../data/genomes/ -g masker_models.txt   -p 50 -o output_files -n HBB_LCR_mm10-hg38
 </pre>
-* -t 1 option specifies that gkm-align is in 'align' mode.
+  * -t 1 option specifies that gkm-align is in 'align' mode.
   * 'HBB.to_align' contains genomic coordinate ranges of human and mouse HBB Locus Control Regions that gkm-align will perform alignment. 
-* -d ../../data/genomes specifiy directory containing hg38/ and mm10/, each containing chromosome.fa. \
+  * -d ../../data/genomes specifiy directory containing hg38/ and mm10/, each containing chromosome.fa. \
   * -g masker_models.txt specify gkm-SVM genome background model to use for repeat masking.
-* -p 50: uses 50 parallel threads. Set to -p 1 if resource unavailable.
-* -o and -n each specify output directory and output file prefix. 
+  * -p 50: uses 50 parallel threads. Set to -p 1 if resource unavailable.
+  * -o and -n each specify output directory and output file prefix. 
   
-3) Mapping mouse HBB-LCR enhancers to human. 
+* Mapping mouse HBB-LCR enhancers to human. 
 <pre>
   ../../bin/gkm_align  -t 2  HBB_LCR_enhancers_mm10.bed  -c output_files/HBB_LCR_mm10-hg38.coord -q mm10 -m -o output_files -n HBB_LCR_enhancers_mm10_mapped_to_hg3
 </pre>
-* -t 2 option specifies that gkm-align is in 'mapping' mode.  
-* 'HBB_LCR_enhancers_mm10.bed' contains mm10 coordinates of mouse HBB-LCR enhancers.
+  * -t 2 option specifies that gkm-align is in 'mapping' mode.  
+  * 'HBB_LCR_enhancers_mm10.bed' contains mm10 coordinates of mouse HBB-LCR enhancers.
 
 
 
