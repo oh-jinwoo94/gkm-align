@@ -6,7 +6,7 @@ cd src
 make clean
 make
 cd ..
-printf "\n\n\n"
+printf "\n\n\n\n"
 
 
 
