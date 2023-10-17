@@ -110,10 +110,10 @@ The output binary file can be converted into a tab-separated file by running:
 
 <div style="display: flex;">
   <div style="flex: 50%; padding: 10px;">
-    <img src="fads_matrix.png" alt="Image 1" width="200"/>
+    <img src="example/FADS_cluster/png/fads_matrix.png" alt="Image 1" width="200"/>
   </div>
   <div style="flex: 50%; padding: 10px;">
-    <img src="fads_coords.png" alt="Image 2" width="200"/>
+    <img src="example/FADS_cluster/png/fads_coords.png" alt="Image 2" width="200"/>
   </div>
 </div>
 
