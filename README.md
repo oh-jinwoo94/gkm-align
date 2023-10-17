@@ -77,7 +77,7 @@ Enter the following commands.
 
 Details on other software options can be found by typing:
 <pre>
-../bin/gkm_align -h
+../../bin/gkm_align -h
 </pre>
 
 ## example human-mouse whole-genome alignment
