@@ -50,9 +50,9 @@ Enter the following commands.
   ../../bin/gkm_align  -t 1  HBB.to_align -d ../../data/genomes/ -g masker_models.txt   -p 50 -o output_files -n HBB_LCR_mm10-hg38
 </pre>
 * -t 1 option specifies that gkm-align is in 'align' mode.
-* 'HBB.to_align' contains genomic coordinate ranges of human and mouse HBB Locus Control Regions that gkm-align will perform alignment. 
+  * 'HBB.to_align' contains genomic coordinate ranges of human and mouse HBB Locus Control Regions that gkm-align will perform alignment. 
 * -d ../../data/genomes specifiy directory containing hg38/ and mm10/, each containing chromosome.fa. \
-* -g masker_models.txt specify gkm-SVM genome background model to use for repeat masking.
+  * -g masker_models.txt specify gkm-SVM genome background model to use for repeat masking.
 * -p 50: uses 50 parallel threads. Set to -p 1 if resource unavailable.
 * -o and -n each specify output directory and output file prefix. 
   
