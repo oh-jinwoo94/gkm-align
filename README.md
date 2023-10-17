@@ -74,7 +74,7 @@ Details on other software options can be found by typing:
 
 ## example: human-mouse whole-genome alignment
 
-(description coming soon. all necessary command lines are in example/whole_genome)
+(description coming soon. all necessary command lines are provided in example/whole_genome)
 
 # Authors
 - Jin Woo Oh *
