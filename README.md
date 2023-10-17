@@ -109,7 +109,7 @@ The output binary file can be converted into a tab-separated file by running:
 
 | Image 1 | Image 2 |
 | ------- | ------- |
-| ![Image 1](example/FADS_cluster/png/fads_matrix.png) | ![Image 2](fads_coords.png) |
+| ![Image 1](example/FADS_cluster/png/fads_matrix.png) | ![Image 2](example/FADS_cluster/png/fads_coords.png) |
 
 
 
