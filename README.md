@@ -53,7 +53,8 @@ Enter the following commands.
 * 'HBB.to_align' contains genomic coordinate ranges of human and mouse HBB Locus Control Regions that gkm-align will perform alignment. 
 * -d ../../data/genomes specifiy directory containing hg38/ and mm10/, each containing chromosome.fa. \
 * -g masker_models.txt specify gkm-SVM genome background model to use for repeat masking.
-* -p 50: uses 50 parallel threads. Set to -p 1 if resource unavailable.  
+* -p 50: uses 50 parallel threads. Set to -p 1 if resource unavailable.
+* -o and -n each specify output directory and output file prefix. 
   
 3) Mapping mouse HBB-LCR enhancers to human. 
 <pre>
