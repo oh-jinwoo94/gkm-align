@@ -1,0 +1,5 @@
+#!/bin/sh
+
+cp /mnt/data0/joh27/projects/alignment_enhancer_conservation/results/for_manuscript_figures/fig3/new/hbb/defining_enhancers_as_GATA1_overlapping_ENCODE-DHS_as_peakss/HBB.2align HBB.to_align
+
+cp /mnt/data0/joh27/projects/alignment_enhancer_conservation/results/for_manuscript_figures/fig3/new/hbb/defining_enhancers_as_GATA1_overlapping_ENCODE-DHS_as_peakss/hbb_mm10_enhancers.bed HBB_LCR_enhancers_mm10.bed
