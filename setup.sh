@@ -20,7 +20,7 @@ wget -q https://beerlab.org/gkmalign/masker_model_mm10_outside_union_repr_kmer_c
 # download genomes 
 while true; do
 	printf "\nDownload hg38 and mm10 genomes? (y/n) \n"
-	read -p "y recommended for the github tutorial.   " yn
+	read -p "y recommended for the github tutorial (~6 gigabytes).   " yn
 	case $yn in
 	[Yy]* )
 	 cd data
