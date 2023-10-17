@@ -1,0 +1,1 @@
+cp /mnt/data0/joh27/projects/alignment_enhancer_conservation/results/for_manuscript_figures/fig3/new/fen1_visual/fen1.2align  FADS_loci.to_align
