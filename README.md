@@ -14,10 +14,10 @@ First, download the source code using the following command line:
 git clone https://github.com/oh-jinwoo94/gkm-align.git
 </pre>
 
-Then, compile gkm-align by typing:
+Then, compile and set up gkm-align by typing:
 <pre>
-  cd src
-  make
+  chmod +x setup.sh
+  ./setup.sh
 </pre>
 
 # Running gkm-align whole-genome alignment
