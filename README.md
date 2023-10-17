@@ -24,7 +24,7 @@ The script compiles gkm-align and downloads gkm-SVM genomic background models (h
 Further, if you press y (recommended for following the tutorial more easily), hg38 and mm10 genomes download to data/.
 
 # gkm-align tutorial
-In this section, we use gkm-align to align the human,mouse HBB Locus Control Region (HBB-LCR) and map mouse HBB-LCR enhancers to human genome (Oh and Beer, Figure 3G). 
+In this section, we use gkm-align to align the human,mouse HBB Locus Control Region (HBB-LCR) and map mouse HBB-LCR enhancers to human genome (Oh and Beer, **Figure 3G**). 
 
 we demonstrate how to use gkm-align to generate whole-genome (WG) alignment between human and mouse (option -t 1). WG alignment between other mammals can also be computed similarly. Running gkm-align requires input files containing **1)** the human and mouse genome  **2)** a list of human/mouse syntenic intergenic loci and **3)** gkm-SVM models for human/mouse genomic background. These files can be found in this repository, and we provide information on how they can be computed in later sections of this document. 
 
