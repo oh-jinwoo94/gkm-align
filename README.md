@@ -5,7 +5,7 @@
 - [Installation](#installation)
 - [Running gkm-align](#running-gkm-align)
 
-- [example: HBB Locus Control Region](#example1)
+- [example: HBB Locus Control Region](example-hbb-locus-control-region)
 - [example: human-mouse whole-genome alignment](#example-human-mouse-whole-genome-alignment)
   
 # Introduction
