@@ -51,10 +51,10 @@ Enter the following commands.
 </pre>
   * -t 1 option specifies that gkm-align is in 'align' mode.
   * 'HBB.to_align' contains genomic coordinate ranges of human and mouse HBB Locus Control Regions that gkm-align will perform alignment. 
-  * -d ../../data/genomes specifiy directory containing hg38/ and mm10/, each containing chromosome.fa. \
-  * -g masker_models.txt specify gkm-SVM genome background model to use for repeat masking.
-  * -p 50: uses 50 parallel threads. Set to -p 1 if resource unavailable.
-  * -o and -n each specify output directory and output file prefix. 
+  * -d ../../data/genomes specifiies directory containing hg38/ and mm10/, each containing chromosome.fa. \
+  * -g masker_models.txt specifies gkm-SVM genome background model to use for repeat masking.
+  * -p 50: use 50 parallel threads. Set to -p 1 if resource unavailable.
+  * -o and -n each specifies output directory and output file prefix. 
   
 **3)** Mapping mouse HBB-LCR enhancers to human. 
 <pre>
@@ -62,11 +62,10 @@ Enter the following commands.
 </pre>
   * -t 2 option specifies that gkm-align is in 'mapping' mode.  
   * 'HBB_LCR_enhancers_mm10.bed' contains mm10 coordinates of mouse HBB-LCR enhancers.
-
-
-
-
-Option -G can be added to save gkm-simialritiy matrices in a local directory specified by the -o option. gkm-align will automatially look for relevant pre-computed matrix G's in the local directory unless option -O is provided. This substantially reduces the computation time required for cell-specific gkm-SVM weighted alignment (next section).
+  * -c output_files/HBB_LCR_mm10-hg38.coord: output of -t 1 (align mode) to be use for mapping.
+  * -q mm10 specifies that the query enhancers.bed is in mm10.
+  * -m: allows multiple mapping.
+  * -o and -n each specifies output directory and output file prefix. 
 
 Details on other software options can be found by typing:
 <pre>
