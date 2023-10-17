@@ -38,7 +38,7 @@ Enter the following commands.
 
 'run_gkmalign.sh' script contains three parts.
 
-**1)** Setting gkm-align input file (specifying gkm-SVM genomic masker models to be used) and output directory. 
+**1)** Setting up gkm-align input file (specifying gkm-SVM genomic masker models to be used) and output directory. 
 <pre>
   echo "../../data/mouse_genomic_background_model_p_0.1.out" > masker_models.txt
   echo "../../data/human_genomic_background_model_p_0.1.out" >> masker_models.txt
