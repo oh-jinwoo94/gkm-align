@@ -6,22 +6,21 @@ cd src
 make clean
 make
 cd ..
-printf "\n\n\n"
 
 
 
 # download genome background models 
 mkdir data
-echo "hg38, mm10 genome background models downloaded to data"
+printf "\nhg38, mm10 genome background models downloaded to data/. \n"
 wget -q https://beerlab.org/gkmalign/masker_model_hg38_outside_union_repr_kmer_cluster_threshold_pieces_p_0.1.out -O data/human_genomic_background_model_p_0.1.out 
 wget -q https://beerlab.org/gkmalign/masker_model_mm10_outside_union_repr_kmer_cluster_threshold_pieces_p_0.1.out -O data/mouse_genomic_background_model_p_0.1.out
 
 
 
-printf "\n\n\n"
 # download genomes 
 while true; do
-	read -p "Download hg38 and mm10 genomes? (y/n) recommended." yn
+	printf "\nDownload hg38 and mm10 genomes? (y/n) \n"
+	read -p "y recommended for the github tutorial.   " yn
 	case $yn in
 	[Yy]* )
 	 cd data
@@ -31,7 +30,7 @@ while true; do
 	 mkdir mm10
 
 	 cd hg38
-	 echo "downloading hg38 to data/genomes"
+	 printf "\nDownloading hg38 to data/genomes/.\n"
 	 for c in {1..22} X Y M 
 	 do
 	     printf "chr${c}\n"
@@ -40,7 +39,7 @@ while true; do
 	 gunzip *.fa.gz
 
 	 cd ../mm10
-	 echo "downloading mm10 to data/genomes"
+	 printf "\nDownloading mm10 to data/genomes/.\n"
 	 for c in {1..19} X Y M
 	 do
              printf "chr${c}\n"
@@ -50,7 +49,7 @@ while true; do
 	 cd ../../../../
 	 break;;
 	[Nn]* ) exit;;
-	* ) echo "enter y or n; Download hg38 and mm10 genomes?";;
+	* ) printf "enter y or n; Download hg38 and mm10 genomes?\n";;
 	esac
 done
 
