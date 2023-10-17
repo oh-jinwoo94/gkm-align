@@ -5,7 +5,7 @@
 - [Installation](#installation)
 - [Running gkm-align](#running-gkm-align)
   - [example: HBB Locus Control Region](#example-hbb-locus-control-region)
-  - [example: FADS gene cluster loci](#example-hbb-locus-control-region)
+  - [example: FADS gene cluster loci](#example-fads-gene-cluster-loci)
   - [example: human-mouse whole-genome alignment](#example-human-mouse-whole-genome-alignment)
   
 # Introduction
@@ -100,6 +100,8 @@ Use the following command line to run align:
 ../../bin/gkm_align  -t 1  FADS_loci.to_align -d ../../data/genomes/ -g masker_models.txt   -p 50 -o output_files -n FADS_loci_mm10-hg38 -G
 </pre>
  * Adding -G option outputs matrix G (binary) to an output directory specified by -o, for each line in the input file with .to_align suffix. Output matrix G file is named automatically based on the genomic ranges from which the matrix was computed. 
+![matrix](example/FADS_cluster/png/fads_matrix.png)
+![coords](example/FADS_cluster/png/fads_coords.png)
 
 The output binary file can be converted into a tab-separated file by running: 
 <pre> 
