@@ -107,15 +107,10 @@ The output binary file can be converted into a tab-separated file by running:
 </pre>
 
 
+| Image 1 | Image 2 |
+| ------- | ------- |
+| ![Image 1](example/FADS_cluster/png/fads_matrix.png) | ![Image 2](fads_coords.png) |
 
-<div style="display: flex;">
-  <div style="flex: 50%; padding: 10px;">
-    <img src="example/FADS_cluster/png/fads_matrix.png" alt="Image 1" width="200"/>
-  </div>
-  <div style="flex: 50%; padding: 10px;">
-    <img src="example/FADS_cluster/png/fads_coords.png" alt="Image 2" width="200"/>
-  </div>
-</div>
 
 
 ## example: human-mouse whole-genome alignment
