@@ -8,13 +8,13 @@ const unordered_map<char,char> comp = {{'A', 'T'}, {'T', 'A'}, {'G', 'C'}, {'C',
 void help(){
 	    cout << endl <<endl <<endl;;
             cout << " ========================================================================================================" <<endl;
-            cout << "| gkm-Align: gapped-kmer based whole-genome alignment software for mapping conserved distal enhancers     |" <<endl;
+            cout << "| gkm-align: gapped-kmer based whole-genome alignment software for mapping conserved distal enhancers     |" <<endl;
             cout << "|                                                                                                         |" << endl;
             cout << "| version: v.1.0                                                                                          |" << endl;
             cout << "|                                                                                                         |" << endl;
             cout << "| For more details, please refer to the github README and the gkm-Align paper.                            |" <<endl;
 	    cout << "| - github: https://github.com/oh-jinwoo94/gkm-align                                                      |" << endl;
-	    cout << "| - paper :                                                                                               |" << endl;
+	    cout << "| - paper : https://www.biorxiv.org/content/10.1101/2023.10.06.561128v1                                   |" << endl;
             cout << " ========================================================================================================\n" << endl;
             cout << "Usage: " <<endl;
             cout << "                  (1) for genome alignment (-t 1):" << endl;
