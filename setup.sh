@@ -11,7 +11,7 @@ printf "\n\n\n"
 
 
 # download genome background models 
-rm data/*out
+mkdir data
 echo "hg38, mm10 genome background models downloaded to data"
 wget -q https://beerlab.org/gkmalign/masker_model_hg38_outside_union_repr_kmer_cluster_threshold_pieces_p_0.1.out -O data/human_genomic_background_model_p_0.1.out 
 wget -q https://beerlab.org/gkmalign/masker_model_mm10_outside_union_repr_kmer_cluster_threshold_pieces_p_0.1.out -O data/mouse_genomic_background_model_p_0.1.out
