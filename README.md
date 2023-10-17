@@ -19,7 +19,7 @@ Then, compile and set up gkm-align by typing:
   chmod +x setup.sh
   ./setup.sh
 </pre>
-The script compiles gkm-align and downloads to gkm-SVM human,mouse genomic background models to data
+The script compiles gkm-align and downloads to gkm-SVM human,mouse genomic background models to data/.
 
 Further, if the user presses 'y' (recommended for following the tutorial more easily), hg38 and mm10 genomes download to data/.
 
