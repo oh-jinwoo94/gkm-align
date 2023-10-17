@@ -106,10 +106,15 @@ The output binary file can be converted into a tab-separated file by running:
 ../../bin/binary_matrix_2_tsv output_files/mm10-chr19-10194014-10214169-hg38-chr11-61782802-61802911-diff_strand.matrixG output_files/mm10-chr19-10194014-10214169-hg38-chr11-61782802-61802911-diff_strand.tsv
 </pre>
 
+Two visualize FADS locus gkm-align output, run 
+<pre>
+Rscript ../../scripts/visualize_matrix.R output_files/mm10-chr19-10194014-10214169-hg38-chr11-61782802-61802911-diff_strand.tsv invert
+Rscript ../../scripts/visualize_coordinates.R output_files/FADS_loci_mm10-hg38.coord
+</pre>
 
-| Image 1 | Image 2 |
+| FADS locus gkmsim matrix (G) | FADS gkm-alignment coordinates |
 | ------- | ------- |
-| ![Image 1](example/FADS_cluster/png/fads_matrix.png) | ![Image 2](example/FADS_cluster/png/fads_coords.png) |
+| ![FADS locus gkmsim matrix (G)](example/FADS_cluster/png/fads_matrix.png) | ![FADS gkm-alignment](example/FADS_cluster/png/fads_coords.png) |
 
 
 
