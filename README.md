@@ -72,7 +72,7 @@ Details on other software options can be found by typing:
 ../bin/gkm_align -h
 </pre>
 
-
+## example: human-mouse whole-genome alignment
 
 # Authors
 - Jin Woo Oh *
