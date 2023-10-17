@@ -31,16 +31,23 @@ In this section, we use gkm-align to align the human,mouse HBB Locus Control Reg
   chmod +x run_gkmalign.sh
   ./run_gkmalign.sh
 </pre>
+run_gkmalign.sh script contains three parts (1)
 
+1) Setting gkm-align input file (specifying gkm-SVM genomic masker models to be used) and output directory. 
 <pre>
   echo "../../data/mouse_genomic_background_model_p_0.1.out" > masker_models.txt
-echo "../../data/human_genomic_background_model_p_0.1.out" >> masker_models.txt
+  echo "../../data/human_genomic_background_model_p_0.1.out" >> masker_models.txt
+  mkdir output_files
+</pre>
 
+2) Aligning human and mouse HBB-LCRs. 
+<pre>
+  ../../bin/gkm_align  -t 1  HBB.to_align -d ../../data/genomes/ -g masker_models.txt   -p 50 -o output_files -n HBB_LCR_mm10-hg38
+</pre>
 
-mkdir output_files
-../../bin/gkm_align  -t 1  HBB.to_align -d ../../data/genomes/ -g masker_models.txt   -p 50 -o output_files -n HBB_LCR_mm10-hg38
-../../bin/gkm_align  -t 2  HBB_LCR_enhancers_mm10.bed  -c output_files/HBB_LCR_mm10-hg38.coord -q mm10 -m -o output_files -n HBB_LCR_enhancers_mm10_mapped_to_hg38
-
+3) Mapping mouse HBB-LCR enhancers to human. 
+<pre>
+  ../../bin/gkm_align  -t 2  HBB_LCR_enhancers_mm10.bed  -c output_files/HBB_LCR_mm10-hg38.coord -q mm10 -m -o output_files -n HBB_LCR_enhancers_mm10_mapped_to_hg3
 </pre>
 
 
