@@ -28,12 +28,15 @@ Further, if you press y (recommended for following the tutorial more easily), hg
 ## example: HBB Locus Control Region
 In this section, we use gkm-align to align the human,mouse HBB Locus Control Region (HBB-LCR) and map mouse HBB-LCR enhancers to human genome (Oh and Beer, **Figure 3G**). 
 
+Enter the following commands.
 <pre>
   cd examples/HBB_LCR
   chmod +x run_gkmalign.sh
   ./run_gkmalign.sh
 </pre>
-run_gkmalign.sh script contains three parts (1)
+
+
+run_gkmalign.sh script contains three parts.
 
 1) Setting gkm-align input file (specifying gkm-SVM genomic masker models to be used) and output directory. 
 <pre>
