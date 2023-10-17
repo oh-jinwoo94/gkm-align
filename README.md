@@ -24,6 +24,8 @@ The script compiles gkm-align and downloads gkm-SVM genomic background models (h
 Further, if you press y (recommended for following the tutorial more easily), hg38 and mm10 genomes download to data/.
 
 # gkm-align tutorial
+
+## example: HBB Locus Control Region
 In this section, we use gkm-align to align the human,mouse HBB Locus Control Region (HBB-LCR) and map mouse HBB-LCR enhancers to human genome (Oh and Beer, **Figure 3G**). 
 
 <pre>
