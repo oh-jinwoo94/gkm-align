@@ -30,7 +30,7 @@ Then, compile and set up gkm-align by typing:
 </pre>
 The script **1)** compiles gkm-align and **2)** downloads gkm-SVM genomic background models (human & mouse) to data/.
 
-Further, if you press y (recommended for following the tutorial more easily), **3)** hg38 and mm10 genomes download to data/.
+Further, if you press y (recommended for following the tutorial more easily), **3)** hg38 and mm10 genomes download to data/ (~6 gigabytes).
 
 # Running gkm-align
 
