@@ -177,11 +177,11 @@ int main(int argc, char *argv[]) {
 
         cout << "\n-- Parameters --" << endl;
         cout << "insertion/deletion penalty: " << indel << endl;
-        cout << "l-mer length: " << lmer_length << " (default: 19)" << endl;
+        cout << "l-mer length: " << lmer_length << " (default: 11)" << endl;
         cout << "number of informative base pairs: " << non_gap
              << " (default: 7)" << endl;
         cout << "slide width: " << slide_width << " (default: 20)" << endl;
-        cout << "window width: " << window_width << " (default: 80)" << endl;
+        cout << "window width: " << window_width << " (default: 300)" << endl;
         cout << "number of parallel threads: " << n_thread << " (default: 1)" << endl;
 
         if (output_G_matrix) {
