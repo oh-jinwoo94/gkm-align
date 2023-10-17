@@ -87,7 +87,7 @@ In this section, we align the human-mouse FADS gene cluster loci.
 
 Enter the following commands.
 <pre>
-  cd ../examples/FADS_cluster
+  cd examples/FADS_cluster
   chmod +x run_gkmalign.sh
   ./run_gkmalign.sh
 </pre>
