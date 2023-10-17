@@ -5,8 +5,8 @@
 - [Installation](#installation)
 - [Running gkm-align](#running-gkm-align)
 
-- [example: HBB Locus Control Region](#example1)
-- [example: human-mouse whole-genome alignment](#example2)
+- [example HBB Locus Control Region](#example1)
+- [example human-mouse whole-genome alignment](#example2)
   
 # Introduction
 gkm-align is a whole-genome alignment algorithm designed to map distal enhancers conserved between distant mammals (e.g., human and mouse). gkm-align discovers orthologous enhancers by identifying alignment paths with maximal similarities in gapped-kmer compositions along syntenic loci. gkm-align's performance can further be boosted by incorporating conserved enhancer vocabularies obtained using gkm-SVM sequence models trained on enhancers. 
@@ -34,7 +34,7 @@ Further, if you press y (recommended for following the tutorial more easily), **
 
 # Running gkm-align
 
-## example: HBB Locus Control Region
+## example HBB Locus Control Region
 In this section, we use gkm-align to align the human,mouse HBB Locus Control Region (HBB-LCR) and map mouse HBB-LCR enhancers to human genome (Oh and Beer, **Figure 3G**). 
 
 Enter the following commands.
@@ -81,7 +81,7 @@ Details on other software options can be found by typing:
 ../bin/gkm_align -h
 </pre>
 
-## example: human-mouse whole-genome alignment
+## example human-mouse whole-genome alignment
 
 (description coming soon. all necessary command lines are provided in example/whole_genome)
 
