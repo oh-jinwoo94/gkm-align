@@ -19,7 +19,9 @@ Then, compile and set up gkm-align by typing:
   chmod +x setup.sh
   ./setup.sh
 </pre>
-The script compiles gkm-align, downloads to data/ (1) gkm-SVM human,mouse genomic background models (2) hg38,mm10 genomes if the user presses 'y' (recommended for following the tutorial more easily).  
+The script compiles gkm-align and downloads to gkm-SVM human,mouse genomic background models to data/
+Further, if the user presses 'y' (recommended for following the tutorial more easily), hg38 and mm10 genomes download to data/.
+
 # Running gkm-align whole-genome alignment
 In this section, we demonstrate how to use gkm-align to generate whole-genome (WG) alignment between human and mouse (option -t 1). WG alignment between other mammals can also be computed similarly. Running gkm-align requires input files containing **1)** the human and mouse genome  **2)** a list of human/mouse syntenic intergenic loci and **3)** gkm-SVM models for human/mouse genomic background. These files can be found in this repository, and we provide information on how they can be computed in later sections of this document. 
 
