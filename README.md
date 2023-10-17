@@ -28,11 +28,13 @@ In this section, we use gkm-align to align the human,mouse HBB Locus Control Reg
 
 we demonstrate how to use gkm-align to generate whole-genome (WG) alignment between human and mouse (option -t 1). WG alignment between other mammals can also be computed similarly. Running gkm-align requires input files containing **1)** the human and mouse genome  **2)** a list of human/mouse syntenic intergenic loci and **3)** gkm-SVM models for human/mouse genomic background. These files can be found in this repository, and we provide information on how they can be computed in later sections of this document. 
 
+
 <pre>
-cd example
-../bin/gkm_align -t 1 -d genomes/ -g ../hg38_mm10/genomic_background_models.txt  ../hg38_mm10/syntenic_loci.to_align -o ofiles/ -n unweighted_hg38_mm10
+  cd examples/HBB_LCR
+  chmod +x run_gkmalign.sh
+  ./run_gkmalign.sh
 </pre>
-The above command line generates the WG alignment output file: unweighted_hg38_mm10.coord.
+
 
 - **1)** genomes/ is a directory containing subdirectories hg38/ and mm10/, each containing .fa files for each of the chromosomes. These files can be downloaded using the instructions provided in:
 
