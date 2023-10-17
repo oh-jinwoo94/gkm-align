@@ -38,14 +38,14 @@ Enter the following commands.
 
 'run_gkmalign.sh' script contains three parts.
 
-* Setting gkm-align input file (specifying gkm-SVM genomic masker models to be used) and output directory. 
+**1)** Setting gkm-align input file (specifying gkm-SVM genomic masker models to be used) and output directory. 
 <pre>
   echo "../../data/mouse_genomic_background_model_p_0.1.out" > masker_models.txt
   echo "../../data/human_genomic_background_model_p_0.1.out" >> masker_models.txt
   mkdir output_files
 </pre>
 
-* Aligning human and mouse HBB-LCRs. 
+**2)** Aligning human and mouse HBB-LCRs. 
 <pre>
   ../../bin/gkm_align  -t 1  HBB.to_align -d ../../data/genomes/ -g masker_models.txt   -p 50 -o output_files -n HBB_LCR_mm10-hg38
 </pre>
@@ -56,7 +56,7 @@ Enter the following commands.
   * -p 50: uses 50 parallel threads. Set to -p 1 if resource unavailable.
   * -o and -n each specify output directory and output file prefix. 
   
-* Mapping mouse HBB-LCR enhancers to human. 
+**3)** Mapping mouse HBB-LCR enhancers to human. 
 <pre>
   ../../bin/gkm_align  -t 2  HBB_LCR_enhancers_mm10.bed  -c output_files/HBB_LCR_mm10-hg38.coord -q mm10 -m -o output_files -n HBB_LCR_enhancers_mm10_mapped_to_hg3
 </pre>
