@@ -1,2 +1,0 @@
-human_brain_enhancer_model.out
-mouse_brain_enhancer_model.out
