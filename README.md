@@ -36,7 +36,7 @@ Enter the following commands.
 </pre>
 
 
-run_gkmalign.sh script contains three parts.
+'run_gkmalign.sh' script contains three parts.
 
 1) Setting gkm-align input file (specifying gkm-SVM genomic masker models to be used) and output directory. 
 <pre>
@@ -49,11 +49,15 @@ run_gkmalign.sh script contains three parts.
 <pre>
   ../../bin/gkm_align  -t 1  HBB.to_align -d ../../data/genomes/ -g masker_models.txt   -p 50 -o output_files -n HBB_LCR_mm10-hg38
 </pre>
+* -t 1 option specifies that gkm-align is in 'align' mode.
+* 'HBB.to_align' contains the genomic coordinate ranges of human and mouse HBB Locus Control Regions that gkm-align will perform alignment. 
 
 3) Mapping mouse HBB-LCR enhancers to human. 
 <pre>
   ../../bin/gkm_align  -t 2  HBB_LCR_enhancers_mm10.bed  -c output_files/HBB_LCR_mm10-hg38.coord -q mm10 -m -o output_files -n HBB_LCR_enhancers_mm10_mapped_to_hg3
 </pre>
+* -t 2 option specifies that gkm-align is in 'mapping' mode.  
+* 'HBB_LCR_enhancers_mm10.bed' contains mm10 coordinates of mouse HBB-LCR enhancers.
 
 
 
