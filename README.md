@@ -1,4 +1,4 @@
-(being updated with more details and reproducible examples)
+(being updated with more details and examples)
 
 # Table of Contents
 - [Introduction](#introduction)
