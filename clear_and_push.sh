@@ -17,3 +17,7 @@ rm example/HBB_LCR/masker_models.txt; rm -r example/HBB_LCR/output_files
 
 # FADS
 rm example/FADS_cluster/masker_models.txt;  rm -r example/FADS_cluster/output_files
+
+
+
+git add .; git commit -m "test"; git push gkm main
