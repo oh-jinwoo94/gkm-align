@@ -20,7 +20,7 @@ rm example/FADS_cluster/masker_models.txt;  rm -r example/FADS_cluster/output_fi
 
 # WG
 rm -r example/whole_genome/output_files
-for file in $(ls example/whole_genome|grep -v .sh|grep -v syntenic_intergenic.axt)
+for file in $(ls example/whole_genome|grep -v .sh)
 do 
 	rm example/whole_genome/$file
 done
