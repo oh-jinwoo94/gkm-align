@@ -3,24 +3,48 @@
 # 10/25/2023
 # Outputs of this pipeline will soon be uploaded to the beerlab/gkm-align webpage
 
-genome_1="hg38"
-genome_2="mm10"
 
-##### run lastz (~10 days) #####  output will be uploaded soon to the beerlab gkmalign website ##
-/mnt/data0/joh27/tools/lastz/lastz/src/lastz_32 /mnt/data0/joh27/genomes/${genome_2}/multifasta/${genome_2}.fa[multiple] /mnt/data0/joh27/genomes/${genome_1}/multifasta/${genome_1}.fa[multiple] --format=axt --gfextend --nochain --nogapped  --notransition --seed=match10 --step=1 > lastz_output.axt
+printf "\nThis pipeline first uses LASTZ software to identify short sequence matches in human and mouse. \n"
+printf "This step (>5days) can be skipped by downloading a pre-computed intermediate file. \n"
+printf "\nPress 1 to skip and download intermediate file from beerlab.org/gkmalign/ (recommended).\n"
+printf "Press 2 to run the whole pipeline. LASTZ will be downloaded/compiled and hg38/mm10 multifasta files will be downloaded.\n"
+read -p "1 recommended.   " choice
+case $choice in
+    [1]* )
+	    printf "option A"
+            break;;
+    [2]* ) 
+	    genome_1="hg38"
+            genome_2="mm10"
+
+            printf "Setting up LASTZ"
+	    wget https://github.com/lastz/lastz/archive/refs/tags/1.04.22.zip
+	    unzip 1.04.22.zip
+	    cd lastz-1.04.22/
+	    make
+	    cd .. 
+
+	    printf "\n\n  downloading hg38 and mm10"
+	    wget https://hgdownload.cse.ucsc.edu/goldenpath/${genome_1}/bigZips/${genome_1}.fa.gz
+	    wget https://hgdownload.cse.ucsc.edu/goldenpath/${genome_2}/bigZips/${genome_2}.fa.gz
+	    gunzip *fa.gz
+
+	    pwd
+	    printf "\n\n generating hg38/mm10 short sequence matches. This step will take more than 5 days. Replacing --step=1 to --step=10 will decrease the runtime.\n" 
+	    lastz-1.04.22/src/lastz /mnt/data0/joh27/genomes/${genome_2}/multifasta/${genome_2}.fa[multiple] /mnt/data0/joh27/genomes/${genome_1}/multifasta/${genome_1}.fa[multiple] --format=axt --gfextend --nochain --nogapped  --notransition --seed=match10 --step=1 > lastz_output.axt
 
 
-axtfile=lastz_output.axt
-######## steps below < 20mins  ########
-# process lastz output
-cat ${axtfile} |grep  chr|grep -v _ | awk -v g1="${genome_1}" -v g2="${genome_2}" '{print g2"\t"$2"\t"$3"\t"$4"\t"g1"\t"$5"\t"$6"\t"$7"\t"$8}' >> short_sequence_matches_1.axt
+	    cat lastz_output.axt |grep  chr|grep -v _ | awk -v g1="${genome_1}" -v g2="${genome_2}" '{print g2"\t"$2"\t"$3"\t"$4"\t"g1"\t"$5"\t"$6"\t"$7"\t"$8}' >> short_sequence_matches_1.axt
 
-python ../../scripts/flip_query_coordinates.py short_sequence_matches_1.axt hg38 /mnt/data0/joh27/projects/alignment_enhancer_conservation/chrom_sizes/hg38.chrom.sizes > short_sequence_matches_2.axt
+	    python ../../scripts/flip_query_coordinates.py short_sequence_matches_1.axt hg38 /mnt/data0/joh27/projects/alignment_enhancer_conservation/chrom_sizes/hg38.chrom.sizes > short_sequence_matches_2.axt
 
-# filter using ENCODE syntenic integenic loci
-wget https://beerlab.org/gkmalign/Supplementary_Table_6.txt -O hg38_mm10_ortholog_syntenic_intergenic_pairs.txt
+            # filter using ENCODE syntenic integenic loci
+            wget https://beerlab.org/gkmalign/Supplementary_Table_6.txt -O hg38_mm10_ortholog_syntenic_intergenic_pairs.txt
+            python ../../scripts/filter_short-seq-matches_by_syntenic_integenic_loci.py  short_sequence_matches_2.axt  hg38_mm10_ortholog_syntenic_intergenic_pairs.txt > short_sequence_human-mouse_syntenic_intergenic.axt
 
-python ../../scripts/filter_short-seq-matches_by_syntenic_integenic_loci.py  short_sequence_matches_2.axt  hg38_mm10_ortholog_syntenic_intergenic_pairs.txt > short_sequence_human-mouse_syntenic_intergenic.axt
+            break ;;
+    * ) printf "Please enter  1 or 2\n";;
+esac
 
 
 # chain to generate syntenic loci to aign
