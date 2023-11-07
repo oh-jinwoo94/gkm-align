@@ -11,22 +11,22 @@ printf "Press 2 to run the whole pipeline. LASTZ will be downloaded/compiled and
 read -p "1 recommended.   " choice
 case $choice in
     [1]* )
-	    printf "option A"
+	    wget https://beerlab.org/gkmalign/short_sequence_human-mouse_syntenic_intergenic.txt -O short_sequence_human-mouse_syntenic_intergenic.txt
             break;;
     [2]* ) 
 	    genome_1="hg38"
             genome_2="mm10"
 
             printf "Setting up LASTZ"
-	    wget https://github.com/lastz/lastz/archive/refs/tags/1.04.22.zip
+	    wget https://github.com/lastz/lastz/archive/refs/tags/1.04.22.zip -O 1.04.22.zip
 	    unzip 1.04.22.zip
 	    cd lastz-1.04.22/
 	    make
 	    cd .. 
 
 	    printf "\n\n  downloading hg38 and mm10"
-	    wget https://hgdownload.cse.ucsc.edu/goldenpath/${genome_1}/bigZips/${genome_1}.fa.gz
-	    wget https://hgdownload.cse.ucsc.edu/goldenpath/${genome_2}/bigZips/${genome_2}.fa.gz
+	    wget https://hgdownload.cse.ucsc.edu/goldenpath/${genome_1}/bigZips/${genome_1}.fa.gz -O ${genome_1}.fa.gz
+	    wget https://hgdownload.cse.ucsc.edu/goldenpath/${genome_2}/bigZips/${genome_2}.fa.gz -O ${genome_2}.fa.gz
 	    gunzip *fa.gz
 
 	    pwd
@@ -40,14 +40,19 @@ case $choice in
 
             # filter using ENCODE syntenic integenic loci
             wget https://beerlab.org/gkmalign/Supplementary_Table_6.txt -O hg38_mm10_ortholog_syntenic_intergenic_pairs.txt
-            python ../../scripts/filter_short-seq-matches_by_syntenic_integenic_loci.py  short_sequence_matches_2.axt  hg38_mm10_ortholog_syntenic_intergenic_pairs.txt > short_sequence_human-mouse_syntenic_intergenic.axt
+            python ../../scripts/filter_short-seq-matches_by_syntenic_integenic_loci.py  short_sequence_matches_2.axt  hg38_mm10_ortholog_syntenic_intergenic_pairs.txt > short_sequence_human-mouse_syntenic_intergenic.txt
 
             break ;;
     * ) printf "Please enter  1 or 2\n";;
 esac
 
 
-# chain to generate syntenic loci to aign
-python ../../scripts/chain_short_seq_matches.py  short_sequence_human-mouse_syntenic_intergenic.axt 0.00001 100000 0.1 0 short_sequence_human-mouse_syntenic_intergenic.chains
+printf "\n\n\nSetup complete: short sequence matches within hg38/mm10 syntenic intergenic loci\n"
+printf "The rest of the pipeline will take less than 20 minutes.\n"
+
+# chain to generate syntenic loci to align
+python ../../scripts/chain_short_seq_matches.py  short_sequence_human-mouse_syntenic_intergenic.txt 0.00001 100000 0.1 0 short_sequence_human-mouse_syntenic_intergenic.chains
 
 python ../../scripts/convert_chain_to_to-align.py short_sequence_human-mouse_syntenic_intergenic.chains  20000 10000 1000 human_mouse_WG_syntenic_intergenic_loci.to_align
+
+printf "\n\n Pipeline complete; Saved as: human_mouse_WG_syntenic_intergenic_loci.to_align"
