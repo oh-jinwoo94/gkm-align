@@ -1,7 +1,7 @@
 #!/usr/bin/env python3.6
 '''
 * chain short sequence matches by their genomic coordinates in human and mouse. 
-(base) [joh27@troctolite whole_genome]$ head short_sequence_human-mouse_syntenic_intergenic.axt
+head short_sequence_human-mouse_syntenic_intergenic.axt
 mm10    chr4    155190070       hg38    chr1    2270646 +
 mm10    chr4    154402461       hg38    chr1    3340605 +
 mm10    chr4    153708450       hg38    chr1    4335556 +
