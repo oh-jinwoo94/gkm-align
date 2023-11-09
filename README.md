@@ -114,7 +114,7 @@ Rscript ../../scripts/visualize_coordinates.R output_files/FADS_loci_mm10-hg38.c
 
 | FADS locus gkmsim matrix (G) | FADS gkm-alignment coordinates |
 | ------- | ------- |
-| ![FADS locus gkmsim matrix (G)](example/FADS_cluster/png/fads_matrix.png) | ![FADS gkm-alignment](example/FADS_cluster/png/fads_coords.png) |
+| ![FADS locus gkmsim matrix (G)](examples/FADS_cluster/png/fads_matrix.png) | ![FADS gkm-alignment](examples/FADS_cluster/png/fads_coords.png) |
 
 
 
