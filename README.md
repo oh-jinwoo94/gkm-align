@@ -15,9 +15,11 @@ Please cite the following paper if you use gkm-align:
 Oh JW and Beer MA. Gapped-kmer sequence modeling robustly identifies regulatory vocabularies and distal enhancers conserved between evolutionarily distant mammals. 
 [bioRxiv](https://www.biorxiv.org/content/10.1101/2023.10.06.561128v1)
 
-# Installation
-gkm-align has been compiled and tested for Linux based operating systems (such as Red Hat, Centos, and Rocky Linux, etc.)
 
+# System Requirements
+gkm-align software is built for Linux based operating systems (such as Red Hat, Centos, and Rocky Linux, etc.), and it has been tested for Rocky Linux release 8.8 (Green Obsidian).
+
+# Installation
 First, download the source code using the following command line:
 <pre>
 git clone https://github.com/oh-jinwoo94/gkm-align.git
