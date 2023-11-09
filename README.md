@@ -89,6 +89,7 @@ Details on other software options can be found by typing:
 ../../bin/gkm_align -h
 </pre>
 
+This process takes 10 seconds ~ minutes depending on your hardware availability.
 
 ## example: FADS gene cluster loci
 In this section, we align the human-mouse FADS gene cluster loci. 
@@ -124,7 +125,7 @@ Rscript ../../scripts/visualize_coordinates.R output_files/FADS_loci_mm10-hg38.c
 | ------- | ------- |
 | ![FADS locus gkmsim matrix (G)](examples/FADS_cluster/png/fads_matrix.png) | ![FADS gkm-alignment](examples/FADS_cluster/png/fads_coords.png) |
 
-
+This process takes 10 seconds ~ minutes depending on your hardware availability.
 
 ## example: human-mouse whole-genome alignment
 
