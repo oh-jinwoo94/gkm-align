@@ -17,7 +17,9 @@ Oh JW and Beer MA. Gapped-kmer sequence modeling robustly identifies regulatory 
 
 
 # System Requirements
-gkm-align software is built for Linux based operating systems (such as Red Hat, Centos, and Rocky Linux, etc.), and it has been tested for Rocky Linux release 8.8 (Green Obsidian).
+gkm-align software is built for Linux based operating systems (such as Red Hat, Centos, and Rocky Linux, etc.).
+The package has  and it has been tested on the following system:
+* Rocky Linux release 8.8 (Green Obsidian).
 
 # Installation
 First, download the source code using the following command line:
