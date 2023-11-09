@@ -2,6 +2,7 @@
 
 # Table of Contents
 - [Introduction](#introduction)
+- [System Requirements](#system-requirements)
 - [Installation](#installation)
 - [Running gkm-align](#running-gkm-align)
   - [example: HBB Locus Control Region](#example-hbb-locus-control-region)
