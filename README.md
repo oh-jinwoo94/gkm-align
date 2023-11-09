@@ -21,6 +21,8 @@ gkm-align software is built for Linux based operating systems (such as Red Hat, 
 The package has been tested on the following system:
 * Rocky Linux release 8.8 (Green Obsidian).
 
+gkm-align uses SIMD parallel computation and requires AVX2 (to check: lscpu|grep avx2)
+ 
 # Installation
 First, download the source code using the following command line:
 <pre>
