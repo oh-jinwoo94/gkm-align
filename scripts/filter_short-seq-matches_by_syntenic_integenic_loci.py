@@ -1,4 +1,5 @@
 '''
+Jin Woo Oh
 
 two input files (1) short sequence match coordinates (2) human-mouse syntenic intergenic loci
 
