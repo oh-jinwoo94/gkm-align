@@ -1,4 +1,5 @@
 #4/21/2020
+#Jin Woo Oh
 
 # K-mean cluster its anchors, where #cluster is determined by the average width and anchor number of the chain.
 # k = ceiling(avg_W/L), where L = target avg width of sub-chains for each cluster on average

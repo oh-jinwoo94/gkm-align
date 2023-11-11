@@ -1,5 +1,6 @@
 #!/usr/bin/env python3.6
 '''
+Jin Woo Oh
 * chain short sequence matches by their genomic coordinates in human and mouse. 
 head short_sequence_human-mouse_syntenic_intergenic.axt
 mm10    chr4    155190070       hg38    chr1    2270646 +
