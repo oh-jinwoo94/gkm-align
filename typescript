@@ -1,0 +1,327 @@
+Script started on 2023-11-11 11:39:44-05:00
+ls]0;joh27@troctolite:/mnt/data0/joh27/projects/alignment_enhancer_conservation/methods/gkm_dynam/versions/whole_genome/pubgrade_V_6(base) [joh27@troctolite pubgrade_V_6]$ ls
+[0m[01;34mbin[0m  [01;32mclear_and_push.sh[0m  [01;34mexamples[0m  LICENSE.txt  README.md  [01;34mscripts[0m  [01;32msetup.sh[0m  [01;34msrc[0m  typescript
+]0;joh27@troctolite:/mnt/data0/joh27/projects/alignment_enhancer_conservation/methods/gkm_dynam/versions/whole_genome/pubgrade_V_6(base) [joh27@troctolite pubgrade_V_6]$ ^C
+]0;joh27@troctolite:/mnt/data0/joh27/projects/alignment_enhancer_conservation/methods/gkm_dynam/versions/whole_genome/pubgrade_V_6(base) [joh27@troctolite pubgrade_V_6]$ sc[K[Kcd scripts/
+]0;joh27@troctolite:/mnt/data0/joh27/projects/alignment_enhancer_conservation/methods/gkm_dynam/versions/whole_genome/pubgrade_V_6/scripts(base) [joh27@troctolite scripts]$ ls
+chain_short_seq_matches.py    filter_short-seq-matches_by_syntenic_integenic_loci.py  generate_all_gkmers.py  visualize_coordinates.R
+convert_chain_to_to-align.py  flip_query_coordinates.py                               seq_to_gkmer_vector.py  visualize_matrix.R
+]0;joh27@troctolite:/mnt/data0/joh27/projects/alignment_enhancer_conservation/methods/gkm_dynam/versions/whole_genome/pubgrade_V_6/scripts(base) [joh27@troctolite scripts]$ python generate_all_gkmers.py 
+usage: {0} {l (e.g. 11)} {k (e.g. 7)} {ofile}
+]0;joh27@troctolite:/mnt/data0/joh27/projects/alignment_enhancer_conservation/methods/gkm_dynam/versions/whole_genome/pubgrade_V_6/scripts(base) [joh27@troctolite scripts]$ python generate_all_gkmers.py  11 7 all_gapped_kmers_11_7.txt^C
+]0;joh27@troctolite:/mnt/data0/joh27/projects/alignment_enhancer_conservation/methods/gkm_dynam/versions/whole_genome/pubgrade_V_6/scripts(base) [joh27@troctolite scripts]$ python generate_all_gkmers.py  11 7 all_gapped_kmers_11_7.txt
+]0;joh27@troctolite:/mnt/data0/joh27/projects/alignment_enhancer_conservation/methods/gkm_dynam/versions/whole_genome/pubgrade_V_6/scripts(base) [joh27@troctolite scripts]$ head all_gapped_kmers_11_7.txt
+AAAAAAA----
+AAAAAA-A---
+AAAAAA--A--
+AAAAAA---A-
+AAAAAA----A
+AAAAA-AA---
+AAAAA-A-A--
+AAAAA-A--A-
+AAAAA-A---A
+AAAAA--AA--
+]0;joh27@troctolite:/mnt/data0/joh27/projects/alignment_enhancer_conservation/methods/gkm_dynam/versions/whole_genome/pubgrade_V_6/scripts(base) [joh27@troctolite scripts]$ ls
+all_gapped_kmers_11_7.txt     filter_short-seq-matches_by_syntenic_integenic_loci.py  seq_to_gkmer_vector.py
+chain_short_seq_matches.py    flip_query_coordinates.py                               visualize_coordinates.R
+convert_chain_to_to-align.py  generate_all_gkmers.py                                  visualize_matrix.R
+]0;joh27@troctolite:/mnt/data0/joh27/projects/alignment_enhancer_conservation/methods/gkm_dynam/versions/whole_genome/pubgrade_V_6/scripts(base) [joh27@troctolite scripts]$ vim test.fa
+[?2004h[?1049h[22;0;0t[?1h=[?2004h[1;36r[?12h[?12l[27m[23m[29m[m[H[2J[?25l[36;1H"test.fa" [New File][2;1H▽[6n[2;1H  [1;1H[>c]10;?]11;?[2;1H[1m[34m~                                                                                                                                                         [3;1H~                                                                                                                                                         [4;1H~                                                                                                                                                         [5;1H~                                                                                                                                                         [6;1H~                                                                                                                                                         [7;1H~                                                                                                                                                         [8;1H~                                                                                                                                                         [9;1H~                                                                                                                                                         [10;1H~                                                                                                                                                         [11;1H~                                                                                                                                                         [12;1H~                                                                                                                                                         [13;1H~                                                                                                                                                         [14;1H~                                                                                                                                                         [15;1H~                                                                                                                                                         [16;1H~                                                                                                                                                         [17;1H~                                                                                                                                                         [18;1H~                                                                                                                                                         [19;1H~                                                                                                                                                         [20;1H~                                                                                                                                                         [21;1H~                                                                                                                                                         [22;1H~                                                                                                                                                         [23;1H~                                                                                                                                                         [24;1H~                                                                                                                                                         [25;1H~                                                                                                                                                         [26;1H~                                                                                                                                                         [27;1H~                                                                                                                                                         [28;1H~                                                                                                                                                         [29;1H~                                                                                                                                                         [30;1H~                                                                                                                                                         [31;1H~                                                                                                                                                         [32;1H~                                                                                                                                                         [33;1H~                                                                                                                                                         [34;1H~                                                                                                                                                         [35;1H~                                                                                                                                                         [m[36;137H0,0-1[9CAll[1;1H[?25h[?25l[36;127Hi[1;1H[36;127H [1;1H[36;1H[1m-- INSERT --[m[36;13H[K[36;137H0,1[11CAll[1;1H[?25h[?25l>[36;137H1,2[1;2H[?25h[?25le[36;139H3[1;3H[?25h[?25lx[36;139H4[1;4H[?25h[?25la[36;139H5[1;5H[?25h[?25lm[36;139H6[1;6H[?25h[?25lp[36;139H7[1;7H[?25h[?25ll[36;139H8[1;8H[?25h[?25le[36;139H9[1;9H[?25h[?25l[2;1H[K[36;137H2,1[2;1H[?25h[?25lG[36;139H2[2;2H[?25h[?25lA[36;139H3[2;3H[?25h[?25lT[36;139H4[2;4H[?25h[?25lA[36;139H5[2;5H[?25h[?25lA[36;139H6[2;6H[?25h[?25l[2;5H[K[36;139H5[2;5H[?25h[?25l[2;4H[K[36;139H4[2;4H[?25h[?25lA[36;139H5[2;5H[?25h[?25lA[36;139H6[2;6H[?25h[?25lC[36;139H7[2;7H[?25h[?25lT[36;139H8[2;8H[?25h[?25lC[36;139H9[2;9H[?25h[?25lC[36;139H10[2;10H[?25h[?25l[36;139H9 [2;9H[?25h[?25l[36;139H8[2;8H[?25h[?25l[36;139H7[2;7H[?25h[?25l[36;139H6[2;6H[?25h[?25l[36;139H5[2;5H[?25h[?25l[36;139H4[2;4H[?25h[?25l[36;139H3[2;3H[?25h[?25l[36;139H2[2;2H[?25h[?25l[36;139H1[2;1H[?25h[?25l[36;139H2[2;2H[?25h[?25l[36;139H3[2;3H[?25h[?25l[36;139H4[2;4H[?25h[?25l[36;139H5[2;5H[?25h[?25l[36;139H6[2;6H[?25h[?25l[36;139H7[2;7H[?25h[?25l[36;139H8[2;8H[?25h[?25l[36;139H9[2;9H[?25h[?25l[36;139H10[2;10H[?25h[?25lG[36;140H1[2;11H[?25h[?25lC[36;140H2[2;12H[?25h[?25l[36;140H1[2;11H[?25h[?25l[36;140H0[2;10H[?25h[?25l[36;139H9 [2;9H[?25h[?25l[36;139H8[2;8H[?25h[?25l[36;139H7[2;7H[?25h[?25l[36;139H6[2;6H[?25h[?25l[36;139H5[2;5H[?25h[?25l[36;139H4[2;4H[?25h[?25l[36;139H3[2;3H[?25h[?25l[36;139H2[2;2H[?25h[?25l[36;139H1[2;1H[?25h[?25l[36;139H2[2;2H[?25h[?25l[36;139H3[2;3H[?25h[?25l[36;139H4[2;4H[?25h[?25l[36;139H5[2;5H[?25h[?25l[36;139H6[2;6H[?25h[?25l[36;139H7[2;7H[?25h[?25l[36;139H8[2;8H[?25h[36;1H[K[2;7H[?25l[36;127H^[[2;7H[36;127H  [2;8H[36;137H2,7[11CAll[2;7H[?25h[?25l[36;127H^[[2;7H[36;127H  [2;7H[36;127H^[[2;7H[36;127H  [2;7H[?25h[?25l[36;127H:[2;7H[36;127H[K[36;1H:[?2004h[?25hw[?25l[?25hq[?25l[?25h[?25l[?2004l"test.fa" [New] 2L, 21C written
+[?2004l[?1l>[?25h[?1049l[23;0;0t]0;joh27@troctolite:/mnt/data0/joh27/projects/alignment_enhancer_conservation/methods/gkm_dynam/versions/whole_genome/pubgrade_V_6/scripts(base) [joh27@troctolite scripts]$ python [K[K[K[K[K[K[Kpython generate_all_gkmers.py  11 7 all_gapped_kmers_11_7.txt
+]0;joh27@troctolite:/mnt/data0/joh27/projects/alignment_enhancer_conservation/methods/gkm_dynam/versions/whole_genome/pubgrade_V_6/scripts(base) [joh27@troctolite scripts]$ python test[K[K[K[Kc[Kgenerate_all_gkmers.py [K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[Kseq_to_gkmer_vector.py 
+usage: {0} {single .fa} {gapped_kmer_list.txt} {gapped-kmer size (e.g. l=11)} {#non-gapped positions (e.g. k=7)} {include reverse complement? (y or n)} {ofile}
+]0;joh27@troctolite:/mnt/data0/joh27/projects/alignment_enhancer_conservation/methods/gkm_dynam/versions/whole_genome/pubgrade_V_6/scripts(base) [joh27@troctolite scripts]$ python seq_to_gkmer_vector.py test.fa  all_gapped_kmers_11_7.txt  11 7 n test_gkmer_cnt_[K.txt
+]0;joh27@troctolite:/mnt/data0/joh27/projects/alignment_enhancer_conservation/methods/gkm_dynam/versions/whole_genome/pubgrade_V_6/scripts(base) [joh27@troctolite scripts]$ head test_gkmer_cnt.txt 
+AAAAAAA----	0
+AAAAAA-A---	0
+AAAAAA--A--	0
+AAAAAA---A-	0
+AAAAAA----A	0
+AAAAA-AA---	0
+AAAAA-A-A--	0
+AAAAA-A--A-	0
+AAAAA-A---A	0
+AAAAA--AA--	0
+]0;joh27@troctolite:/mnt/data0/joh27/projects/alignment_enhancer_conservation/methods/gkm_dynam/versions/whole_genome/pubgrade_V_6/scripts(base) [joh27@troctolite scripts]$ awk ''$'2'='='[1P'[1P'!'='0'[C python seq_to_gkmer_vector.py test.fa  all_gapped_kmers_11_7.txt  11 7 n test_gkmer_cnt.txt[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K0' test_gkmer_cnt.txt |head
+-A-AAC-CC-C	1
+-A-AAC-CCG-	1
+-A-AAC-C-GC	1
+-A-AAC--CGC	1
+-A-AA--CCGC	1
+-A-AACTCC--	1
+-A-AACTC--C	1
+-A-AACT-C-C	1
+-A-AACTC-G-	1
+-A-AACT-CG-	1
+]0;joh27@troctolite:/mnt/data0/joh27/projects/alignment_enhancer_conservation/methods/gkm_dynam/versions/whole_genome/pubgrade_V_6/scripts(base) [joh27@troctolite scripts]$ awk '$2!=0' test_gkmer_cnt.txt |head headsheadoheadrheadthead head1head|head
+sort: cannot read: 1: No such file or directory
+]0;joh27@troctolite:/mnt/data0/joh27/projects/alignment_enhancer_conservation/methods/gkm_dynam/versions/whole_genome/pubgrade_V_6/scripts(base) [joh27@troctolite scripts]$ awk '$2!=0' test_gkmer_cnt.txt | sort 1|head[1P|head-|headg|headr|headk|head |head2|head[1P|head1|head
+--T--CTCCGC	1
+--TA--TCCGC	1
+--T-A-TCCGC	1
+--TA-CTC-GC	1
+--TA-CT-CGC	1
+--T-ACTC-GC	1
+--T-ACT-CGC	1
+--TA-CTCCG-	1
+--T-ACTCCG-	1
+--TA-CTCC-C	1
+]0;joh27@troctolite:/mnt/data0/joh27/projects/alignment_enhancer_conservation/methods/gkm_dynam/versions/whole_genome/pubgrade_V_6/scripts(base) [joh27@troctolite scripts]$ awk '$2!=0' test_gkmer_cnt.txt | sort -grk 1|head[1P[C[1P 1|head
+sort: cannot read: 1: No such file or directory
+]0;joh27@troctolite:/mnt/data0/joh27/projects/alignment_enhancer_conservation/methods/gkm_dynam/versions/whole_genome/pubgrade_V_6/scripts(base) [joh27@troctolite scripts]$ awk '$2!=0' test_gkmer_cnt.txt | sort -g 1|headk 1|head
+-A-AAC-CC-C	1
+-A-AAC-CCG-	1
+-A-AA--CCGC	1
+-A-AAC--CGC	1
+-A-AAC-C-GC	1
+-A-AACT-C-C	1
+-A-AACTC--C	1
+-A-AACTCC--	1
+-A-AACT-CG-	1
+-A-AACTC-G-	1
+]0;joh27@troctolite:/mnt/data0/joh27/projects/alignment_enhancer_conservation/methods/gkm_dynam/versions/whole_genome/pubgrade_V_6/scripts(base) [joh27@troctolite scripts]$ awk '$2!=0' test_gkmer_cnt.txt | sort -gk 1|head[1P 1|headr 1|headk 1|head
+--T--CTCCGC	1
+--TA--TCCGC	1
+--T-A-TCCGC	1
+--TA-CTC-GC	1
+--TA-CT-CGC	1
+--T-ACTC-GC	1
+--T-ACT-CGC	1
+--TA-CTCCG-	1
+--T-ACTCCG-	1
+--TA-CTCC-C	1
+]0;joh27@troctolite:/mnt/data0/joh27/projects/alignment_enhancer_conservation/methods/gkm_dynam/versions/whole_genome/pubgrade_V_6/scripts(base) [joh27@troctolite scripts]$ pwd
+/mnt/data0/joh27/projects/alignment_enhancer_conservation/methods/gkm_dynam/versions/whole_genome/pubgrade_V_6/scripts
+]0;joh27@troctolite:/mnt/data0/joh27/projects/alignment_enhancer_conservation/methods/gkm_dynam/versions/whole_genome/pubgrade_V_6/scripts(base) [joh27@troctolite scripts]$ ls
+all_gapped_kmers_11_7.txt     filter_short-seq-matches_by_syntenic_integenic_loci.py  seq_to_gkmer_vector.py  visualize_coordinates.R
+chain_short_seq_matches.py    flip_query_coordinates.py                               test.fa                 visualize_matrix.R
+convert_chain_to_to-align.py  generate_all_gkmers.py                                  test_gkmer_cnt.txt
+]0;joh27@troctolite:/mnt/data0/joh27/projects/alignment_enhancer_conservation/methods/gkm_dynam/versions/whole_genome/pubgrade_V_6/scripts(base) [joh27@troctolite scripts]$ rm test.fa
+]0;joh27@troctolite:/mnt/data0/joh27/projects/alignment_enhancer_conservation/methods/gkm_dynam/versions/whole_genome/pubgrade_V_6/scripts(base) [joh27@troctolite scripts]$ rm test_gkmer_cnt.txt 
+]0;joh27@troctolite:/mnt/data0/joh27/projects/alignment_enhancer_conservation/methods/gkm_dynam/versions/whole_genome/pubgrade_V_6/scripts(base) [joh27@troctolite scripts]$ ls
+all_gapped_kmers_11_7.txt     filter_short-seq-matches_by_syntenic_integenic_loci.py  seq_to_gkmer_vector.py
+chain_short_seq_matches.py    flip_query_coordinates.py                               visualize_coordinates.R
+convert_chain_to_to-align.py  generate_all_gkmers.py                                  visualize_matrix.R
+]0;joh27@troctolite:/mnt/data0/joh27/projects/alignment_enhancer_conservation/methods/gkm_dynam/versions/whole_genome/pubgrade_V_6/scripts(base) [joh27@troctolite scripts]$ vim seq_to_gkmer_vector.py 
+[?2004h[?1049h[22;0;0t[?1h=[?2004h[1;36r[?12h[?12l[27m[23m[29m[m[H[2J[?25l[36;1H"seq_to_gkmer_vector.py" 82L, 1897C[2;1H▽[6n[2;1H  [1;1H[>c]10;?]11;?[1;1H[31m'''
+##
+Input: 
+1)
+A single-fasta file 
+>example
+GATTAACTCCG
+
+2) List of all gapped-kmers(l,k)
+AAAAAAA----
+AAAAAA-A---
+AAAAAA--A--
+.
+.
+##
+Output:
+AAAAAAA----     0
+AAAAAA-A---     0
+AAAAAA--A--     0
+'''[m
+[35mimport[m sys
+[35mimport[m numpy [33mas[m np
+[35mfrom[m itertools [35mimport[m combinations
+
+comp={[31m'A'[m:[31m'T'[m, [31m'T'[m:[31m'A'[m, [31m'G'[m:[31m'C'[m, [31m'C'[m:[31m'G'[m}
+num_to_char = {[31m0[m:[31m'A'[m, [31m1[m:[31m'C'[m, [31m2[m:[31m'G'[m, [31m3[m:[31m'T'[m, [31m4[m:[31m'-'[m}
+
+[34m# returns reverse complment[m
+[33mdef[m [36mrevcomp[m(seq):
+    oseq=[31m''[m
+    [33mfor[m nc [33min[m seq:[32;9Hoseq=comp[nc]+oseq
+    [33mreturn[m np.array([36mlist[m(oseq))
+
+[34m# kmer -> [gkm1, gkm2, ..][m[36;137H1,1[11CTop[1;1H[?25h[?25l[36;127Hi[1;1H[36;127H [1;1H[36;1H[1m-- INSERT --[m[36;13H[K[36;137H1,1[11CTop[1;1H[?25h[?25l[36;137H2[2;1H[?25h[?25l[3;35r[3;1H[L[1;36r[2;1H[K[3;1H[31m##[m[36;137H[K[36;137H3,1[11CTop[3;1H[?25h[?25l[36;137H2[2;1H[?25h[?25l[31m#[m[36;139H2[2;2H[?25h[?25l[31m [m[36;139H3[2;3H[?25h[?25l[31mJ[m[36;139H4[2;4H[?25h[?25l[2;3H[K[36;139H3[2;3H[?25h[?25l[2;2H[K[36;139H2[2;2H[?25h[?25l[2;1H[K[36;139H1[2;1H[?25h[?25l[31mJ[m[36;139H2[2;2H[?25h[?25l[31mW[m[36;139H3[2;3H[?25h[?25l[31mO[m[36;139H4[2;4H[?25h[?25l[31m [m[36;139H5[2;5H[?25h[?25l[31m1[m[36;139H6[2;6H[?25h[?25l[31m1[m[36;139H7[2;7H[?25h[?25l[31m/[m[36;139H8[2;8H[?25h[?25l[31m1[m[36;139H9[2;9H[?25h[?25l[31m1[m[36;139H10[2;10H[?25h[?25l[31m/[m[36;140H1[2;11H[?25h[?25l[31m2[m[36;140H2[2;12H[?25h[?25l[31m0[m[36;140H3[2;13H[?25h[?25l[31m2[m[36;140H4[2;14H[?25h[?25l[31m3[m[36;140H5[2;15H[?25h[?25l[3;35r[3;1H[L[1;36r[36;137H[K[36;137H3,1[11CTop[3;1H[?25h[36;1H[K[3;1H[?25l[36;127H^[[3;1H[36;127H  [3;1H[36;137H3,0-1[9CTop[3;1H[?25h[?25l[36;127H:[3;1H[36;127H[K[36;1H:[?2004h[?25hw[?25l[?25hq[?25l[?25h[?25l[?2004l"seq_to_gkmer_vector.py" 84L, 1913C written
+[?2004l[?1l>[?25h[?1049l[23;0;0t]0;joh27@troctolite:/mnt/data0/joh27/projects/alignment_enhancer_conservation/methods/gkm_dynam/versions/whole_genome/pubgrade_V_6/scripts(base) [joh27@troctolite scripts]$ vim seq_to_gkmer_vector.py 
+[?2004h[?1049h[22;0;0t[?1h=[?2004h[1;36r[?12h[?12l[27m[23m[29m[m[H[2J[?25l[36;1H"seq_to_gkmer_vector.py" 84L, 1913C[2;1H▽[6n[2;1H  [1;1H[>c]10;?]11;?[1;1H[31m'''
+JWO 11/11/2023
+
+##
+Input: 
+1)
+A single-fasta file 
+>example
+GATTAACTCCG
+
+2) List of all gapped-kmers(l,k)
+AAAAAAA----
+AAAAAA-A---
+AAAAAA--A--
+.
+.
+##
+Output:
+AAAAAAA----     0
+AAAAAA-A---     0
+AAAAAA--A--     0
+'''[m
+[35mimport[m sys
+[35mimport[m numpy [33mas[m np
+[35mfrom[m itertools [35mimport[m combinations
+
+comp={[31m'A'[m:[31m'T'[m, [31m'T'[m:[31m'A'[m, [31m'G'[m:[31m'C'[m, [31m'C'[m:[31m'G'[m}
+num_to_char = {[31m0[m:[31m'A'[m, [31m1[m:[31m'C'[m, [31m2[m:[31m'G'[m, [31m3[m:[31m'T'[m, [31m4[m:[31m'-'[m}
+
+[34m# returns reverse complment[m
+[33mdef[m [36mrevcomp[m(seq):
+    oseq=[31m''[m
+    [33mfor[m nc [33min[m seq:[34;9Hoseq=comp[nc]+oseq
+    [33mreturn[m np.array([36mlist[m(oseq))[36;137H3,0-1[9CTop[3;1H[?25h[?25l[36;127H^[[3;1H[36;127H  [3;1H[36;127H^[[3;1H[36;127H  [3;1H[?25h[?25l[36;127H:[3;1H[36;1H[K[36;1H:[?2004h[?25hq[?25l[?25h[?25l[?2004l[36;1H[K[36;1H[?2004l[?1l>[?25h[?1049l[23;0;0t]0;joh27@troctolite:/mnt/data0/joh27/projects/alignment_enhancer_conservation/methods/gkm_dynam/versions/whole_genome/pubgrade_V_6/scripts(base) [joh27@troctolite scripts]$ vim generate_all_gkmers.py 
+[?2004h[?1049h[22;0;0t[?1h=[?2004h[1;36r[?12h[?12l[27m[23m[29m[m[H[2J[?25l[36;1H"generate_all_gkmers.py" 39L, 986C[2;1H▽[6n[2;1H  [1;1H[>c]10;?]11;?[1;1H[35mimport[m sys
+[35mimport[m numpy [33mas[m np
+[35mfrom[m itertools [35mimport[m combinations
+
+num_to_char = {[31m0[m:[31m'A'[m, [31m1[m:[31m'C'[m, [31m2[m:[31m'G'[m, [31m3[m:[31m'T'[m}
+
+[34m# decimal -> kmer (base 4)[m
+[33mdef[m [36mdec_to_kmer[m(val, l):
+    kmer = [[31m''[m [33mfor[m i [33min[m [36mrange[m([31m0[m, l)]
+    [33mfor[m i [33min[m [36mrange[m([31m0[m, l):[11;9Hkmer[l - [31m1[m - i] = num_to_char[val % [31m4[m][12;9Hval //= [31m4[m
+    [33mreturn[m [31m''[m.join(kmer)
+
+
+[33mdef[m [36mmain[m(argv = sys.argv):
+    [33mif[m([36mlen[m(argv) != [31m4[m):[18;9H[36mprint[m([31m"usage: {0} {l (e.g. 11)} {k (e.g. 7)} {ofile}"[m)[19;9Hsys.exit()[21;5Hl, k = [36mint[m(argv[[31m1[m]), [36mint[m(argv[[31m2[m])
+    ofile = [36mopen[m(argv[[31m3[m], [31m'w'[m)[25;5Hcombs = [36mlist[m(combinations([36mrange[m([31m0[m, l), k)) [34m# gapped-position combinations[m
+    gkms = []
+    [33mfor[m val [33min[m [36mrange[m([31m0[m, [31m4[m**k): [34m# loop through all kmers[m[28;9Hkmer = dec_to_kmer(val, k)[29;9H[33mfor[m comb [33min[m combs:[30;13Hgkm = [[31m'-'[m [33mfor[m a [33min[m [36mrange[m([31m0[m, l)][31;13H[33mfor[m i, c [33min[m [36menumerate[m(comb):[32;17Hgkm[c] = kmer[i][33;13Hgkms.append([31m''[m.join(gkm))[36;137H1,1[11CTop[1;1H[?25h[?25l[36;127H^[[1;1H[36;127H  [1;1H[36;127H^[[1;1H[36;127H  [1;1H[?25h[?25l[36;127H^[[1;1H[36;127H  [1;1H[36;127H^[[1;1H[36;127H  [1;1H[?25h[?25l[36;127Hi[1;1H[36;127H [1;1H[36;1H[1m-- INSERT --[m[36;13H[K[36;137H1,1[11CTop[1;1H[?25h[?25l[2;35r[2;1H[L[1;36r[1;1H[K[2;1H[35mimport[m sys[36;137H[K[36;137H2,1[11CTop[2;1H[?25h[?25l[36;137H1[1;1H[?25h[?25l[34m#[m[36;139H2[1;2H[?25h[?25l[1;1H[K[36;139H1[1;1H[?25h[?25l[31m'
+import sys
+import numpy as np
+from itertools import combinations 
+
+num_to_char = {0:[m[1CA[1C[31m, 1:[m[1CC[1C[31m, 2:[m[1CG[1C[31m, 3:[m[1CT[1C[31m}
+
+# decimal -> kmer (base 4)
+def dec_to_kmer(val, l):
+    kmer = ['' for i in range(0, l)]
+    for i in range(0, l):
+        kmer[l - 1 - i] = num_to_char[val % 4]
+        val //= 
+    return ''.join(kmer)
+
+
+def main(argv = sys.argv):
+    if(len(argv) != 4):
+        print([47C)
+        sys.exit()
+
+    l, k = int(argv[1]), int(argv[2])
+    ofile = open(argv[3], [m[1Cw[1C[31m)
+
+
+    combs = list(combinations(range(0, l), k)) # gapped-position combinations
+    gkms = []
+    for val in range(0, 4**k): # loop through all kmers
+        kmer = dec_to_kmer(val, k)
+        for comb in combs:
+            gkm = [[m[1C-[1C[31m for a in range(0, l)]
+            for i, c in enumerate(comb):
+                gkm[c] = kmer[i]
+            gkms.append(''.join(gkm))
+                [m[36;139H2[1;2H[?25h[?25l[31m'[m
+[35mimport[m sys
+[35mimport[m numpy [33mas[m np
+[35mfrom[m itertools [35mimport[m combinations 
+
+num_to_char = {[1C:[1C[31mA[m[1C, [1C:[1C[31mC[m[1C, [1C:[1C[31mG[m[1C, [1C:[1C[31mT[m[1C}
+
+[34m# decimal -> kmer (base 4)[m
+[33mdef[m [36mdec_to_kmer[m(val, l):
+    kmer = [[2C [33mfor[m i [33min[m [36mrange[m([1C, l)]
+    [33mfor[m i [33min[m [36mrange[m([1C, l):
+        kmer[l - [1C - i] = num_to_char[val % [1C]
+        val //= 
+    [33mreturn[m [2C.join(kmer)
+
+
+[33mdef[m [36mmain[m(argv = sys.argv):
+    [33mif[m([36mlen[m(argv) != [1C):
+        [36mprint[m([47C)
+        sys.exit()
+
+    l, k = [36mint[m(argv[[1C]), [36mint[m(argv[[1C])
+    ofile = [36mopen[m(argv[[1C], [1C[31mw[m[1C)
+
+
+    combs = [36mlist[m(combinations([36mrange[m([1C, l), k)) [34m# gapped-position combinations[m
+    gkms = []
+    [33mfor[m val [33min[m [36mrange[m([1C, [1C**k): [34m# loop through all kmers[m
+        kmer = dec_to_kmer(val, k)
+        [33mfor[m comb [33min[m combs:
+            gkm = [[1C[31m-[m[1C [33mfor[m a [33min[m [36mrange[m([1C, l)]
+            [33mfor[m i, c [33min[m [36menumerate[m(comb):
+                gkm[c] = kmer[i]
+            gkms.append([2C.join(gkm))
+                [36;139H3[1;3H[?25h[?25l[31m'
+import sys
+import numpy as np
+from itertools import combinations 
+
+num_to_char = {0:'A', 1:'C', 2:'G', 3:'T'}
+
+# decimal -> kmer (base 4)
+def dec_to_kmer(val, l):
+    kmer = ['' for i in range(0, l)]
+    for i in range(0, l):
+        kmer[l - 1 - i] = num_to_char[val % 4]
+        val //= 
+    return ''.join(kmer)
+
+
+def main(argv = sys.argv):
+    if(len(argv) != 4):
+        print([47C)
+        sys.exit()
+
+    l, k = int(argv[1]), int(argv[2])
+    ofile = open(argv[3], 'w')
+
+
+    combs = list(combinations(range(0, l), k)) # gapped-position combinations
+    gkms = []
+    for val in range(0, 4**k): # loop through all kmers
+        kmer = dec_to_kmer(val, k)
+        for comb in combs:
+            gkm = ['-' for a in range(0, l)]
+            for i, c in enumerate(comb):
+                gkm[c] = kmer[i]
+            gkms.append(''.join(gkm))
+                [m[36;139H4[1;4H[?25h[?25l[2;35r[2;1H[L[1;36r[36;137H[K[36;137H2,1[11CTop[2;1H[?25h[?25l[31m'[m[36;139H2[2;2H[?25h[?25l[31m'[m[36;139H3[2;3H[?25h[?25l[31m'[m
+[35mimport[m sys
+[35mimport[m numpy [33mas[m np
+[35mfrom[m itertools [35mimport[m combinations 
+
+num_to_char = {[1C:[3C, [1C:[3C, [1C:[3C, [1C:[3C}
+
+[34m# decimal -> kmer (base 4)[m
+[33mdef[m [36mdec_to_kmer[m(val, l):
+    kmer = [[2C [33mfor[m i [33min[m [36mrange[m([1C, l)]
+    [33mfor[m i [33min[m [36mrange[m([1C, l):
+        kmer[l - [1C - i] = num_to_char[val % [1C]
+        val //= 
+    [33mreturn[m [2C.join(kmer)
+
+
+[33mdef[m [36mmain[m(argv = sys.argv):
+    [33mif[m([36mlen[m(argv) != [1C):
+        [36mprint[m([47C)
+        sys.exit()
+
+    l, k = [36mint[m(argv[[1C]), [36mint[m(argv[[1C])
+    ofile = [36mopen[m(argv[[1C], [3C)
+
+
+    combs = [36mlist[m(combinations([36mrange[m([1C, l), k)) [34m# gapped-position combinations[m
+    gkms = []
+    [33mfor[m val [33min[m [36mrange[m([1C, [1C**k): [34m# loop through all kmers[m
+        kmer = dec_to_kmer(val, k)
+        [33mfor[m comb [33min[m combs:
+            gkm = [[3C [33mfor[m a [33min[m [36mrange[m([1C, l)]
+            [33mfor[m i, c [33min[m [36menumerate[m(comb):
+                gkm[c] = kmer[i]
+            gkms.append([2C.join(gkm))[36;139H4[2;4H[?25h[?25l[36;137H1[1;4H[?25h[?25l[2;35r[2;1H[L[1;36r[36;137H[K[36;137H2,1[11CTop[2;1H[?25h[?25l[31mJ[m[36;139H2[2;2H[?25h[?25l[31mW[m[36;139H3[2;3H[?25h[?25l[31mO[m[36;139H4[2;4H[?25h[?25l[31m [m[36;139H5[2;5H[?25h[?25l[31m1[m[36;139H6[2;6H[?25h[?25l[31m1[m[36;139H7[2;7H[?25h[?25l[31m/[m[36;139H8[2;8H[?25h[?25l[31m1[m[36;139H9[2;9H[?25h[?25l[31m1[m[36;139H10[2;10H[?25h[?25l[31m/[m[36;140H1[2;11H[?25h[?25l[31m2[m[36;140H2[2;12H[?25h[?25l[31m0[m[36;140H3[2;13H[?25h[?25l[31m2[m[36;140H4[2;14H[?25h[?25l[31m3[m[36;140H5[2;15H[?25h[?25l[36;137H11,15[11;15H[?25h[?25l[36;138H4[14;15H[?25h[?25l[36;138H7,1 [17;1H[?25h[?25l[36;137H26[26;1H[?25h[?25l[29;12H[46m[][m[36;138H9,1
