@@ -34,7 +34,7 @@ case $choice in
 	    lastz-1.04.22/src/lastz /mnt/data0/joh27/genomes/${genome_2}/multifasta/${genome_2}.fa[multiple] /mnt/data0/joh27/genomes/${genome_1}/multifasta/${genome_1}.fa[multiple] --format=axt --gfextend --nochain --nogapped  --notransition --seed=match10 --step=1 > lastz_output.axt
 
 
-	    cat lastz_output.axt |grep  chr|grep -v _ | awk -v g1="${genome_1}" -v g2="${genome_2}" '{print g2"\t"$2"\t"$3"\t"$4"\t"g1"\t"$5"\t"$6"\t"$7"\t"$8}' >> short_sequence_matches_1.axt
+	    cat lastz_output.axt |grep  chr|grep -v _ | awk -v g1="${genome_1}" -v g2="${genome_2}" '{print g2"\t"$2"\t"$3"\t"$4"\t"g1"\t"$5"\t"$6"\t"$7"\t"$8}' > short_sequence_matches_1.axt
 
 	    python ../../scripts/flip_query_coordinates.py short_sequence_matches_1.axt hg38 /mnt/data0/joh27/projects/alignment_enhancer_conservation/chrom_sizes/hg38.chrom.sizes > short_sequence_matches_2.axt
 
