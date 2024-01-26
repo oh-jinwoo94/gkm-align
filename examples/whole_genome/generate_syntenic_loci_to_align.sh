@@ -31,8 +31,8 @@ case $choice in
 	    gunzip *fa.gz
 
 	    pwd
-	    printf "\n\n generating hg38/mm10 short sequence matches. This step will take more than 5 days. Replacing --step=1 to --step=10 will decrease the runtime.\n" 
-	    lastz-1.04.22/src/lastz_32 /mnt/data0/joh27/genomes/${genome_2}/multifasta/${genome_2}.fa[multiple] /mnt/data0/joh27/genomes/${genome_1}/multifasta/${genome_1}.fa[multiple] --format=axt --gfextend --nochain --nogapped  --notransition --seed=match10 --step=1 > lastz_output.axt
+	    printf "\n\n generating hg38/mm10 short sequence matches. (make take days)\n" 
+	    lastz-1.04.22/src/lastz_32 /mnt/data0/joh27/genomes/${genome_2}/multifasta/${genome_2}.fa[multiple] /mnt/data0/joh27/genomes/${genome_1}/multifasta/${genome_1}.fa[multiple] --format=axt --gfextend --nochain --nogapped  --notransition --seed=match10 --step=10 > lastz_output.axt
 
 
 	    cat lastz_output.axt |grep  chr|grep -v _ | awk -v g1="${genome_1}" -v g2="${genome_2}" '{print g2"\t"$2"\t"$3"\t"$4"\t"g1"\t"$5"\t"$6"\t"$7"\t"$8}' > short_sequence_matches_1.axt
