@@ -1,5 +1,7 @@
 #!/bin/sh
 
+## for development only ##
+
 # remove binary files
 for file in $(ls bin/|grep -v .py)
 do
