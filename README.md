@@ -103,7 +103,7 @@ Enter the following commands.
 </pre>
 
 
-'run_gkmalign.sh' in this example is almost identifcal to the version in the previous HBB-LCR example. 
+'run_gkmalign.sh' in this example is almost identical to the version in the previous HBB-LCR example. 
 
 Use the following command line to run align:
 <pre>
