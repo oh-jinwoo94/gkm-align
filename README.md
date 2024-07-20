@@ -104,8 +104,7 @@ Enter the following commands.
 
 
 'run_gkmalign.sh' in this example is almost identical to the version in the previous HBB-LCR example. 
-
-Use the following command line to run align:
+For example, the 'run_gkmalign.sh' script contains the following command lnes:
 <pre>
 ../../bin/gkm_align  -t 1  FADS_loci.to_align -d ../../data/genomes/ -g masker_models.txt   -p 50 -o output_files -n FADS_loci_mm10-hg38 -G
 </pre>
