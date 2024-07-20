@@ -8,11 +8,12 @@ printf "\nThis pipeline first uses LASTZ software to identify short sequence mat
 printf "This step (>5days) can be skipped by downloading a pre-computed intermediate file. \n"
 printf "\nPress 1 to skip and download intermediate file from beerlab.org/gkmalign/ (recommended).\n"
 printf "Press 2 to run the whole pipeline. LASTZ will be downloaded/compiled and hg38/mm10 multifasta files will be downloaded.\n"
+printf "Press 3 to exit.\n"
 read -p "1 recommended.   " choice
 case $choice in
     [1]* )
 	    wget https://beerlab.org/gkmalign/short_sequence_human-mouse_syntenic_intergenic.txt -O short_sequence_human-mouse_syntenic_intergenic.txt
-            break;;
+	    ;;
     [2]* ) 
 	    genome_1="hg38"
             genome_2="mm10"
@@ -43,8 +44,12 @@ case $choice in
             wget https://beerlab.org/gkmalign/Supplementary_Table_6.txt -O hg38_mm10_ortholog_syntenic_intergenic_pairs.txt
             python ../../scripts/filter_short-seq-matches_by_syntenic_integenic_loci.py  short_sequence_matches_2.axt  hg38_mm10_ortholog_syntenic_intergenic_pairs.txt > short_sequence_human-mouse_syntenic_intergenic.txt
 
-            break ;;
-    * ) printf "Please enter  1 or 2\n";;
+            ;;
+    [3]* )
+	    echo "exiting"
+	    exit 0
+	    ;;
+    * ) printf "Please enter  1, 2, or 3\n";;
 esac
 
 
