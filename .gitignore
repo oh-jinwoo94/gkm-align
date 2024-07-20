@@ -1,0 +1,6 @@
+# compiled binary files 
+bin/*
+
+# all example files and data
+data/*
+examples/*
