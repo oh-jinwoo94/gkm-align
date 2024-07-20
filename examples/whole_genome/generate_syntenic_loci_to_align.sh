@@ -1,15 +1,12 @@
 #!/bin/sh
 
-# 10/25/2023
-# Outputs of this pipeline will soon be uploaded to the beerlab/gkm-align webpage
-
 
 printf "\nThis pipeline first uses LASTZ software to identify short sequence matches in human and mouse. \n"
 printf "This step (>5days) can be skipped by downloading a pre-computed intermediate file. \n"
-printf "\nPress 1 to skip and download intermediate file from beerlab.org/gkmalign/ (recommended).\n"
+printf "\nPress 1 to skip and download the intermediate file from beerlab.org/gkmalign/ (recommended).\n"
 printf "Press 2 to run the whole pipeline. LASTZ will be downloaded/compiled and hg38/mm10 multifasta files will be downloaded.\n"
 printf "Press 3 to exit.\n"
-read -p "1 recommended.   " choice
+read -p "Option 1 is recommended.   " choice
 case $choice in
     [1]* )
 	    wget https://beerlab.org/gkmalign/short_sequence_human-mouse_syntenic_intergenic.txt -O short_sequence_human-mouse_syntenic_intergenic.txt
