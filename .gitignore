@@ -4,3 +4,4 @@ bin/*
 # all example files and data
 data/*
 examples/*
+!examples/**/.sh
