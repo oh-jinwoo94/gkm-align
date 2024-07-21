@@ -32,8 +32,7 @@ git clone https://github.com/oh-jinwoo94/gkm-align.git
 
 Then, compile and set up gkm-align using the following command:
 <pre>
-  chmod +x setup.sh
-  ./setup.sh
+bash setup.sh
 </pre>
 The script **1)** compiles gkm-align and **2)** downloads gkm-SVM genomic background models (human & mouse) to the 'data/' directory.
 
@@ -48,9 +47,8 @@ In this section, we use gkm-align to align the human and mouse HBB Locus Control
 
 Enter the following commands.
 <pre>
-  cd examples/HBB_LCR
-  chmod +x run_gkmalign.sh
-  ./run_gkmalign.sh
+cd examples/HBB_LCR
+bash run_gkmalign.sh
 </pre>
 
 
@@ -58,14 +56,14 @@ The 'run_gkmalign.sh' script contains three parts.
 
 **1)** Setting up gkm-align input file (specifying gkm-SVM genomic masker models to be used) and output directory. 
 <pre>
-  echo "../../data/mouse_genomic_background_model_p_0.1.out" > masker_models.txt
-  echo "../../data/human_genomic_background_model_p_0.1.out" >> masker_models.txt
-  mkdir output_files
+echo "../../data/mouse_genomic_background_model_p_0.1.out" > masker_models.txt
+echo "../../data/human_genomic_background_model_p_0.1.out" >> masker_models.txt
+mkdir output_files
 </pre>
 
 **2)** **Aligning** human and mouse HBB-LCRs. 
 <pre>
-  ../../bin/gkm_align  -t 1  HBB.to_align -d ../../data/genomes/ -g masker_models.txt   -p 50 -o output_files -n HBB_LCR_mm10-hg38
+../../bin/gkm_align  -t 1  HBB.to_align -d ../../data/genomes/ -g masker_models.txt   -p 50 -o output_files -n HBB_LCR_mm10-hg38
 </pre>
   * '-t 1' option specifies that gkm-align is in 'align' mode.
   * 'HBB.to_align' contains genomic coordinate ranges of human and mouse HBB Locus Control Regions that gkm-align will align. 
@@ -76,7 +74,7 @@ The 'run_gkmalign.sh' script contains three parts.
   
 **3)** **Mapping** mouse HBB-LCR enhancers to human. 
 <pre>
-  ../../bin/gkm_align  -t 2  HBB_LCR_enhancers_mm10.bed  -c output_files/HBB_LCR_mm10-hg38.coord -q mm10 -m -o output_files -n HBB_LCR_enhancers_mm10_mapped_to_hg3
+../../bin/gkm_align  -t 2  HBB_LCR_enhancers_mm10.bed  -c output_files/HBB_LCR_mm10-hg38.coord -q mm10 -m -o output_files -n HBB_LCR_enhancers_mm10_mapped_to_hg3
 </pre>
   * '-t 2' option specifies that gkm-align is in 'mapping' mode.  
   * 'HBB_LCR_enhancers_mm10.bed' contains mm10 coordinates of mouse HBB-LCR enhancers.
@@ -97,9 +95,8 @@ In this section, we align the human and mouse FADS gene cluster loci.
 
 Enter the following commands.
 <pre>
-  cd examples/FADS_cluster
-  chmod +x run_gkmalign.sh
-  ./run_gkmalign.sh
+cd examples/FADS_cluster
+bash run_gkmalign.sh
 </pre>
 
 
@@ -129,7 +126,33 @@ This process takes between 10 seconds and a few minutes depending on your hardwa
 
 ## example: human-mouse whole-genome alignment
 
-(description coming soon. all necessary command lines are provided in example/whole_genome)
+The previous two examples (HBB LCR and FADS loci) demonstrated how gkm-align can align a pair of human and mouse loci when their genomic coordinate ranges are well defined, as below:
+<pre>
+[HBB LCR]
+mm10 chr7 103851395 103883181 hg38 chr11 5267522 5302220 same_strand
+
+[FADS locus]
+mm10 chr19 10194014 10214169 hg38 chr11 61782802 61802911 diff_strand*
+(*note: 'diff_strand' indicates that the human and mouse loci are inverted relative to each another in their respective genome builds.)
+</pre>
+
+gkm-align can be applied at the whole genome level by providing a pre-computed list of conserved syntenic loci. It may consist of a list of flanking windows around known conserved transcription start sites, or it may include a list of predicted syntenic intergenic loci derived from a comprehensive list of short sequence matches, as was done for the gkm-align manuscript. In this part of the tutorial, I will describe how to perform whole-genome alignment with gkm-align using syntenic intergenic loci generated using short sequence matches. 
+
+To generate the list of human-mouse syntenic intergenic loci, run following command lines. 
+<pre>
+cd examples/whole_genome/ 
+bash generate_syntenic_loci_to_align.sh
+</pre>
+The pipeline encoded in the shell script consists of three parts:
+1) The pipeline runs the [LASTZ](https://github.com/lastz/lastz/) software to generate a comprehensive list of short sequences between humand and mouse genomes. This step is computationally intensive, and it may take more than 5 days to run depending on hardware availability. For aligning human and mouse (hg38,mm10), this step can be skipped by downloading the output file we have uploaded ([beerlab](https://beerlab.org/gkmalign/short_sequence_human-mouse_syntenic_intergenic.txt)). The pipeline allows you to choose between the two options, and outputs 'short_sequence_human-mouse_syntenic_intergenic.txt'.
+
+2) To generate syntenic blocks, the pipeline runs the 'chain_short_seq_matches.py' script, which partitions the generated list of short sequence matches to identify and chain together nearby collinear sequence matches in the 2D coordinate space of human and mouse genomes. The script is based on the algorithm described in [Zhang et al. (1994)](https://www.liebertpub.com/doi/10.1089/cmb.1994.1.217), which we have adapted for more intuitive parameterization and simpler usage. This step generates 'short_sequence_human-mouse_syntenic_intergenic.chains'.
+
+3) The last step of the pipeline is to run 'convert_chain_to_to-align.py'. Syntenic loci, derived from chaining sequence matches in the previous two steps, tend to be very large, making it computationally intensive to compute the gapped-kmer similarity matrices. This code helps expedite the process by breaking the syntenic blocks into smaller pieces through K-means clustering of the sequence matches based on their 2D human-mouse coordinates within each chain. The number of clusters (k) for each chain is automatically determined using the average target block size. The resulting centroids are then used to define the edges of the smaller syntenic blocks. This step generates 'human_mouse_WG_syntenic_intergenic_loci.to_align', which is then used as input for the gkm-align whole genome alignment.  
+
+The following figure shows an example output from running the pipeline described above (GNA12 inversion locus). Step 1 generates the dots. Step 2 chains the dots, with each dot colored according to its assigned chain. Step 3 generates the rectangles, whcih define the boundaries of syntenic blocks which can then be used as input for gkm-align whole-genome alignment. 
+
+![GNA12 syntenic blocks](examples/whole_genome/png/gna12_vis.png) 
 
 # Authors
 - Jin Woo Oh *
