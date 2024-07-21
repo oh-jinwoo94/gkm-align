@@ -138,17 +138,17 @@ mm10 chr19 10194014 10214169 hg38 chr11 61782802 61802911 diff_strand*
 
 gkm-align can be applied at the whole genome level by providing a pre-computed list of conserved syntenic loci. It may consist of a list of flanking windows around known conserved transcription start sites, or it may include a list of predicted syntenic intergenic loci derived from a comprehensive list of short sequence matches, as was done for the gkm-align manuscript. In this part of the tutorial, I will describe how to perform whole-genome alignment with gkm-align using syntenic intergenic loci generated using short sequence matches. 
 
-To generate the list of human-mouse syntenic intergenic loci, run enter following command lines. 
+To generate the list of human-mouse syntenic intergenic loci, run following command lines. 
 <pre>
 cd examples/whole_genome/ 
 bash generate_syntenic_loci_to_align.sh
 </pre>
 The pipeline encoded in the shell script consists of three parts:
-1) The pipeline runs the [LASTZ](https://github.com/lastz/lastz/) software to generate a comprehensive lisft of short sequences between humand and mouse genomes. This step is computationally intensive, and it may take more than 5 days to run depending on the hardware availability. For aligning human and mouse (hg38,mm10), this step can be skipped by downloading the output file we have uploaded ([beerlab](https://beerlab.org/gkmalign/short_sequence_human-mouse_syntenic_intergenic.txt)). The pipeline allows you to choose between the two options, and outputs 'short_sequence_human-mouse_syntenic_intergenic.txt'.
+1) The pipeline runs the [LASTZ](https://github.com/lastz/lastz/) software to generate a comprehensive list of short sequences between humand and mouse genomes. This step is computationally intensive, and it may take more than 5 days to run depending on hardware availability. For aligning human and mouse (hg38,mm10), this step can be skipped by downloading the output file we have uploaded ([beerlab](https://beerlab.org/gkmalign/short_sequence_human-mouse_syntenic_intergenic.txt)). The pipeline allows you to choose between the two options, and outputs 'short_sequence_human-mouse_syntenic_intergenic.txt'.
 
-2) To generate syntenic blocks, the pipeline runs the chain_short_seq_matches.py script, which partitions the generated list of short sequence matches to identify and chain together nearby collinear sequence matches in the 2D coordinate space of human and mouse genomes. The script is based on the algorithm described in [Zhang et al. (1994)](https://www.liebertpub.com/doi/10.1089/cmb.1994.1.217), which we have adapted for more intuitive parameterization and simpler usage. This step generates 'short_sequence_human-mouse_syntenic_intergenic.chains'.
+2) To generate syntenic blocks, the pipeline runs the 'chain_short_seq_matches.py' script, which partitions the generated list of short sequence matches to identify and chain together nearby collinear sequence matches in the 2D coordinate space of human and mouse genomes. The script is based on the algorithm described in [Zhang et al. (1994)](https://www.liebertpub.com/doi/10.1089/cmb.1994.1.217), which we have adapted for more intuitive parameterization and simpler usage. This step generates 'short_sequence_human-mouse_syntenic_intergenic.chains'.
 
-3)
+3) The last step of the pipeline is to run 'convert_chain_to_to-align.py'. Syntenic loci, derived from chaining sequence matches in the previous two steps, tend to be very large, making it computationally intensive to compute the gapped-kmer similarity matrices. This code helps expedite the process by breaking the syntenic blocks into smaller pieces through K-means clustering of the sequence matches based on their 2D human-mouse coordinates within each chain. The number of clusters (k) is determined by the average target block size. The resulting centroids are then used to define the edges of the smaller syntenic blocks.  
 
 
 # Authors
