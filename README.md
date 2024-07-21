@@ -48,7 +48,6 @@ In this section, we use gkm-align to align the human and mouse HBB Locus Control
 Enter the following commands.
 <pre>
   cd examples/HBB_LCR
-  chmod +x run_gkmalign.sh
   bash run_gkmalign.sh
 </pre>
 
@@ -97,7 +96,6 @@ In this section, we align the human and mouse FADS gene cluster loci.
 Enter the following commands.
 <pre>
   cd examples/FADS_cluster
-  chmod +x run_gkmalign.sh
   bash run_gkmalign.sh
 </pre>
 
