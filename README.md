@@ -144,7 +144,9 @@ cd examples/whole_genome/
 bash generate_syntenic_loci_to_align.sh
 </pre>
 The pipeline encoded in the shell script consists of three parts:
-1) running the [LASTZ](https://github.com/lastz/lastz/) software to generate a comprehensive lisft of short sequences between humand and mouse genomes. This step is computationally intensive, and it may take more than 5 days to run depending on the hardware availability. For aligning human and mouse (hg38,mm10), this step can be skipped by downloading the output file we have uploaded ([beerlab](https://beerlab.org/gkmalign/short_sequence_human-mouse_syntenic_intergenic.txt))
+1) running the [LASTZ](https://github.com/lastz/lastz/) software to generate a comprehensive lisft of short sequences between humand and mouse genomes. This step is computationally intensive, and it may take more than 5 days to run depending on the hardware availability. For aligning human and mouse (hg38,mm10), this step can be skipped by downloading the output file we have uploaded ([beerlab](https://beerlab.org/gkmalign/short_sequence_human-mouse_syntenic_intergenic.txt)). The pipeline allows you to choose between the two options, and outputs 'short_sequence_human-mouse_syntenic_intergenic.txt'.
+
+2) running the 'chain_short_seq_matches.py' script 
 
 # Authors
 - Jin Woo Oh *
