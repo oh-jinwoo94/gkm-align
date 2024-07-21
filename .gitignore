@@ -7,3 +7,4 @@ data/*
 examples/*
 !examples/**/*.sh
 !examples/**/*.png
+!examples/
