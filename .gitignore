@@ -4,7 +4,5 @@ src/*.o
 
 # all example files and data
 data/*
-#examples/*
-#!examples/**/*.sh
-#!examples/**/*.png
-#!examples/whole_genome/gna12_vis.png
+examples/*
+!examples/**/*.sh
