@@ -138,8 +138,13 @@ mm10 chr19 10194014 10214169 hg38 chr11 61782802 61802911 diff_strand*
 
 gkm-align can be applied at the whole genome level by providing a pre-computed list of conserved syntenic loci. It may consist of a list of flanking windows around known conserved transcription start sites, or it may include a list of predicted syntenic intergenic loci derived from a comprehensive list of short sequence matches, as was done for the gkm-align manuscript. In this part of the tutorial, I will describe how to perform whole-genome alignment with gkm-align using syntenic intergenic loci generated using short sequence matches. 
 
-
-
+To generate the list of human-mouse syntenic intergenic loci, run enter following command lines. 
+<pre>
+cd examples/whole_genome/ 
+bash generate_syntenic_loci_to_align.sh
+</pre>
+The pipeline encoded in the shell script consists of three parts:
+1) running the [LASTZ](https://github.com/lastz/lastz/) software to generate a comprehensive lisft of short sequences between humand and mouse genomes
 
 # Authors
 - Jin Woo Oh *
