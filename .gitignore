@@ -1,7 +1,8 @@
 # compiled binary files 
 bin/*
+src/*.o
 
 # all example files and data
 data/*
 examples/*
-!examples/**/.sh
+!examples/**/*.sh
