@@ -139,7 +139,9 @@ mm10 chr19 10194014 10214169 hg38 chr11 61782802 61802911 diff_strand*
 (*note: 'diff_strand' indicates that the human and mouse loci are inverted relative to one another in their respective genome builds)
 </pre>
 
-gkm-align can be applied at the whole genome level by providing a pre-computed list of conserved syntenic loci. It can be a list of flanking windows around known conserved transcription start sites, or it can be a list of predicted syntenic intergenic loci derived from a comprehensive list of short sequence mathces, as was done for the gkm-align manuscript.
+gkm-align can be applied at the whole genome level by providing a pre-computed list of conserved syntenic loci. It can be a list of flanking windows around known conserved transcription start sites, or it can be a list of predicted syntenic intergenic loci derived from a comprehensive list of short sequence mathces, as was done for the gkm-align manuscript. In this part of the tutorial, I will describe how to perform whole-genome alignment with gkm-align using syntenic intergenic loci generated using short sequence matches. 
+
+
 
 
 # Authors
