@@ -129,7 +129,7 @@ This process takes between 10 seconds and a few minutes depending on your hardwa
 
 ## example: human-mouse whole-genome alignment
 
-The previous two examples (HBB LCR and FADS loci) demonstrated how gkm-align can align a pair of human and mouse loci when their coordinate ranges are well defined as below:
+The previous two examples (HBB LCR and FADS loci) demonstrated how gkm-align can align a pair of human and mouse loci when their genomic coordinate ranges are well defined as below:
 <pre>
 HBB LCR
 mm10 chr7 103851395 103883181 hg38 chr11 5267522 5302220 same_strand
