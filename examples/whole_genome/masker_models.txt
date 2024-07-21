@@ -1,2 +1,0 @@
-../../data/mouse_genomic_background_model_p_0.1.out
-../../data/human_genomic_background_model_p_0.1.out

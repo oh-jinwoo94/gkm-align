@@ -1,2 +1,0 @@
-human_emb_brain_enhancer_weights_posterior.out
-mouse_emb_brain_enhancer_weights_posterior.out
