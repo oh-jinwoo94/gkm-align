@@ -129,7 +129,7 @@ This process takes between 10 seconds and a few minutes depending on your hardwa
 
 ## example: human-mouse whole-genome alignment
 
-(description coming soon. all necessary command lines are provided in example/whole_genome)
+The previous two examples (HBB LCR and FADS loci) demonstrated how gkm-align can align a pair of human and mouse loci when their coordinate ranges are well defined. 
 
 # Authors
 - Jin Woo Oh *
