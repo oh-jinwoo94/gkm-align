@@ -134,9 +134,9 @@ The previous two examples (HBB LCR and FADS loci) demonstrated how gkm-align can
 HBB LCR
 mm10 chr7 103851395 103883181 hg38 chr11 5267522 5302220 same_strand
 FADS locus
-mm10 chr19 10194014 10214169 hg38 chr11 61782802 61802911 diff_strand
+mm10 chr19 10194014 10214169 hg38 chr11 61782802 61802911 diff_strand*
+(*note: 'diff_strand' indicates that the human and mouse loci are inverted relative to one another in their respective genome builds)
 </pre>
-<span style="font-size: 0.1em;">note: 'diff_strand' indicates that the human and mouse loci are inverted relative to one another in their respective genome builds.</span>
 
 # Authors
 - Jin Woo Oh *
