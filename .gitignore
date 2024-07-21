@@ -6,3 +6,4 @@ src/*.o
 data/*
 examples/*
 !examples/**/.sh
+!examples/**/.png
