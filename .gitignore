@@ -7,4 +7,4 @@ data/*
 examples/*
 !examples/**/*.sh
 !examples/**/*.png
-!examples/
+!examples/whole_genome/*.png
