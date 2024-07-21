@@ -47,8 +47,8 @@ In this section, we use gkm-align to align the human and mouse HBB Locus Control
 
 Enter the following commands.
 <pre>
-  cd examples/HBB_LCR
-  bash run_gkmalign.sh
+cd examples/HBB_LCR
+bash run_gkmalign.sh
 </pre>
 
 
@@ -56,14 +56,14 @@ The 'run_gkmalign.sh' script contains three parts.
 
 **1)** Setting up gkm-align input file (specifying gkm-SVM genomic masker models to be used) and output directory. 
 <pre>
-  echo "../../data/mouse_genomic_background_model_p_0.1.out" > masker_models.txt
-  echo "../../data/human_genomic_background_model_p_0.1.out" >> masker_models.txt
-  mkdir output_files
+echo "../../data/mouse_genomic_background_model_p_0.1.out" > masker_models.txt
+echo "../../data/human_genomic_background_model_p_0.1.out" >> masker_models.txt
+mkdir output_files
 </pre>
 
 **2)** **Aligning** human and mouse HBB-LCRs. 
 <pre>
-  ../../bin/gkm_align  -t 1  HBB.to_align -d ../../data/genomes/ -g masker_models.txt   -p 50 -o output_files -n HBB_LCR_mm10-hg38
+../../bin/gkm_align  -t 1  HBB.to_align -d ../../data/genomes/ -g masker_models.txt   -p 50 -o output_files -n HBB_LCR_mm10-hg38
 </pre>
   * '-t 1' option specifies that gkm-align is in 'align' mode.
   * 'HBB.to_align' contains genomic coordinate ranges of human and mouse HBB Locus Control Regions that gkm-align will align. 
@@ -74,7 +74,7 @@ The 'run_gkmalign.sh' script contains three parts.
   
 **3)** **Mapping** mouse HBB-LCR enhancers to human. 
 <pre>
-  ../../bin/gkm_align  -t 2  HBB_LCR_enhancers_mm10.bed  -c output_files/HBB_LCR_mm10-hg38.coord -q mm10 -m -o output_files -n HBB_LCR_enhancers_mm10_mapped_to_hg3
+../../bin/gkm_align  -t 2  HBB_LCR_enhancers_mm10.bed  -c output_files/HBB_LCR_mm10-hg38.coord -q mm10 -m -o output_files -n HBB_LCR_enhancers_mm10_mapped_to_hg3
 </pre>
   * '-t 2' option specifies that gkm-align is in 'mapping' mode.  
   * 'HBB_LCR_enhancers_mm10.bed' contains mm10 coordinates of mouse HBB-LCR enhancers.
@@ -95,8 +95,8 @@ In this section, we align the human and mouse FADS gene cluster loci.
 
 Enter the following commands.
 <pre>
-  cd examples/FADS_cluster
-  bash run_gkmalign.sh
+cd examples/FADS_cluster
+bash run_gkmalign.sh
 </pre>
 
 
