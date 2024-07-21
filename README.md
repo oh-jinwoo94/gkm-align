@@ -33,7 +33,7 @@ git clone https://github.com/oh-jinwoo94/gkm-align.git
 Then, compile and set up gkm-align using the following command:
 <pre>
   chmod +x setup.sh
-  ./setup.sh
+  bash setup.sh
 </pre>
 The script **1)** compiles gkm-align and **2)** downloads gkm-SVM genomic background models (human & mouse) to the 'data/' directory.
 
@@ -50,7 +50,7 @@ Enter the following commands.
 <pre>
   cd examples/HBB_LCR
   chmod +x run_gkmalign.sh
-  ./run_gkmalign.sh
+  bash run_gkmalign.sh
 </pre>
 
 
@@ -99,7 +99,7 @@ Enter the following commands.
 <pre>
   cd examples/FADS_cluster
   chmod +x run_gkmalign.sh
-  ./run_gkmalign.sh
+  bash run_gkmalign.sh
 </pre>
 
 
