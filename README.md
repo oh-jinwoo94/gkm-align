@@ -132,9 +132,12 @@ This process takes between 10 seconds and a few minutes depending on your hardwa
 The previous two examples (HBB LCR and FADS loci) demonstrated how gkm-align can align a pair of human and mouse loci when their coordinate ranges are well defined as below:
 <pre>
 HBB LCR
-genome_build_1  chr_1   begin_1 end_1   genome_build_2  chr_2   begin_2 end_2   relative_strand chainID
-mm10    chr7    103851395       103883181       hg38    chr11   5267522 5302220 same_strand     chain1
+mm10    chr7    103851395       103883181       hg38    chr11   5267522 5302220 same_strand
+FADS locus
+mm10    chr19   10194014        10214169        hg38    chr11   61782802        61802911        diff_strand
+(note: 'diff_strand' indicates that the human and mouse loci are inverted relative to one another in their respective genome builds)
 </pre>
+
 
 # Authors
 - Jin Woo Oh *
