@@ -154,6 +154,13 @@ The following figure shows an example output from running the pipeline described
 
 ![GNA12 syntenic blocks](examples/whole_genome/png/gna12_vis.png) 
 
+After generating 'human_mouse_WG_syntenic_intergenic_loci.to_align' through the pipeline above, whole-genome alignment can now be performed by running:
+<pre>
+bash run_gkmalign.sh
+</pre>
+The shell script first generates 'masker_models.txt'. It contains file paths to gkm-SVM genomic background models for human and mouse. These files are downlaoded to 'data/' upon setting up gkm-align (bash setup.sh). Then the shell script runs gkm-align on the syntenic blocks.
+
+
 # Authors
 - Jin Woo Oh *
 - Michael A. Beer *
