@@ -154,18 +154,18 @@ The following figure shows an example output from running the pipeline described
 
 ![GNA12 syntenic blocks](examples/whole_genome/png/gna12_vis.png) 
 
-After generating 'human_mouse_WG_syntenic_intergenic_loci.to_align' through the pipeline above, whole-genome alignment can now be performed by running:
+After generating 'human_mouse_WG_syntenic_intergenic_loci.to_align' through the pipeline described above, whole-genome alignment can now be performed by running:
 <pre>
 bash run_gkmalign.sh
 </pre>
-The shell script first generates 'masker_models.txt'. It contains file paths to gkm-SVM genomic background models for human and mouse. These files are downlaoded to 'data/' upon setting up gkm-align (bash setup.sh). Then the shell script runs gkm-align on the syntenic blocks using the following command line:
+The shell script first generates 'masker_models.txt'. It contains file paths to gkm-SVM genomic background models for human and mouse. These files are downloaded to 'data/' upon setting up gkm-align (bash setup.sh). Then the shell script runs gkm-align on the syntenic blocks using the following command:
 <pre>
 ../../bin/gkm_align  -t 1  human_mouse_WG_syntenic_intergenic_loci.to_align -d ../../data/genomes/ -g masker_models.txt   -p 50 -o output_files -n human_mouse_WG_syntenic_intergenic_loci -G
 </pre>
 
-The '-G' option locally saves all the gapepd-kmer matrices computed in the directory specified with '-o'. Since computing the gapped-kmer matrices is the most time-consuming aspect of the algorithm, locally saving the matrices allows the whole-genome alignment to be resumed when the software is disrupted mid alignment. But this option is recommended only if your system has a large disk space. Depending on the sizes of the genomes, you may need more than 100 gigabytes of disk space. Similar to the FADS and HBB examples, this command line will output a '.coord' file, which can be used for mapping conserved elements between genome builds. 
+The '-G' option locally saves all the gapped-kmer matrices computed in the directory specified with '-o'. Since computing the gapped-kmer matrices is the most time-consuming aspect of the algorithm, locally saving the matrices allows the whole-genome alignment to be resumed when the process is interrupted. But this option is recommended only if your system has sufficient disk space. Depending on the sizes of the genomes, you may need more than 100 gigabytes of disk space. Similar to the FADS and HBB examples, this command line will output a '.coord' file for mapping conserved elements between genome builds. 
 
-The '-G' option is particularly useful if you want to run gkm-align multiple times using various gkm-SVM enhancer models. The gkm-align software checks for relevant gkm-matrices in the output directory (-o) that have already been generated. 
+The -G option is particularly useful if you plan to run gkm-align multiple times with various gkm-SVM enhancer models, as it allows the software to reuse previously generated gkm-matrices found in the output directory (-o).
 
 
 
