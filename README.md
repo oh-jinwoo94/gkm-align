@@ -158,7 +158,15 @@ After generating 'human_mouse_WG_syntenic_intergenic_loci.to_align' through the 
 <pre>
 bash run_gkmalign.sh
 </pre>
-The shell script first generates 'masker_models.txt'. It contains file paths to gkm-SVM genomic background models for human and mouse. These files are downlaoded to 'data/' upon setting up gkm-align (bash setup.sh). Then the shell script runs gkm-align on the syntenic blocks.
+The shell script first generates 'masker_models.txt'. It contains file paths to gkm-SVM genomic background models for human and mouse. These files are downlaoded to 'data/' upon setting up gkm-align (bash setup.sh). Then the shell script runs gkm-align on the syntenic blocks using the following command line:
+<pre>
+../../bin/gkm_align  -t 1  human_mouse_WG_syntenic_intergenic_loci.to_align -d ../../data/genomes/ -g masker_models.txt   -p 50 -o output_files -n human_mouse_WG_syntenic_intergenic_loci -G
+</pre>
+
+The '-G' option locally saves all the gapepd-kmer matrices computed in the directory specified with '-o'. Since computing the gapped-kmer matrices is the most time-consuming aspect of the algorithm, locally saving the matrices allows the whole-genome alignment to be resumed when the software is disrupted mid alignment. But this option is recommended only if your system has a large disk space. Depending on the sizes of the genomes, you may need more than 100 gigabytes of disk space. Similar to the FADS and HBB examples, this command line will output a '.coord' file, which can be used for mapping conserved elements between genome builds. 
+
+The '-G' option is particularly useful if you want to run gkm-align multiple times using various gkm-SVM enhancer models. The gkm-align software checks for relevant gkm-matrices in the output directory (-o) that have already been generated. 
+
 
 
 # Authors
