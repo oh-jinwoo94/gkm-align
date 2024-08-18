@@ -11,8 +11,8 @@
   - [Whole-genome alignment & mapping](#whole-genome-alignment-and-mapping)
     - [Genome alignment](#genome-alignment)
         - [Pre-processing for genome alignment](#pre-processing-for-genome-alignment)
-        - [cell-type-independent unweighted genome alignment](#cell-type-indepedent-unweighted-genome-alignment)
-        - [cell-type-specific model-weighted genome alignment](#cell-type-specific model-weighted-genome-alignment)
+        - [cell-type-independent unweighted genome alignment](#cell-type-independent-unweighted-genome-alignment)
+        - [cell-type-specific model-weighted genome alignment](#cell-type-specific-model-weighted-genome-alignment)
     - [Genome-wide mapping](#genome-wide-mapping)
 # Introduction
 gkm-align is a whole-genome alignment algorithm designed to map distal enhancers conserved between distant mammals (e.g., human and mouse). gkm-align discovers orthologous enhancers by identifying alignment paths with maximal similarity in gapped-kmer compositions along syntenic loci. gkm-align's performance can further be enhanced by incorporating conserved enhancer vocabularies obtained using gkm-SVM sequence models trained on enhancers. 
