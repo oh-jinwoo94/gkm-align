@@ -10,6 +10,9 @@
     - [example: FADS gene cluster loci](#example-fads-gene-cluster-loci)
   - [Whole-genome alignment & mapping](#whole-genome-alignment-and-mapping)
     - [Genome alignment](#genome-alignment)
+        - [Pre-processing for genome alignment](#pre-processing-for-genome-alignment)
+        - [cell-type-independent unweighted genome alignment](#cell-type-indepedent-unweighted-genome-alignment)
+        - [cell-specific model-weighted genome alignment](#cell-specific model-weighted genome alignment)
     - [Genome-wide mapping](#genome-wide-mapping)
 # Introduction
 gkm-align is a whole-genome alignment algorithm designed to map distal enhancers conserved between distant mammals (e.g., human and mouse). gkm-align discovers orthologous enhancers by identifying alignment paths with maximal similarity in gapped-kmer compositions along syntenic loci. gkm-align's performance can further be enhanced by incorporating conserved enhancer vocabularies obtained using gkm-SVM sequence models trained on enhancers. 
@@ -132,7 +135,9 @@ Rscript ../../scripts/visualize_coordinates.R output_files/FADS_loci_mm10-hg38.c
 This process takes between 10 seconds and a few minutes depending on your hardware availability.
 
 ## Whole-genome alignment and mapping
+
 ### Genome alignment
+#### Pre-processing for genome alignment
 The previous two examples (HBB LCR and FADS loci) demonstrated how gkm-align can align a pair of human and mouse loci when their genomic coordinate ranges are well defined, as below:
 <pre>
 [HBB LCR]
@@ -160,6 +165,10 @@ The pipeline encoded in the shell script consists of three parts:
 The following figure shows an example output from running the pipeline described above (GNA12 inversion locus). **Step 1** generates the dots. **Step 2** chains the dots, with each dot colored according to its assigned chain. **Step 3** generates the rectangles, whcih define the boundaries of syntenic blocks which can then be used as input for gkm-align whole-genome alignment. 
 
 ![GNA12 syntenic blocks](examples/whole_genome/png/gna12_vis.png) 
+
+#### Cell-type-independent unweighted genome alignment
+
+#### Cell-specific model-weighted genome alignment
 
 ### Genome-wide mapping
 
