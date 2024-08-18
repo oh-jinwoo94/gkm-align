@@ -84,7 +84,7 @@ mkdir output_files
   * '-q mm10' specifies that the query 'enhancers.bed' is in mm10.
   * '-m': allows multiple mappings.
   * '-o' and '-n' specify output directory and output file prefix, respectively.
-The process of mapping conserved enhancers is described in more detail in the next section (#genome-mapping). 
+The process of mapping conserved enhancers is described in more detail in the next section ([Genome mapping](#genome-mapping)). 
 
 
 Details on other software options can be found by typing:
