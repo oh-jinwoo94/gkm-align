@@ -225,12 +225,16 @@ bash run_gkmalign_cell-weighted.sh subset_human_mouse_WG_syntenic_intergenic_loc
 ### Genome-wide mapping
 This section demonstrates how to use the alignment outputs from the [previous section](#genome-alignment) to map genomic sequences conserved between human and mouse. 
 
-First, download human embryonic brain enhancers ([DHS_790_hg38_300_noproms_nc30.bed](https://beerlab.org/gkmalign/human_enh/DHS_790_hg38_300_noproms_nc30.bed)) from our [lab website](https://beerlab.org/gkmalign). We have uploaded all the enhancer sets of the 45 pairs of human and mouse cell/tissues that we used quantify enhancer conservation and to evaluate gkm-align. You can identify the cell/tissue source for each enhancer set using this [catalog](https://beerlab.org/gkmalign/Supplementary_Table_4.txt). For more details on the biosamples, you can search for their ENCODE accession IDs (listed in [human](https://beerlab.org/gkmalign/Supplementary_Table_2.txt), [mouse](https://beerlab.org/gkmalign/Supplementary_Table_3.txt)) on the [ENCODE portal](https://encodeproject.org); 
+First, download the human embryonic brain enhancers ([DHS_790_hg38_300_noproms_nc30.bed](https://beerlab.org/gkmalign/human_enh/DHS_790_hg38_300_noproms_nc30.bed)) from our [lab website](https://beerlab.org/gkmalign). We have uploaded all the enhancer sets for the 45 pairs of human and mouse cell/tissues that we used to quantify enhancer conservation and to evaluate gkm-align. You can identify the cell/tissue source for each enhancer set using this [catalog](https://beerlab.org/gkmalign/Supplementary_Table_4.txt). For more details on the biosamples, you can search for their ENCODE accession IDs (listed in the following links: [human](https://beerlab.org/gkmalign/Supplementary_Table_2.txt), [mouse](https://beerlab.org/gkmalign/Supplementary_Table_3.txt)) on the [ENCODE portal](https://encodeproject.org). 
+
+The enhancer bed files contain DNase-signal strength recorded for each enhancer in the fourth column. Before running gkm-align, re-format the query enhancer file so that the fourth column contains unique element identifiers. 
+<pre>
+awk '{print $1"\t"$2"\t"$3"\t"$1":"$2"-"$3}' DHS_790_hg38_300_noproms_nc30.bed > human_brain_enhancers.bed
+</pre>
 
 To map human embryonic brain enhancers to the mouse genome using [hg38-mm10_unweighted.coord](https://beerlab.org/gkmalign/hg38-mm10_unweighted.coord), run the following command line: 
-
 <pre>
-
+../../bin/gkm_align  -t 2  human_brain_enhancers.bed  -c hg38-mm10_unweighted.coord -q mm10 -m -o output_files -n human_brain_enhancers_mapped_to_mm10
 </pre>
  
 
