@@ -198,7 +198,11 @@ The [run_gkmalign_cell-weighted.sh](examples/whole_genome/run_gkmalign_cell-weig
 
 The first step is to download the relevant sequence models. For example, to perform alignment weighted toward embryonic brain enhancers, first download the gkm-SVM embryonic brain enhancer models for human (DHS_790_hg38) and mouse (DHS_97_mm10). The full list of enhancer models can be found at the following links: [human-model-list](https://beerlab.org/gkmalign/Supplementary_Table_2.txt) and [mouse-model-list](https://beerlab.org/gkmalign/Supplementary_Table_3.txt). Using the model aliases, you can download the models from these links: [human-model-repo](https://beerlab.org/gkmalign/human) and [mouse-model-repo](https://beerlab.org/gkmalign/mouse). These files include the enhancer-kmer weights and additional information used to compute gkm-SVM prediction scores, which range from 0 to 1.
 
-After downloading the model files, you can run enhancer-model-weighted gkm-align using the '-W' option. For example, to run embryonic-brain-weighted alignment with a model weight of c=0.5, include '-W,0.5,sequence_model_files.txt', where each line of 'sequence_model_files.txt' specifies the file path to the enhancer models downloaded in the previous step.
+After downloading the model files, you can run enhancer-model-weighted gkm-align using the '-W' option. For example, to run embryonic-brain-weighted alignment with a model weight of c=0.5, include '-W,0.5,sequence_model_files.txt', where each line of '[sequence_model_files.txt](examples/whole_genome/sequence_model_files.txt)' specifies the file path to the enhancer models downloaded in the previous step.
+
+<pre>
+../../bin/gkm_align -t 1 -g masker_models.txt -d /mnt/data0/joh27/genomes/ subset_human_mouse_WG_syntenic_intergenic_loci.to_align -W 0.5,sequence_model_files.txt -p 50 -o output_files/ -n hg38-mm10_enhancer-model-weighted_DHS_790_hg38-DHS_97_mm10_c-0.5.coord
+</pre>
 
 The pipeline described above can be executed with the following command:
 
