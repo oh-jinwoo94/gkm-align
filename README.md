@@ -14,7 +14,7 @@ gkm-align is a whole-genome alignment algorithm designed to map distal enhancers
 
 Please cite the following paper if you use gkm-align:
 
-Oh, J.W., Beer, M.A. Gapped-kmer sequence modeling robustly identifies regulatory vocabularies and distal enhancers conserved between evolutionarily distant mammals. Nat Commun 15, 6464 (2024). https://doi.org/10.1038/s41467-024-50708-z
+Oh, J.W., Beer, M.A. Gapped-kmer sequence modeling robustly identifies regulatory vocabularies and distal enhancers conserved between evolutionarily distant mammals. Nature Communications 15, 6464 (2024). https://doi.org/10.1038/s41467-024-50708-z
 
 
 # System Requirements
