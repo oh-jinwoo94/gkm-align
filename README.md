@@ -22,7 +22,7 @@ gkm-align software is built for Linux-based operating systems (such as Red Hat, 
 The package has been tested on the following system:
 * Rocky Linux release 8.8 (Green Obsidian).
 
-gkm-align utilizes SIMD parallel computation and requires AVX2 support (to check availability, use: lscpu | grep avx2). However, SIMD is only employed for sequence alignment. Therefore, the software can still be used without AVX2 if you plan to use gkm-align with our precomputed genome alignment output files for mapping conserved enhancers. For example, the -t 1 option requires AVX2, but the -t 2 option can be used without it.
+gkm-align utilizes SIMD parallel computation and requires AVX2 support (to check availability, use: 'lscpu | grep avx2'). However, SIMD is only employed for sequence alignment. Therefore, the software can still be used without AVX2 if you plan to use gkm-align with our precomputed genome alignment output files (e.g., [hg38-mm10_unweighted.coord](https://beerlab.org/gkmalign/hg38-mm10_unweighted.coord)) for mapping conserved enhancers. For example, the -t 1 option requires AVX2, but the -t 2 option can be used without it. 
  
 # Installation
 First, download the source code using the following command line:
