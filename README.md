@@ -252,7 +252,7 @@ Although this README is sufficient for running gkm-align, it will be updated wit
 
 - Generating gkm-SVM genome background models for repeat masking.
 - Generating posterior gkm-SVM kmer-weight files (for generating prediction values ranging from 0-1).
-- Generating gkm-align logo visualization ([Fig. 5C](https://www.nature.com/articles/s41467-024-50708-z#Fig5) of the manuscript).
+- Generating gkm-align logo visualization (e.g., [Fig. 5C](https://www.nature.com/articles/s41467-024-50708-z#Fig5) of the manuscript).
 
 Regardless, all necessary information required for performing these analyses is included in the [manuscript](https://www.nature.com/articles/s41467-024-50708-z). Mathematical details of the gkm-align algorithm are provided on pages 41 to 48 of the Supplementary Information document of the manuscript. 
 
