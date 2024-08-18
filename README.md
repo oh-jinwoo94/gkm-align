@@ -66,11 +66,11 @@ mkdir output_files
 <pre>
 ../../bin/gkm_align  -t 1  HBB.to_align -d ../../data/genomes/ -g masker_models.txt   -p 50 -o output_files -n HBB_LCR_mm10-hg38
 </pre>
-  * '-t 1 HBB.to_align': Specifies that gkm-align is in "align" mode and uses the input file HBB.to_align, which contains the genomic coordinates of the HBB Locus Control Regions (LCRs) for both human and mouse.
-  * '-d ../../data/genomes': Specifiies directory containing the genome data files for human (hg38) and mouse (mm10). These directories should contain chromosome sequence files (e.g., chr1.fa, chr2.fa).
-  * '-g masker_models.txt': Specifies the genome background model to use for repeat masking, which helps reduce alignment errors by masking repetitive sequences.
-  * '-p 50': Uses 50 parallel threads to speed up processing. This can be adjusted based on available computational resources.
-  * '-o' and '-n': Specify the output directory and output file prefix, respectively.
+  * **'-t 1 HBB.to_align'**: Specifies that gkm-align is in "align" mode and uses the input file HBB.to_align, which contains the genomic coordinates of the HBB Locus Control Regions (LCRs) for both human and mouse.
+  * **'-d ../../data/genomes'**: Specifiies directory containing the genome data files for human (hg38) and mouse (mm10). These directories should contain chromosome sequence files (e.g., chr1.fa, chr2.fa).
+  * **'-g masker_models.txt'**: Specifies the genome background model to use for repeat masking, which helps reduce alignment errors by masking repetitive sequences.
+  * **'-p 50'**: Uses 50 parallel threads to speed up processing. This can be adjusted based on available computational resources.
+  * **'-o' and '-n'**: Specify the output directory and output file prefix, respectively.
 
 This step generates 'output_files/HBB_LCR_mm10-hg38.coord', which is used as an input for the following step. 
   
@@ -78,12 +78,12 @@ This step generates 'output_files/HBB_LCR_mm10-hg38.coord', which is used as an 
 <pre>
 ../../bin/gkm_align  -t 2 -c output_files/HBB_LCR_mm10-hg38.coord  HBB_LCR_enhancers_mm10.bed -q mm10 -m -o output_files -n HBB_LCR_enhancers_mm10_mapped_to_hg3
 </pre>
-  * '-t 2 -c output_files/HBB_LCR_mm10-hg38.coord': Specifies that gkm-align is in "mapping" mode and uses the output from the alignment step (-t 1) as the coordinate mapping file.
-  * 'HBB_LCR_enhancers_mm10.bed': Input file containing the mm10 coordinates of mouse HBB-LCR enhancers.
-  * '-c output_files/HBB_LCR_mm10-hg38.coord': Uses the output from the alignment step (-t 1) as the coordinate mapping file.
-  * '-q mm10' : Indicates that the query enhancers.bed file is in the mm10 (mouse) genome.
-  * '-m': Allows multiple mappings for enhancers that may align to several locations.
-  * '-o' and '-n': Specify the output directory and output file prefix, respectively.
+  * **'-t 2 -c output_files/HBB_LCR_mm10-hg38.coord'**: Specifies that gkm-align is in "mapping" mode and uses the output from the alignment step (-t 1) as the coordinate mapping file.
+  * **'HBB_LCR_enhancers_mm10.bed'**: Input file containing the mm10 coordinates of mouse HBB-LCR enhancers.
+  * **'-c output_files/HBB_LCR_mm10-hg38.coord'**: Uses the output from the alignment step (-t 1) as the coordinate mapping file.
+  * **'-q mm10'** : Indicates that the query enhancers.bed file is in the mm10 (mouse) genome.
+  * **'-m'**: Allows multiple mappings for enhancers that may align to several locations.
+  * **'-o' and '-n'**: Specify the output directory and output file prefix, respectively.
 
 
 
