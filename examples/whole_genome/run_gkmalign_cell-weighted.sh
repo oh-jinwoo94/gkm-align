@@ -1,11 +1,16 @@
 #!/bin/sh
 
-# align, map
 
+# specify alignment loci
+to_align=$1 # e.g., human_mouse_WG_syntenic_intergenic_loci.to_align
 
-h_model=DHS_790_hg38 # human embryonic brain
-m_model=DHS_97_mm10  # mouse embryonic brain
-c=0.5
+# model specification 
+h_model=$2  # e.g., DHS_790_hg38   # for human embryonic brain enhancer model (https://beerlab.org/gkmalign/Supplementary_Table_2.txt)
+m_model=$3  # e.g,. DHS_97_mm10    # for mouse emtryonic brain enhancer model (https://beerlab.org/gkmalign/Supplementary_Table_3.txt) 
+
+# enhancer model weighting 
+c=$4        # e.g., 0.5            
+
 
 # download gkm-SVM posterior kmer weights
 wget https://beerlab.org/gkmalign/human/${h_model}_300_noproms_nc30_cvAVG_top10k_vs_neg1x_r1_weights_posterior.out -O ${h_model}_enhancer_weights_posterior.out 
