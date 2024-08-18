@@ -74,7 +74,7 @@ mkdir output_files
 </pre>
   * **'-t 1 HBB.to_align'**: Specifies that gkm-align is in "align" mode and uses the input file HBB.to_align, which contains the genomic coordinates of the HBB Locus Control Regions (LCRs) for both human and mouse.
   * **'-d ../../data/genomes'**: Specifiies directory containing the genome data files for human (hg38) and mouse (mm10). These directories should contain chromosome sequence files (e.g., chr1.fa, chr2.fa).
-  * **'-g masker_models.txt'**: Specifies the genome background model to use for repeat masking, which helps reduce alignment errors by masking repetitive sequences.
+  * **'-g masker_models.txt'**: Specifies the genomic background model to use for repeat masking, which helps reduce alignment errors by masking repetitive sequences.
   * **'-p 50'**: Uses 50 parallel threads to speed up processing. This can be adjusted based on available computational resources.
   * **'-o' and '-n'**: Specify the output directory and output file prefix, respectively.
 
@@ -162,7 +162,7 @@ The pipeline encoded in the [shell script](examples/whole_genome/generate_synten
 
 3) The last step of the pipeline is to run **'convert_chain_to_to-align.py'**. Syntenic loci, derived from chaining sequence matches in the previous two steps, tend to be very large, making it computationally intensive to compute the gapped-kmer similarity matrices. This code helps expedite the process by breaking the syntenic blocks into smaller pieces through K-means clustering of the sequence matches based on their 2D human-mouse coordinates within each chain. The number of clusters (k) for each chain is automatically determined using the average target block size. The resulting centroids are then used to define the edges of the smaller syntenic blocks. This step generates 'human_mouse_WG_syntenic_intergenic_loci.to_align', which is then used as input for the gkm-align whole genome alignment.  
 
-The following figure shows an example output from running the pipeline described above (GNA12 inversion locus). **Step 1** generates the dots. **Step 2** chains the dots, with each dot colored according to its assigned chain. **Step 3** generates the rectangles, whcih define the boundaries of syntenic blocks which can then be used as input for gkm-align whole-genome alignment. 
+The following figure shows an example output from running the pipeline described above (GNA12 inversion locus). **Step 1** generates the dots. **Step 2** chains the dots, with each dot colored according to its assigned chain. **Step 3** generates the rectangles, which define the boundaries of syntenic blocks which can then be used as input for gkm-align whole-genome alignment. 
 
 ![GNA12 syntenic blocks](examples/whole_genome/png/gna12_vis.png) 
 
