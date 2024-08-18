@@ -14,6 +14,7 @@
         - [cell-type-independent unweighted genome alignment](#cell-type-independent-unweighted-genome-alignment)
         - [cell-type-specific model-weighted genome alignment](#cell-type-specific-model-weighted-genome-alignment)
     - [Genome-wide mapping](#genome-wide-mapping)
+- [Other](#other)
 # Introduction
 gkm-align is a whole-genome alignment algorithm designed to map distal enhancers conserved between distant mammals (e.g., human and mouse). gkm-align discovers orthologous enhancers by identifying alignment paths with maximal similarity in gapped-kmer compositions along syntenic loci. gkm-align's performance can further be enhanced by incorporating conserved enhancer vocabularies obtained using gkm-SVM sequence models trained on enhancers. 
 
@@ -238,9 +239,15 @@ To map human embryonic brain enhancers to the mouse genome using [hg38-mm10_unwe
 ../../bin/gkm_align  -t 2  human_brain_enhancers.bed  -c hg38-mm10_unweighted.coord -q mm10 -m -o output_files -n human_brain_enhancers_mapped_to_mm10
 </pre>
  
-This generates the following two files, each with the following suffixes: '.multiple_mapped' and '.multiple_not_mapped'. These file formats were designed to match the output file formats of LiftOver.
+This generates the following two files, each with the following suffixes: '*.multiple_mapped*' and '*.multiple_not_mapped*'. These file formats were designed to match the output file formats of LiftOver.
+
  '.multiple_mapped' contains the mapped mouse coordinates (column 1-3) for each of the query enhancers (column 4). The fifth column contains unique identifiers for mouse loci that were mapped from a single query human enhacer. Additionally, the fifth column contains the gkm-similarity score between the query human enhancer and the mapped mouse element. Mapping outputs from using enhancer-model-weighted '.coord' files include two extra columns containing interspecies gkm-SVM prediction scores (column 6 and 7 each encoding gkm-SVM scores of the mapped and query DNA elements). The gkm-similarity and gkm-SVM scores both range from 0 to 1, and they can be used for quantifying the conservation level or confidence level of gkm-align mapping. 
 
+
+'.multiple_not_mapped' contains the list of query enhancers that failed to map to the other species. Currently, all failed mappings contain the header "# deleted in mm10", indicating that the element was either not alignable using gkm-align or that the query element fell outside the syntenic intergenic loci specified in 'human_mouse_WG_syntenic_intergenic_loci.to_align'. A future software release may provide more specific failure messages, but for now, you can check whether the query enhancer lies within the syntenic bounds by overlapping the BED file with the 'to_align' file.
+
+
+# Other
 
 # Authors
 - Jin Woo Oh *
