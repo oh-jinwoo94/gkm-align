@@ -21,5 +21,5 @@ printf "${m_model}_enhancer_weights_posterior.out\n" >> sequence_model_files.txt
 
 
 # run gkm align (x10 faster with precomputed matrix files with -G option)
-../../bin/gkm_align -t 1  -g  masker_models.txt -d /mnt/data0/joh27/genomes/ human_mouse_WG_syntenic_intergenic_loci.to_align -W ${c},sequence_model_files.txt -p 50 -o output_files/ -n hg38-mm10_enhancer-model-weighted_${hsamp}-${msamp}_c-${c}.coord
+../../bin/gkm_align -t 1  -g  masker_models.txt -d /mnt/data0/joh27/genomes/ ${to_align} -W ${c},sequence_model_files.txt -p 50 -o output_files/ -n hg38-mm10_enhancer-model-weighted_${h_model}-${m_model}_c-${c}.coord
 
