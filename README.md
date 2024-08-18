@@ -223,9 +223,9 @@ bash run_gkmalign_cell-weighted.sh subset_human_mouse_WG_syntenic_intergenic_loc
 </pre>
 
 ### Genome-wide mapping
-This section shows how we can use the alignment outputs from the [previous section](#genome-alignment) to map genomic sequences conserved between human and mouse. 
+This section demonstrates how to use the alignment outputs from the [previous section](#genome-alignment) to map genomic sequences conserved between human and mouse. 
 
-First, download human embryonic brain enhancers ([DHS_790_hg38_300_noproms_nc30.bed](https://beerlab.org/gkmalign/human_enh/DHS_790_hg38_300_noproms_nc30.bed)) from our [lab website](https://beerlab.org/gkmalign). We have uploaded all the enhancer sets of the 45 pairs of human and mouse cell/tissues that we used for quantitative analysis of enhancer conservation and for evaluating gkm-align. You can identify the cell/tissue source of each enhancer set using this [catalogue](https://beerlab.org/gkmalign/Supplementary_Table_4.txt). You can look up more details on the biosamples by searching for their ENCODE accession IDs ([human](https://beerlab.org/gkmalign/Supplementary_Table_2.txt), [mouse](https://beerlab.org/gkmalign/Supplementary_Table_3.txt)) from the [ENCODE portal](https://encodeproject.org); 
+First, download human embryonic brain enhancers ([DHS_790_hg38_300_noproms_nc30.bed](https://beerlab.org/gkmalign/human_enh/DHS_790_hg38_300_noproms_nc30.bed)) from our [lab website](https://beerlab.org/gkmalign). We have uploaded all the enhancer sets of the 45 pairs of human and mouse cell/tissues that we used quantify enhancer conservation and to evaluate gkm-align. You can identify the cell/tissue source for each enhancer set using this [catalog](https://beerlab.org/gkmalign/Supplementary_Table_4.txt). For more details on the biosamples, you can search for their ENCODE accession IDs (listed in [human](https://beerlab.org/gkmalign/Supplementary_Table_2.txt), [mouse](https://beerlab.org/gkmalign/Supplementary_Table_3.txt)) on the [ENCODE portal](https://encodeproject.org); 
 
 To map human embryonic brain enhancers to the mouse genome using [hg38-mm10_unweighted.coord](https://beerlab.org/gkmalign/hg38-mm10_unweighted.coord), run the following command line: 
 
