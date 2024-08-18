@@ -82,7 +82,7 @@ This step generates 'output_files/HBB_LCR_mm10-hg38.coord', which is used as an 
   
 **3)** **Mapping** mouse HBB-LCR enhancers to human. 
 <pre>
-../../bin/gkm_align  -t 2 -c output_files/HBB_LCR_mm10-hg38.coord  HBB_LCR_enhancers_mm10.bed -q mm10 -m -o output_files -n HBB_LCR_enhancers_mm10_mapped_to_hg3
+../../bin/gkm_align  -t 2 -c output_files/HBB_LCR_mm10-hg38.coord  HBB_LCR_enhancers_mm10.bed -q mm10 -m -o output_files -n HBB_LCR_enhancers_mm10_mapped_to_hg38
 </pre>
   * **'-t 2 -c output_files/HBB_LCR_mm10-hg38.coord'**: Specifies that gkm-align is in "mapping" mode and uses the output from the alignment step (-t 1) as the coordinate mapping file.
   * **'HBB_LCR_enhancers_mm10.bed'**: Input file containing the mm10 coordinates of mouse HBB-LCR enhancers.
