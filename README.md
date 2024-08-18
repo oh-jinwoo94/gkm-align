@@ -168,21 +168,23 @@ The following figure shows an example output from running the pipeline described
 
 #### Cell-type-independent unweighted genome alignment
 
-After generating '[human_mouse_WG_syntenic_intergenic_loci.to_align](examples/whole_genome/human_mouse_WG_syntenic_intergenic_loci.to_align)' through the pipeline described above, whole-genome alignment can now be performed by running:
+After generating '[human_mouse_WG_syntenic_intergenic_loci.to_align](examples/whole_genome/human_mouse_WG_syntenic_intergenic_loci.to_align)' through the pipeline described above, you can now perform whole-genome alignment by running:
 <pre>
 bash run_gkmalign.sh human_mouse_WG_syntenic_intergenic_loci.to_align
 </pre>
 
-To try this pipeline for a smaller input using a fraction of the syntenic intergenic loci, run: 
+To try this pipeline for a smaller input, using a fraction of the syntenic intergenic loci, run: 
 <pre>
 head -10 human_mouse_WG_syntenic_intergenic_loci.to_align > subset_human_mouse_WG_syntenic_intergenic_loci.to_align
 bash run_gkmalign.sh subset_human_mouse_WG_syntenic_intergenic_loci.to_align
 </pre>
 
-The shell script first generates 'masker_models.txt'. It contains file paths to gkm-SVM genomic background models for human and mouse. These files are downloaded to 'data/' upon setting up gkm-align (bash setup.sh). Then the shell script runs gkm-align on the syntenic blocks using the following command:
+The shell script first generates masker_models.txt, which contains file paths to gkm-SVM genomic background models for human and mouse. These files are downloaded to data/ when setting up gkm-align (using bash setup.sh). The script then runs gkm-align on the syntenic blocks with the following command:
+
 <pre>
 ../../bin/gkm_align  -t 1  human_mouse_WG_syntenic_intergenic_loci.to_align -d ../../data/genomes/ -g masker_models.txt   -p 50 -o output_files -n human_mouse_WG_syntenic_intergenic_loci -G
 </pre>
+
 
 Similar to the FADS and HBB examples, this command line will output a '.coord' file for mapping conserved elements between genome builds. The '-G' option locally saves all the gapped-kmer matrices computed in the directory specified with '-o'. Since computing the gapped-kmer matrices is the most time-consuming part of the algorithm, locally saving the matrices allows the whole-genome alignment to be resumed if the process is interrupted. This option is recommended only if your system has sufficient disk space.
 
