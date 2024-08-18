@@ -168,7 +168,7 @@ The following figure shows an example output from running the pipeline described
 
 #### Cell-type-independent unweighted genome alignment
 
-After generating 'human_mouse_WG_syntenic_intergenic_loci.to_align' (included in the [repository](examples/whole_genome/human_mouse_WG_syntenic_intergenic_loci.to_align)) through the pipeline described above, whole-genome alignment can now be performed by running:
+After generating '[human_mouse_WG_syntenic_intergenic_loci.to_align](examples/whole_genome/human_mouse_WG_syntenic_intergenic_loci.to_align)' through the pipeline described above, whole-genome alignment can now be performed by running:
 <pre>
 bash run_gkmalign.sh
 </pre>
