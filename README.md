@@ -194,7 +194,7 @@ In general, whole-genome alignment is computationally intensive, and the necessa
 
 
 #### Cell-type-specific model-weighted genome alignment
-The [run_gkmalign_cell-weighted.sh](examples/whole_genome/run_gkmalign_cell-weighted.sh) shell script described how cell-specific whole-genome alignment can be computed using enhancer sequence models (gkm-SVM). The first step is to download the relevant sequence models. For example, for performing alignment weighted toward embryonic brain enhancers, you can download gkm-SVM embryonic brain enhancer models of human (DHS_790_hg38) and mouse (DHS_97_mm10). The full list of enhancer models in the following links: [human](https://beerlab.org/gkmalign/Supplementary_Table_2.txt) and [mouse](https://beerlab.org/gkmalign/Supplementary_Table_3.txt). 
+The [run_gkmalign_cell-weighted.sh](examples/whole_genome/run_gkmalign_cell-weighted.sh) shell script described how cell-specific whole-genome alignment can be computed using enhancer sequence models (gkm-SVM). The first step is to download the relevant sequence models. For example, for performing alignment weighted toward embryonic brain enhancers, you can download gkm-SVM embryonic brain enhancer models of human (DHS_790_hg38) and mouse (DHS_97_mm10). The full list of enhancer models in the following links: [human-model-list](https://beerlab.org/gkmalign/Supplementary_Table_2.txt) and [mouse-model-list](https://beerlab.org/gkmalign/Supplementary_Table_3.txt). 
  
  Cell-specific genome alignment using enhancer sequence models (gkm-SVM) can be performed using the '-W' option. For whole-genome alignment using sequence models of human and mouse brains enhancers
 ### Genome-wide mapping
