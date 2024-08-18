@@ -1,5 +1,3 @@
-(being updated with more detail and examples)
-
 # Table of Contents
 - [Introduction](#introduction)
 - [System Requirements](#system-requirements)
@@ -248,6 +246,14 @@ This generates the following two files, each with the following suffixes: '*.mul
 
 
 # Other
+Although the current version of this README is sufficient to run gkm-align, it will continue to be updated with further details. Future updates will include, but are not limited to, the following:
+
+- generating the quantitative catalogs of conserved enhancers annotated with various gapped-kmer based conserved scores (provided in the [gkm-align website](https://beerlab.org/gkmalign/) under the "Tables of orthologous human/mouse enhancers..." section. e.g., [embryonic brain](https://beerlab.org/gkmalign/gkm-align_mapping/DHS_790_hg38_enhancers_h2m_unweighted.tsv))
+
+- generating gkm-SVM genome background models for repeat masking
+- generating posterior gkm-SVM kmer-weight files (for generating prediction values raning from 0-1)
+- generating gkm-align logo visualization ([Fig. 5C](https://www.nature.com/articles/s41467-024-50708-z#Fig5) of the manuscript)
+
 
 # Authors
 - Jin Woo Oh *
