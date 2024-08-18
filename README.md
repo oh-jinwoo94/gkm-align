@@ -78,11 +78,11 @@ mkdir output_files
   * **'-p 50'**: Uses 50 parallel threads to speed up processing. This can be adjusted based on available computational resources.
   * **'-o' and '-n'**: Specify the output directory and output file prefix, respectively.
 
-This step generates 'output_files/HBB_LCR_mm10-hg38.coord', which is used as an input for the following step. 
+This step generates 'output_files/**HBB_LCR_mm10-hg38.coord**', which is used as an input for the following step. 
   
 **3)** **Mapping** mouse HBB-LCR enhancers to human. 
 <pre>
-../../bin/gkm_align  -t 2 -c output_files/HBB_LCR_mm10-hg38.coord  HBB_LCR_enhancers_mm10.bed -q mm10 -m -o output_files -n HBB_LCR_enhancers_mm10_mapped_to_hg38
+../../bin/gkm_align  -t 2 -c output_files/**HBB_LCR_mm10-hg38.coord**  HBB_LCR_enhancers_mm10.bed -q mm10 -m -o output_files -n HBB_LCR_enhancers_mm10_mapped_to_hg38
 </pre>
   * **'-t 2 -c output_files/HBB_LCR_mm10-hg38.coord'**: Specifies that gkm-align is in "mapping" mode and uses the output from the alignment step (-t 1) as the coordinate mapping file.
   * **'HBB_LCR_enhancers_mm10.bed'**: Input file containing the mm10 coordinates of mouse HBB-LCR enhancers.
@@ -164,7 +164,7 @@ The pipeline encoded in the [shell script](examples/whole_genome/generate_synten
 
 The following figure shows an example output from running the pipeline described above (GNA12 inversion locus). **Step 1** generates the dots. **Step 2** chains the dots, with each dot colored according to its assigned chain. **Step 3** generates the rectangles, which define the boundaries of syntenic blocks which can then be used as input for gkm-align whole-genome alignment. 
 
-This pipeline generates '[human_mouse_WG_syntenic_intergenic_loci.to_align](examples/whole_genome/human_mouse_WG_syntenic_intergenic_loci.to_align)'. 
+This pipeline generates '[**human_mouse_WG_syntenic_intergenic_loci.to_align**](examples/whole_genome/human_mouse_WG_syntenic_intergenic_loci.to_align)'. 
 
 ![GNA12 syntenic blocks](examples/whole_genome/png/gna12_vis.png) 
 
