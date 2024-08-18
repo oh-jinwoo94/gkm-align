@@ -254,6 +254,7 @@ Although this README is sufficient for running gkm-align, it will be updated wit
 - generating posterior gkm-SVM kmer-weight files (for generating prediction values ranging from 0-1)
 - generating gkm-align logo visualization ([Fig. 5C](https://www.nature.com/articles/s41467-024-50708-z#Fig5) of the manuscript)
 
+Regardless, all necessary information required for performing the above analyses are included in the [manuscript](https://www.nature.com/articles/s41467-024-50708-z). Mathematical details of the gkm-align algorithm is given in the Supplementary Note of the [Supplementary Information section](https://static-content.springer.com/esm/art%3A10.1038%2Fs41467-024-50708-z/MediaObjects/41467_2024_50708_MOESM1_ESM.pdf). 
 
 # Authors
 - Jin Woo Oh *
