@@ -164,11 +164,13 @@ The pipeline encoded in the [shell script](examples/whole_genome/generate_synten
 
 The following figure shows an example output from running the pipeline described above (GNA12 inversion locus). **Step 1** generates the dots. **Step 2** chains the dots, with each dot colored according to its assigned chain. **Step 3** generates the rectangles, which define the boundaries of syntenic blocks which can then be used as input for gkm-align whole-genome alignment. 
 
+This pipeline generates '[human_mouse_WG_syntenic_intergenic_loci.to_align](examples/whole_genome/human_mouse_WG_syntenic_intergenic_loci.to_align)'. 
+
 ![GNA12 syntenic blocks](examples/whole_genome/png/gna12_vis.png) 
 
 #### Cell-type-independent unweighted genome alignment
 
-After generating '[human_mouse_WG_syntenic_intergenic_loci.to_align](examples/whole_genome/human_mouse_WG_syntenic_intergenic_loci.to_align)' through the pipeline described above, you can now perform whole-genome alignment by running:
+Using '[human_mouse_WG_syntenic_intergenic_loci.to_align](examples/whole_genome/human_mouse_WG_syntenic_intergenic_loci.to_align)' from the previous section, you can now perform whole-genome alignment by running:
 <pre>
 bash run_gkmalign.sh human_mouse_WG_syntenic_intergenic_loci.to_align
 </pre>
