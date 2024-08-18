@@ -5,7 +5,7 @@
 - [System Requirements](#system-requirements)
 - [Installation](#installation)
 - [Running gkm-align](#running-gkm-align)
-  - [Local alignment & mapping](#local-alignment)
+  - [Local sequence alignment & mapping](#local-alignment)
     - [example: HBB Locus Control Region](#example-hbb-locus-control-region)
     - [example: FADS gene cluster loci](#example-fads-gene-cluster-loci)
   - [Whole-genome alignment & mapping](#example-human-mouse-whole-genome-alignment)
@@ -41,7 +41,7 @@ Additionally, if you press y (recommended for following the tutorial more easily
 The entire process takes less than 3 minutes. 
 
 # Running  gkm-align
-## genome alignment 
+## Local sequence alignment & mapping 
 
 ### example: HBB Locus Control Region
 In this section, we use gkm-align to align the human and mouse HBB Locus Control Region (HBB-LCR) and map mouse HBB-LCR enhancers to human genome (Oh and Beer, **Figure 3G**). 
@@ -128,7 +128,7 @@ Rscript ../../scripts/visualize_coordinates.R output_files/FADS_loci_mm10-hg38.c
 
 This process takes between 10 seconds and a few minutes depending on your hardware availability.
 
-### example: human-mouse whole-genome alignment
+## Whole-genome alignment & mapping
 
 The previous two examples (HBB LCR and FADS loci) demonstrated how gkm-align can align a pair of human and mouse loci when their genomic coordinate ranges are well defined, as below:
 <pre>
