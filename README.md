@@ -5,11 +5,10 @@
 - [System Requirements](#system-requirements)
 - [Installation](#installation)
 - [Running gkm-align](#running-gkm-align)
-  - [genome alignment](#genome-alignment)
+  - [Local alignment & mapping](#local-alignment)
     - [example: HBB Locus Control Region](#example-hbb-locus-control-region)
     - [example: FADS gene cluster loci](#example-fads-gene-cluster-loci)
-    - [example: human-mouse whole-genome alignment](#example-human-mouse-whole-genome-alignment)
-  - [genome mapping](#genome-mapping) 
+  - [Whole-genome alignment & mapping](#example-human-mouse-whole-genome-alignment)
 # Introduction
 gkm-align is a whole-genome alignment algorithm designed to map distal enhancers conserved between distant mammals (e.g., human and mouse). gkm-align discovers orthologous enhancers by identifying alignment paths with maximal similarity in gapped-kmer compositions along syntenic loci. gkm-align's performance can further be enhanced by incorporating conserved enhancer vocabularies obtained using gkm-SVM sequence models trained on enhancers. 
 
