@@ -248,13 +248,13 @@ This generates the following two files, each with the following suffixes: '*.mul
 # Other
 Although this README is sufficient for running gkm-align, it will be updated with additional information. Future updates will include, but are not limited to, instructions on the following:
 
-- generating quantitative catalogs of conserved enhancers annotated with various gapped-kmer-based conservation scores (provided in the [gkm-align website](https://beerlab.org/gkmalign/) under the "Tables of orthologous human/mouse enhancers..." section; e.g., [embryonic brain](https://beerlab.org/gkmalign/gkm-align_mapping/DHS_790_hg38_enhancers_h2m_unweighted.tsv))
+- Generating quantitative catalogs of conserved enhancers annotated with various gapped-kmer-based conservation scores (provided in the [gkm-align website](https://beerlab.org/gkmalign/) under the "Tables of orthologous human/mouse enhancers..." section; e.g., [embryonic brain](https://beerlab.org/gkmalign/gkm-align_mapping/DHS_790_hg38_enhancers_h2m_unweighted.tsv)).
 
-- generating gkm-SVM genome background models for repeat masking
-- generating posterior gkm-SVM kmer-weight files (for generating prediction values ranging from 0-1)
-- generating gkm-align logo visualization ([Fig. 5C](https://www.nature.com/articles/s41467-024-50708-z#Fig5) of the manuscript)
+- Generating gkm-SVM genome background models for repeat masking.
+- Generating posterior gkm-SVM kmer-weight files (for generating prediction values ranging from 0-1).
+- Generating gkm-align logo visualization ([Fig. 5C](https://www.nature.com/articles/s41467-024-50708-z#Fig5) of the manuscript).
 
-Regardless, all necessary information required for performing the above analyses are included in the [manuscript](https://www.nature.com/articles/s41467-024-50708-z). Mathematical details of the gkm-align algorithm is given in the Supplementary Note of the [Supplementary Information section](https://static-content.springer.com/esm/art%3A10.1038%2Fs41467-024-50708-z/MediaObjects/41467_2024_50708_MOESM1_ESM.pdf). 
+Regardless, all necessary information required for performing these analyses are included in the [manuscript](https://www.nature.com/articles/s41467-024-50708-z). Mathematical details of the gkm-align algorithm are provided in the Supplementary Note of the [Supplementary Information section](https://static-content.springer.com/esm/art%3A10.1038%2Fs41467-024-50708-z/MediaObjects/41467_2024_50708_MOESM1_ESM.pdf) of the manuscript. 
 
 # Authors
 - Jin Woo Oh *
