@@ -9,8 +9,8 @@
     - [example: HBB Locus Control Region](#example-hbb-locus-control-region)
     - [example: FADS gene cluster loci](#example-fads-gene-cluster-loci)
   - [Whole-genome alignment & mapping](#whole-genome-alignment-and-mapping)
-    - [Alignment](#alignment)
-    - [Mapping](#mapping)
+    - [Genome alignment](#genome-alignment)
+    - [Genome-wide mapping](#genome-wide-mapping)
 # Introduction
 gkm-align is a whole-genome alignment algorithm designed to map distal enhancers conserved between distant mammals (e.g., human and mouse). gkm-align discovers orthologous enhancers by identifying alignment paths with maximal similarity in gapped-kmer compositions along syntenic loci. gkm-align's performance can further be enhanced by incorporating conserved enhancer vocabularies obtained using gkm-SVM sequence models trained on enhancers. 
 
@@ -132,7 +132,7 @@ Rscript ../../scripts/visualize_coordinates.R output_files/FADS_loci_mm10-hg38.c
 This process takes between 10 seconds and a few minutes depending on your hardware availability.
 
 ## Whole-genome alignment and mapping
-### Alignment
+### Genome alignment
 The previous two examples (HBB LCR and FADS loci) demonstrated how gkm-align can align a pair of human and mouse loci when their genomic coordinate ranges are well defined, as below:
 <pre>
 [HBB LCR]
@@ -161,7 +161,7 @@ The following figure shows an example output from running the pipeline described
 
 ![GNA12 syntenic blocks](examples/whole_genome/png/gna12_vis.png) 
 
-### Mapping 
+### Genome-wide mapping
 
 # Authors
 - Jin Woo Oh *
