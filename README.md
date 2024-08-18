@@ -168,6 +168,22 @@ The following figure shows an example output from running the pipeline described
 
 #### Cell-type-independent unweighted genome alignment
 
+After generating 'human_mouse_WG_syntenic_intergenic_loci.to_align' through the pipeline described above, whole-genome alignment can now be performed by running:
+<pre>
+bash run_gkmalign.sh
+</pre>
+The shell script first generates 'masker_models.txt'. It contains file paths to gkm-SVM genomic background models for human and mouse. These files are downloaded to 'data/' upon setting up gkm-align (bash setup.sh). Then the shell script runs gkm-align on the syntenic blocks using the following command:
+<pre>
+../../bin/gkm_align  -t 1  human_mouse_WG_syntenic_intergenic_loci.to_align -d ../../data/genomes/ -g masker_models.txt   -p 50 -o output_files -n human_mouse_WG_syntenic_intergenic_loci -G
+</pre>
+
+Similar to the FADS and HBB examples, this command line will output a '.coord' file for mapping conserved elements between genome builds. The '-G' option locally saves all the gapped-kmer matrices computed in the directory specified with '-o'. Since computing the gapped-kmer matrices is the most time-consuming part of the algorithm, locally saving the matrices allows the whole-genome alignment to be resumed if the process is interrupted. This option is recommended only if your system has sufficient disk space.
+
+The -G option is particularly useful if you plan to run gkm-align multiple times with various gkm-SVM enhancer models, as it allows the software to reuse previously generated gkm-matrices found in the output directory (-o). For whole genome alignment, this option should be used with discretion because it requires a large disk space (~3TB for hg38-mm10).  Without the locally saved matrices, whole-genome alignment of hg38 and mm10 take about a day with 50 threads ('-p 50'). With the matrices,  whole-genome alignment takes about three hours. 
+
+In general, whole-genome alignment is computationally intensive, and the necessary computational resources may not be available for some users. In such cases, we recommend downloading our pre-computed alignment outputs (analogous to [LiftOver/LASTZ](https://hgdownload.cse.ucsc.edu/goldenpath/hg38/liftOver/)'s .chain files). These files can be downloaded from our lab website ([beerlab.org](https://beerlab.org/gkmalign/)) under "Output files of aligning the hg38 and mm10 genomes with gkm-align". These files (with suffix .coord) can then be used to map any human elements to mouse or vice versa within conserved intergenic loci, using '-t 2' as described using the [HBB LCR](#example-hbb-locus-control-region). 
+
+
 #### Cell-type-specific model-weighted genome alignment
 
 ### Genome-wide mapping
