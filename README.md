@@ -45,7 +45,7 @@ Additionally, if you press y (recommended for following the tutorial more easily
 
 The entire process takes less than 3 minutes. 
 
-# Running  gkm-align
+# Running gkm-align
 ## Local sequence alignment and mapping 
 
 ### Example: HBB Locus Control Region
