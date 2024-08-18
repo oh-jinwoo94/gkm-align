@@ -78,11 +78,11 @@ mkdir output_files
   * **'-p 50'**: Uses 50 parallel threads to speed up processing. This can be adjusted based on available computational resources.
   * **'-o' and '-n'**: Specify the output directory and output file prefix, respectively.
 
-This step generates 'output_files/**HBB_LCR_mm10-hg38.coord**', which is used as an input for the following step. 
+This step generates 'output_files/HBB_LCR_mm10-hg38.coord', which is used as an input for the following step. 
   
 **3)** **Mapping** mouse HBB-LCR enhancers to human. 
 <pre>
-../../bin/gkm_align  -t 2 -c output_files/**HBB_LCR_mm10-hg38.coord**  HBB_LCR_enhancers_mm10.bed -q mm10 -m -o output_files -n HBB_LCR_enhancers_mm10_mapped_to_hg38
+../../bin/gkm_align  -t 2 -c output_files/HBB_LCR_mm10-hg38.coord  HBB_LCR_enhancers_mm10.bed -q mm10 -m -o output_files -n HBB_LCR_enhancers_mm10_mapped_to_hg38
 </pre>
   * **'-t 2 -c output_files/HBB_LCR_mm10-hg38.coord'**: Specifies that gkm-align is in "mapping" mode and uses the output from the alignment step (-t 1) as the coordinate mapping file.
   * **'HBB_LCR_enhancers_mm10.bed'**: Input file containing the mm10 coordinates of mouse HBB-LCR enhancers.
@@ -187,7 +187,7 @@ The [shell script](examples/whole_genome/run_gkmalign.sh) first generates masker
 ../../bin/gkm_align  -t 1  human_mouse_WG_syntenic_intergenic_loci.to_align -d ../../data/genomes/ -g masker_models.txt   -p 50 -o output_files -n hg38-mm10_unweighted -G
 </pre>
 
-This command line will generate '[hg38-mm10_unweighted.coord](https://beerlab.org/gkmalign/hg38-mm10_unweighted.coord)'.
+This command line will generate '[**hg38-mm10_unweighted.coord**](https://beerlab.org/gkmalign/hg38-mm10_unweighted.coord)'.
 
 The '-G' option locally saves all the gapped-kmer matrices computed in the directory specified with '-o'. Since computing the gapped-kmer matrices is the most time-consuming part of the algorithm, locally saving the matrices allows the whole-genome alignment to be resumed if the process is interrupted. This option is recommended only if your system has sufficient disk space.
 
@@ -213,6 +213,8 @@ The pipeline described above can be executed with the following command:
 bash run_gkmalign_cell-weighted.sh human_mouse_WG_syntenic_intergenic_loci.to_align human_mouse_WG_syntenic_intergenic_loci.to_align DHS_790_hg38 DHS_97_mm10 0.5
 </pre>
 
+This command  line will generate [hg38-mm10_enhancer-model-weighted_DHS_790_hg38-DHS_97_mm10_c-0.5.coord
+](https://beerlab.org/gkmalign/coords/hg38-mm10_enhancer-model-weighted_DHS_790_hg38-DHS_97_mm10_c-0.5.coord) 
 To try this pipeline for a smaller input, using a fraction of the syntenic intergenic loci, run:
 <pre>
 head -10 human_mouse_WG_syntenic_intergenic_loci.to_align > subset_human_mouse_WG_syntenic_intergenic_loci.to_align
