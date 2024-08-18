@@ -16,7 +16,7 @@ Please cite the following paper if you use gkm-align:
 
 **Oh, J.W., Beer, M.A.** Gapped-kmer sequence modeling robustly identifies regulatory vocabularies and distal enhancers conserved between evolutionarily distant mammals. **Nature Communications** 15, 6464 (**2024**). https://doi.org/10.1038/s41467-024-50708-z
 
-Also, visit the [gkm-align webpage](https://beerlab.org/gkmalign/) to find useful resources for running gkm-align. 
+Also, visit the [gkm-align webpage](https://beerlab.org/gkmalign/) to find useful resource files for running gkm-align. 
 
 # System Requirements
 gkm-align software is built for Linux-based operating systems (such as Red Hat, CentOS, and Rocky Linux, etc.).
