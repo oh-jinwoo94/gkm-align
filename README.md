@@ -210,6 +210,11 @@ The pipeline described above can be executed with the following command:
 bash run_gkmalign_cell-weighted.sh human_mouse_WG_syntenic_intergenic_loci.to_align human_mouse_WG_syntenic_intergenic_loci.to_align DHS_790_hg38 DHS_97_mm10 0.5
 </pre>
 
+To try this pipeline for a smaller input, using a fraction of the syntenic intergenic loci, run:
+<pre>
+head -10 human_mouse_WG_syntenic_intergenic_loci.to_align > subset_human_mouse_WG_syntenic_intergenic_loci.to_align
+bash run_gkmalign_cell-weighted.sh subset_human_mouse_WG_syntenic_intergenic_loci.to_align human_mouse_WG_syntenic_intergenic_loci.to_align DHS_790_hg38 DHS_97_mm10 0.5
+</pre>
 
 ### Genome-wide mapping
 
