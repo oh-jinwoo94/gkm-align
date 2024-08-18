@@ -3,15 +3,15 @@
 - [System Requirements](#system-requirements)
 - [Installation](#installation)
 - [Running gkm-align](#running-gkm-align)
-  - [Local sequence alignment & mapping](#local-sequence-alignment-and-mapping)
-    - [example: HBB Locus Control Region](#example-hbb-locus-control-region)
-    - [example: FADS gene cluster loci](#example-fads-gene-cluster-loci)
-  - [Whole-genome alignment & mapping](#whole-genome-alignment-and-mapping)
-    - [Genome alignment](#genome-alignment)
+  - [Local Sequence Alignment and Mapping](#local-sequence-alignment-and-mapping)
+    - [Example: HBB Locus Control Region](#example-hbb-locus-control-region)
+    - [Example: FADS Gene Cluster Loci](#example-fads-gene-cluster-loci)
+  - [Whole-genome Alignment and Mapping](#whole-genome-alignment-and-mapping)
+    - [Genome Alignment](#genome-alignment)
         - [Pre-processing for genome alignment](#pre-processing-for-genome-alignment)
         - [cell-type-independent unweighted genome alignment](#cell-type-independent-unweighted-genome-alignment)
         - [cell-type-specific model-weighted genome alignment](#cell-type-specific-model-weighted-genome-alignment)
-    - [Genome-wide mapping](#genome-wide-mapping)
+    - [Genome-wide Mapping](#genome-wide-mapping)
 - [Other](#other)
 # Introduction
 gkm-align is a whole-genome alignment algorithm designed to map distal enhancers conserved between distant mammals (e.g., human and mouse). gkm-align discovers orthologous enhancers by identifying alignment paths with maximal similarity in gapped-kmer compositions along syntenic loci. gkm-align's performance can further be enhanced by incorporating conserved enhancer vocabularies obtained using gkm-SVM sequence models trained on enhancers. 
@@ -48,7 +48,7 @@ The entire process takes less than 3 minutes.
 # Running  gkm-align
 ## Local sequence alignment and mapping 
 
-### example: HBB Locus Control Region
+### Example: HBB Locus Control Region
 In this section, we use gkm-align to align the human and mouse HBB Locus Control Region (HBB-LCR) and map mouse HBB-LCR enhancers to human genome (Oh and Beer, **Figure 3G**). 
 
 Enter the following commands.
@@ -99,7 +99,7 @@ Details on other software options can be found by typing:
 
 This process takes between 10 seconds and a few minutes depending on your hardware availability.
 
-### example: FADS gene cluster loci
+### Example: FADS Gene Cluster Loci
 In this section, we align the human and mouse FADS gene cluster loci. 
 
 Enter the following commands.
@@ -133,10 +133,10 @@ Rscript ../../scripts/visualize_coordinates.R output_files/FADS_loci_mm10-hg38.c
 
 This process takes between 10 seconds and a few minutes depending on your hardware availability.
 
-## Whole-genome alignment and mapping
+## Whole-genome Alignment and Mapping
 
-### Genome alignment
-#### Pre-processing for genome alignment
+### Genome Alignment
+#### Pre-processing for Genome Alignment
 The previous examples (HBB LCR and FADS loci) demonstrated how gkm-align can align a pair of human and mouse loci when their genomic coordinate ranges are well defined, as below:
 <pre>
 [HBB LCR]
@@ -167,7 +167,7 @@ This pipeline generates '[**human_mouse_WG_syntenic_intergenic_loci.to_align**](
 
 ![GNA12 syntenic blocks](examples/whole_genome/png/gna12_vis.png) 
 
-#### Cell-type-independent unweighted genome alignment
+#### Cell-type-independent Unweighted Genome Alignment
 
 Using '[human_mouse_WG_syntenic_intergenic_loci.to_align](examples/whole_genome/human_mouse_WG_syntenic_intergenic_loci.to_align)' from the previous section, you can now perform whole-genome alignment by running:
 <pre>
@@ -195,7 +195,7 @@ The -G option is particularly useful if you plan to run gkm-align multiple times
 In general, whole-genome alignment is computationally intensive, and the necessary computational resources may not be available for some users. In such cases, we recommend downloading our pre-computed alignment outputs (analogous to [LiftOver/LASTZ](https://hgdownload.cse.ucsc.edu/goldenpath/hg38/liftOver/)'s .chain files). These files can be downloaded from our lab website ([beerlab.org](https://beerlab.org/gkmalign/)) under "Output files of aligning the hg38 and mm10 genomes with gkm-align".
 
 
-#### Cell-type-specific model-weighted genome alignment
+#### Cell-type-specific Model-weighted Genome Alignment
 The [run_gkmalign_cell-weighted.sh](examples/whole_genome/run_gkmalign_cell-weighted.sh) shell script describes how to compute cell-specific whole-genome alignment using enhancer sequence models (gkm-SVM).
 
 The first step is to download the relevant sequence models. For example, to perform alignment weighted toward embryonic brain enhancers, first download the gkm-SVM embryonic brain enhancer models for human (DHS_790_hg38) and mouse (DHS_97_mm10). The full list of enhancer models can be found at the following links: [human-model-list](https://beerlab.org/gkmalign/Supplementary_Table_2.txt) and [mouse-model-list](https://beerlab.org/gkmalign/Supplementary_Table_3.txt). Using the model aliases, you can download the models from these links: [human-model-repo](https://beerlab.org/gkmalign/human) and [mouse-model-repo](https://beerlab.org/gkmalign/mouse). These files include the enhancer-kmer weights and additional information used to compute gkm-SVM prediction scores, which range from 0 to 1.
@@ -221,7 +221,7 @@ head -10 human_mouse_WG_syntenic_intergenic_loci.to_align > subset_human_mouse_W
 bash run_gkmalign_cell-weighted.sh subset_human_mouse_WG_syntenic_intergenic_loci.to_align human_mouse_WG_syntenic_intergenic_loci.to_align DHS_790_hg38 DHS_97_mm10 0.5
 </pre>
 
-### Genome-wide mapping
+### Genome-wide Mapping
 This section demonstrates how to use the alignment outputs from the [previous section](#genome-alignment) to map genomic sequences conserved between human and mouse. 
 
 First, download the human embryonic brain enhancers ([DHS_790_hg38_300_noproms_nc30.bed](https://beerlab.org/gkmalign/human_enh/DHS_790_hg38_300_noproms_nc30.bed)) from our [lab website](https://beerlab.org/gkmalign). We have uploaded all the enhancer sets for the 45 pairs of human and mouse cell/tissues that we used to quantify enhancer conservation and to evaluate gkm-align. You can identify the cell/tissue source for each enhancer set using this [catalog](https://beerlab.org/gkmalign/Supplementary_Table_4.txt). For more details on the biosamples, you can search for their ENCODE accession IDs (listed in the following links: [human](https://beerlab.org/gkmalign/Supplementary_Table_2.txt), [mouse](https://beerlab.org/gkmalign/Supplementary_Table_3.txt)) on the [ENCODE portal](https://encodeproject.org). 
