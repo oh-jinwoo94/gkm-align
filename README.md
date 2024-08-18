@@ -5,7 +5,7 @@
 - [System Requirements](#system-requirements)
 - [Installation](#installation)
 - [Running gkm-align](#running-gkm-align)
-  - [genome alignment] ()
+  - [genome alignment] (#genome-alignment)
     - [example: HBB Locus Control Region](#example-hbb-locus-control-region)
     - [example: FADS gene cluster loci](#example-fads-gene-cluster-loci)
     - [example: human-mouse whole-genome alignment](#example-human-mouse-whole-genome-alignment)
