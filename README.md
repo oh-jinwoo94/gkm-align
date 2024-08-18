@@ -182,7 +182,7 @@ bash run_gkmalign.sh subset_human_mouse_WG_syntenic_intergenic_loci.to_align
 The [shell script](examples/whole_genome/run_gkmalign.sh) first generates masker_models.txt, which contains file paths to gkm-SVM genomic background models for human and mouse. These files are downloaded to data/ when setting up gkm-align (using bash setup.sh). The script then runs gkm-align on the syntenic blocks with the following command:
 
 <pre>
-../../bin/gkm_align  -t 1  human_mouse_WG_syntenic_intergenic_loci.to_align -d ../../data/genomes/ -g masker_models.txt   -p 50 -o output_files -n human_mouse_WG_syntenic_intergenic_loci -G
+../../bin/gkm_align  -t 1  human_mouse_WG_syntenic_intergenic_loci.to_align -d ../../data/genomes/ -g masker_models.txt   -p 50 -o output_files -n hg38-mm10_unweighted -G
 </pre>
 
 Similar to the FADS and HBB examples, this command line will output a '.coord' file for mapping conserved elements between genome builds. The '-G' option locally saves all the gapped-kmer matrices computed in the directory specified with '-o'. Since computing the gapped-kmer matrices is the most time-consuming part of the algorithm, locally saving the matrices allows the whole-genome alignment to be resumed if the process is interrupted. This option is recommended only if your system has sufficient disk space.
@@ -200,7 +200,7 @@ The first step is to download the relevant sequence models. For example, to perf
 After downloading the model files, you can run enhancer-model-weighted gkm-align using the '-W' option. For example, to run embryonic-brain-weighted alignment with a model weight of c=0.5, include '-W,0.5,sequence_model_files.txt', where each line of '[sequence_model_files.txt](examples/whole_genome/sequence_model_files.txt)' specifies the file path to the enhancer models downloaded in the previous step.
 
 <pre>
-../../bin/gkm_align -t 1 -g masker_models.txt -d /mnt/data0/joh27/genomes/ subset_human_mouse_WG_syntenic_intergenic_loci.to_align -W 0.5,sequence_model_files.txt -p 50 -o output_files/ -n hg38-mm10_enhancer-model-weighted_DHS_790_hg38-DHS_97_mm10_c-0.5.coord
+../../bin/gkm_align -t 1 -g masker_models.txt -d /mnt/data0/joh27/genomes/ subset_human_mouse_WG_syntenic_intergenic_loci.to_align -W 0.5,sequence_model_files.txt -p 50 -o output_files/ -n hg38-mm10_enhancer-model-weighted_DHS_790_hg38-DHS_97_mm10_c-0.5
 </pre>
 
 The pipeline described above can be executed with the following command:
