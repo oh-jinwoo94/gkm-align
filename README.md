@@ -27,7 +27,7 @@ gkm-align software is built for Linux-based operating systems (such as Red Hat, 
 The package has been tested on the following system:
 * Rocky Linux release 8.8 (Green Obsidian).
 
-gkm-align utilizes SIMD parallel computation and requires AVX2 support (to check availability, use: 'lscpu | grep avx2'). However, SIMD is only employed for sequence alignment. Therefore, the software can still be used without AVX2 if you plan to use gkm-align with our precomputed genome alignment output files (e.g., [hg38-mm10_unweighted.coord](https://beerlab.org/gkmalign/hg38-mm10_unweighted.coord)) for mapping conserved enhancers. For example, the -t 1 option requires AVX2, but the -t 2 option can be used without it. 
+gkm-align uses SIMD parallel computation and requires AVX2 support (to check availability, use: 'lscpu | grep avx2'). However, SIMD is only employed for sequence alignment. Therefore, the software can still be used without AVX2 if are using precomputed genome alignment output files (e.g., [hg38-mm10_unweighted.coord](https://beerlab.org/gkmalign/hg38-mm10_unweighted.coord)) for mapping conserved enhancers. For example, the -t 1 option requires AVX2, but the -t 2 option can be used without it. 
  
 # Installation
 First, download the source code using the following command line:
@@ -58,7 +58,7 @@ bash run_gkmalign.sh
 </pre>
 
 
-The 'run_gkmalign.sh' script contains three parts.
+The 'run_gkmalign.sh' script has three main parts.
 
 **1)** Setting up gkm-align input file (specifying gkm-SVM genomic masker models to be used) and output directory. 
 <pre>
@@ -71,7 +71,7 @@ mkdir output_files
 <pre>
 ../../bin/gkm_align  -t 1  HBB.to_align -d ../../data/genomes/ -g masker_models.txt   -p 50 -o output_files -n HBB_LCR_mm10-hg38
 </pre>
-  * **'-t 1 HBB.to_align'**: Specifies that gkm-align is in "align" mode and uses the input file HBB.to_align, which contains the genomic coordinates of the HBB Locus Control Regions (LCRs) for both human and mouse.
+  * **'-t 1 HBB.to_align'**: Specifies that gkm-align is in "align" mode and uses the input file HBB.to_align, which contains the genomic coordinates for both human and mouse HBB Locus Control Regions (LCRs)
   * **'-d ../../data/genomes'**: Specifiies directory containing the genome data files for human (hg38) and mouse (mm10). These directories should contain chromosome sequence files (e.g., chr1.fa, chr2.fa).
   * **'-g masker_models.txt'**: Specifies the genomic background model to use for repeat masking, which helps reduce alignment errors by masking repetitive sequences.
   * **'-p 50'**: Uses 50 parallel threads to speed up processing. This can be adjusted based on available computational resources.
@@ -116,7 +116,7 @@ For example, the 'run_gkmalign.sh' script contains the following command lnes:
 </pre>
  * Adding '-G' option outputs matrix G (binary) to an output directory specified by -o, for each line in the input file with '.to_align' suffix. Output matrix G file is named automatically based on the genomic ranges from which the matrix was computed. 
 
-The output binary file can be converted into a tab-separated file by running: 
+You can convert the output binary file into a tab-separated file by running:
 <pre> 
 ../../bin/binary_matrix_2_tsv output_files/mm10-chr19-10194014-10214169-hg38-chr11-61782802-61802911-diff_strand.matrixG output_files/mm10-chr19-10194014-10214169-hg38-chr11-61782802-61802911-diff_strand.tsv
 </pre>
@@ -137,7 +137,7 @@ This process takes between 10 seconds and a few minutes depending on your hardwa
 
 ### Genome alignment
 #### Pre-processing for genome alignment
-The previous two examples (HBB LCR and FADS loci) demonstrated how gkm-align can align a pair of human and mouse loci when their genomic coordinate ranges are well defined, as below:
+The previous examples (HBB LCR and FADS loci) demonstrated how gkm-align can align a pair of human and mouse loci when their genomic coordinate ranges are well defined, as below:
 <pre>
 [HBB LCR]
 mm10 chr7 103851395 103883181 hg38 chr11 5267522 5302220 same_strand
@@ -147,9 +147,9 @@ mm10 chr19 10194014 10214169 hg38 chr11 61782802 61802911 diff_strand*
 (*note: 'diff_strand' indicates that the human and mouse loci are inverted relative to each another in their respective genome builds.)
 </pre>
 
-gkm-align can be applied at the whole genome level by providing a pre-computed list of conserved syntenic loci. It may consist of a list of flanking windows around known conserved transcription start sites, or it may include a list of predicted syntenic intergenic loci derived from a comprehensive list of short sequence matches, as was done for the gkm-align manuscript. In this part of the tutorial, I will describe how to perform whole-genome alignment with gkm-align using syntenic intergenic loci generated using short sequence matches. 
+gkm-align can be applied at the whole-genome level by providing a pre-computed list of conserved syntenic loci. It may consist of a list of flanking windows around known conserved transcription start sites, or it may include a list of predicted syntenic intergenic loci derived from a comprehensive list of short sequence matches, as was done for the gkm-align manuscript. In this part of the tutorial, I will describe how to perform whole-genome alignment with gkm-align using syntenic intergenic loci generated using short sequence matches. 
 
-To generate the list of human-mouse syntenic intergenic loci, run following command lines. 
+To generate the list of human-mouse syntenic intergenic loci, run the following command lines:
 <pre>
 cd examples/whole_genome/ 
 bash generate_syntenic_loci_to_align.sh
@@ -196,7 +196,7 @@ In general, whole-genome alignment is computationally intensive, and the necessa
 
 
 #### Cell-type-specific model-weighted genome alignment
-The [run_gkmalign_cell-weighted.sh](examples/whole_genome/run_gkmalign_cell-weighted.sh) shell script describes how cell-specific whole-genome alignment can be computed using enhancer sequence models (gkm-SVM).
+The [run_gkmalign_cell-weighted.sh](examples/whole_genome/run_gkmalign_cell-weighted.sh) shell script describes how to compute cell-specific whole-genome alignment using enhancer sequence models (gkm-SVM).
 
 The first step is to download the relevant sequence models. For example, to perform alignment weighted toward embryonic brain enhancers, first download the gkm-SVM embryonic brain enhancer models for human (DHS_790_hg38) and mouse (DHS_97_mm10). The full list of enhancer models can be found at the following links: [human-model-list](https://beerlab.org/gkmalign/Supplementary_Table_2.txt) and [mouse-model-list](https://beerlab.org/gkmalign/Supplementary_Table_3.txt). Using the model aliases, you can download the models from these links: [human-model-repo](https://beerlab.org/gkmalign/human) and [mouse-model-repo](https://beerlab.org/gkmalign/mouse). These files include the enhancer-kmer weights and additional information used to compute gkm-SVM prediction scores, which range from 0 to 1.
 
@@ -246,7 +246,7 @@ This generates the following two files, each with the following suffixes: '*.mul
 
 
 # Other
-Although this README is sufficient for running gkm-align, it will be updated with additional details. Future updates will include, but are not limited to, instructions for the following:
+Although this README is sufficient for running gkm-align, it will be updated with additional information. Future updates will include, but are not limited to, instructions on the following:
 
 - generating quantitative catalogs of conserved enhancers annotated with various gapped-kmer-based conservation scores (provided in the [gkm-align website](https://beerlab.org/gkmalign/) under the "Tables of orthologous human/mouse enhancers..." section; e.g., [embryonic brain](https://beerlab.org/gkmalign/gkm-align_mapping/DHS_790_hg38_enhancers_h2m_unweighted.tsv))
 
