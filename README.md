@@ -215,6 +215,7 @@ bash run_gkmalign_cell-weighted.sh human_mouse_WG_syntenic_intergenic_loci.to_al
 
 This command  line will generate [hg38-mm10_enhancer-model-weighted_DHS_790_hg38-DHS_97_mm10_c-0.5.coord
 ](https://beerlab.org/gkmalign/coords/hg38-mm10_enhancer-model-weighted_DHS_790_hg38-DHS_97_mm10_c-0.5.coord) 
+
 To try this pipeline for a smaller input, using a fraction of the syntenic intergenic loci, run:
 <pre>
 head -10 human_mouse_WG_syntenic_intergenic_loci.to_align > subset_human_mouse_WG_syntenic_intergenic_loci.to_align
