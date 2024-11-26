@@ -234,7 +234,7 @@ awk '{print $1"\t"$2"\t"$3"\t"$1":"$2"-"$3}' DHS_790_hg38_300_noproms_nc30.bed >
 To map human embryonic brain enhancers to the mouse genome using [hg38-mm10_unweighted.coord](https://beerlab.org/gkmalign/hg38-mm10_unweighted.coord), run the following command line: 
 
 <pre>
-../../bin/gkm_align  -t 2  human_brain_enhancers.bed  -c hg38-mm10_unweighted.coord -q mm10 -m -o output_files -n human_brain_enhancers_mapped_to_mm10
+../../bin/gkm_align  -t 2  human_brain_enhancers.bed  -c hg38-mm10_unweighted.coord -q hg38 -m -o output_files -n human_brain_enhancers_mapped_to_mm10
 </pre>
  
 This generates the following two files, each with the following suffixes: '*.multiple_mapped*' and '*.multiple_not_mapped*'. These file formats were designed to match the output file formats of LiftOver.
