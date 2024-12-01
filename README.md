@@ -138,7 +138,7 @@ This process takes between 10 seconds and a few minutes depending on your hardwa
 ## Whole-genome Alignment and Mapping
 
 > **NOTE:**  
-> The pipeline described in this section performs whole-genome alignment limited to human-mouse syntenic intergenic loci to prioritize sequence matches with high evolutionary and functional relevance. Approximately 10-15% of human and mouse enhancers fall outside these regions and will not be mapped. If you wish to align regions that are excluded by this filter, you can manually add the relevant syntenic region to the '.to_align' file.  
+> The pipeline described in this section performs whole-genome alignment limited to human-mouse syntenic intergenic loci to prioritize sequence matches with high evolutionary and functional relevance. Approximately 10-15% of human and mouse enhancers fall outside these regions and will not be mapped. If you wish to align regions that are excluded by this filter, you can manually add the relevant syntenic region to the `.to_align` file.  
 
 
 ### Genome Alignment
@@ -266,7 +266,7 @@ Regardless, all necessary information required for performing these analyses is 
 
 ---
 ## 2024-12-1
-- **Minor update**: gkm-align generates `.mapped` and `.not_mapped` files, similar to LiftOver (option `-t 2`). The format of the `.not_mapped` file has been updated to provide more detailed information on why certain elements did not map.
+- **Minor update**: gkm-align (option `-t 2`) generates `.mapped` and `.not_mapped` files, similar to LiftOver. The format of the `.not_mapped` file has been updated to provide more detailed information on why certain elements did not map.
   - **Case 1**: Not mapped because they are **outside the syntenic regions**, meaning they do not overlap any syntenic region recorded in the `.coord` file.
   - **Case 2**: Not mapped because they are **deleted**, meaning they overlap a syntenic region in the `.coord` file but are determined to be unconserved during the alignment process.
 
