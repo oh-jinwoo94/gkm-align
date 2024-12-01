@@ -274,7 +274,7 @@ Regardless, all necessary information required for performing these analyses is 
 ## 2024-12-1
 - **Minor update**: gkm-align (option `-t 2`) generates `.mapped` and `.not_mapped` files, similar to LiftOver. The format of the `.not_mapped` file has been updated to provide more detailed information on why certain elements did not map.
   - **Case 1**: Not mapped because they are **outside the syntenic regions**, meaning they do not overlap any syntenic region recorded in the `.coord` file.
-  - **Case 2**: Not mapped because they are **deleted**, meaning they overlap a syntenic region in the `.coord` file but are determined to be unconserved during the alignment process.
+  - **Case 2**: Not mapped because they are **deleted**, meaning they overlap a syntenic region in the `.coord` file but are determined to be unconserved during the alignment process (i.e., indel).
 
 
 # Authors
