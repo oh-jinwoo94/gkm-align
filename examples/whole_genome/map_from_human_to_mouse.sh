@@ -10,4 +10,4 @@ wget https://beerlab.org/gkmalign/hg38-mm10_unweighted.coord
 awk '{print $1"\t"$2"\t"$3"\t"$1":"$2"-"$3}' DHS_790_hg38_300_noproms_nc30.bed > human_brain_enhancers.bed
 
 # run mapper 
-../../bin/gkm_align  -t 2  human_brain_enhancers.bed  -c hg38-mm10_unweighted.coord -q mm10 -m -o output_files -n human_brain_enhancers_mapped_to_mm10 
+../../bin/gkm_align  -t 2  human_brain_enhancers.bed  -c hg38-mm10_unweighted.coord -q hg38 -m -o output_files -n human_brain_enhancers_mapped_to_mm10 
