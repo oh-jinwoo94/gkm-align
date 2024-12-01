@@ -13,6 +13,8 @@
         - [cell-type-specific model-weighted genome alignment](#cell-type-specific-model-weighted-genome-alignment)
     - [Genome-wide Mapping](#genome-wide-mapping)
 - [Other](#other)
+- [Software Updates](#update)
+
 # Introduction
 gkm-align is a whole-genome alignment algorithm designed to map distal enhancers conserved between distant mammals (e.g., human and mouse). gkm-align discovers orthologous enhancers by identifying alignment paths with maximal similarity in gapped-kmer compositions along syntenic loci. gkm-align's performance can further be enhanced by incorporating conserved enhancer vocabularies obtained using gkm-SVM sequence models trained on enhancers. 
 
@@ -259,6 +261,15 @@ Although this README is sufficient for running gkm-align, it will be updated wit
 - Generating gkm-align logo visualization (e.g., [Fig. 5C](https://www.nature.com/articles/s41467-024-50708-z#Fig5) of the manuscript).
 
 Regardless, all necessary information required for performing these analyses is included in the [manuscript](https://www.nature.com/articles/s41467-024-50708-z). Mathematical details of the gkm-align algorithm are provided on pages 41 to 48 of the Supplementary Information document of the manuscript. 
+
+# Software Updates
+
+---
+## 2024-12-1
+- **Minor update**: gkm-align generates `.mapped` and `.not_mapped` files, similar to LiftOver (option `-t 2`). The format of the `.not_mapped` file has been updated to provide more detailed information on why certain elements did not map.
+  - **Case 1**: Not mapped because they are **outside the syntenic regions**, meaning they do not overlap any syntenic region recorded in the `.coord` file.
+  - **Case 2**: Not mapped because they are **deleted**, meaning they overlap a syntenic region in the `.coord` file but are determined to be unconserved during the alignment process.
+
 
 # Authors
 - Jin Woo Oh *
