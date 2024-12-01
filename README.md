@@ -251,7 +251,7 @@ This generates two files with the following suffixes: `.multiple_mapped` and `.m
 
 `.multiple_not_mapped` contains the list of query enhancers that failed to map to the other species. There are two possible ways that this can happen:
   - **Case 1**: Not mapped because they are **outside the syntenic regions**, meaning they do not overlap any syntenic region recorded in the `.coord` file.
-  - **Case 2**: Not mapped because they are **deleted**, meaning they overlap a syntenic region in the `.coord` file but are determined to be unconserved during the alignment process.
+  - **Case 2**: Not mapped because they are **deleted**, meaning they overlap a syntenic region in the `.coord` file but are determined to be unconserved during the alignment process (i.e., indel).
 
 If you wish to align regions that are excluded in the input syntenic regions, you can manually add the relevant syntenic region to the `.to_align` file.
 
