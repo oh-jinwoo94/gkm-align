@@ -644,7 +644,8 @@ int main(int argc, char *argv[]) {
 
 	    // no matching chain 
 	    if(matched_chains.size() == 0){
-                ofile_nmapped << "# deleted in " << mp.get_tbuild()  <<endl;
+		ofile_nmapped << "# falls outside the  " << mp.get_qbuild() << "-" << mp.get_tbuild() << " sytenic regions." <<endl;
+
                 ofile_nmapped << chr + "\t" << start  << "\t" << end << "\t" <<bed_id<<endl;
 	        continue;
             }
