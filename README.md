@@ -248,7 +248,12 @@ This generates the following two files, each with the following suffixes: '*.mul
  '.multiple_mapped' contains the mapped mouse coordinates (column 1-3) for each of the query enhancers (column 4). The fifth column contains unique identifiers for mouse loci that were mapped from a single query human enhacer. Additionally, the fifth column contains the gkm-similarity score between the query human enhancer and the mapped mouse element. Mapping outputs from using enhancer-model-weighted '.coord' files include two extra columns containing interspecies gkm-SVM prediction scores (column 6 and 7 each encoding gkm-SVM scores of the mapped and query DNA elements). The gkm-similarity and gkm-SVM scores both range from 0 to 1, and they can be used for quantifying the conservation level or confidence level of gkm-align mapping. 
 
 
-'.multiple_not_mapped' contains the list of query enhancers that failed to map to the other species. Currently, all failed mappings contain the header "# deleted in mm10", indicating that the element was either not alignable using gkm-align or that the query element fell outside the syntenic intergenic loci specified in 'human_mouse_WG_syntenic_intergenic_loci.to_align'. A future software release may provide more specific failure messages, but for now, you can check whether the query enhancer lies within the syntenic bounds by overlapping the BED file with the 'to_align' file.
+'.multiple_not_mapped' contains the list of query enhancers that failed to map to the other species. There are two possible ways that this can happen:
+  - **Case 1**: Not mapped because they are **outside the syntenic regions**, meaning they do not overlap any syntenic region recorded in the `.coord` file.
+  - **Case 2**: Not mapped because they are **deleted**, meaning they overlap a syntenic region in the `.coord` file but are determined to be unconserved during the alignment process.
+
+If you wish to align regions that are excluded in the input syntenic regions, you can manually add the relevant syntenic region to the `.to_align` file.
+
 
 
 # Other
