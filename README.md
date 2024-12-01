@@ -243,12 +243,13 @@ To map human embryonic brain enhancers to the mouse genome using [hg38-mm10_unwe
 ../../bin/gkm_align  -t 2  human_brain_enhancers.bed  -c hg38-mm10_unweighted.coord -q hg38 -m -o output_files -n human_brain_enhancers_mapped_to_mm10
 </pre>
  
-This generates the following two files, each with the following suffixes: '*.multiple_mapped*' and '*.multiple_not_mapped*'. These file formats were designed to match the output file formats of LiftOver.
-
- '.multiple_mapped' contains the mapped mouse coordinates (column 1-3) for each of the query enhancers (column 4). The fifth column contains unique identifiers for mouse loci that were mapped from a single query human enhacer. Additionally, the fifth column contains the gkm-similarity score between the query human enhancer and the mapped mouse element. Mapping outputs from using enhancer-model-weighted '.coord' files include two extra columns containing interspecies gkm-SVM prediction scores (column 6 and 7 each encoding gkm-SVM scores of the mapped and query DNA elements). The gkm-similarity and gkm-SVM scores both range from 0 to 1, and they can be used for quantifying the conservation level or confidence level of gkm-align mapping. 
+This generates two files with the following suffixes: '*.multiple_mapped*' and '*.multiple_not_mapped*'. These file formats are designed to match the output file formats of LiftOver. Similarly, using `-u` (which filters out duplicate mappings) option generates *.unique_mapped*' and '*.unique_not_mapped*'. However, we recommend the `-m` option to obtain the full range of enhancer mappings, as gkm-align provides conservation metrics for evaluating each mapping. 
 
 
-'.multiple_not_mapped' contains the list of query enhancers that failed to map to the other species. There are two possible ways that this can happen:
+ `.multiple_mapped` contains the mapped mouse coordinates (column 1-3) for each of the query enhancers (column 4). The fifth column contains unique identifiers for mouse loci that were mapped from a single query human enhacer. Additionally, the fifth column contains the gkm-similarity score between the query human enhancer and the mapped mouse element. Mapping outputs from using enhancer-model-weighted `.coord` files include two extra columns containing interspecies gkm-SVM prediction scores (column 6 and 7 each encoding gkm-SVM scores of the mapped and query DNA elements). The gkm-similarity and gkm-SVM scores both range from 0 to 1, and they can be used for quantifying the conservation level or confidence level of gkm-align mapping. 
+
+
+`.multiple_not_mapped` contains the list of query enhancers that failed to map to the other species. There are two possible ways that this can happen:
   - **Case 1**: Not mapped because they are **outside the syntenic regions**, meaning they do not overlap any syntenic region recorded in the `.coord` file.
   - **Case 2**: Not mapped because they are **deleted**, meaning they overlap a syntenic region in the `.coord` file but are determined to be unconserved during the alignment process.
 
