@@ -136,7 +136,7 @@ This process takes between 10 seconds and a few minutes depending on your hardwa
 ## Whole-genome Alignment and Mapping
 
 > **NOTE:**  
-> The pipeline described in this section performs whole-genome alignment limited to human-mouse syntenic intergenic loci to focus on sequence matches with high evolutionary and functional relevance. Approximately 10~15% of human and mouse enhancers fall outside these regions and will not be mapped.  
+> The pipeline described in this section performs whole-genome alignment limited to human-mouse syntenic intergenic loci to prioritize sequence matches with high evolutionary and functional relevance. Approximately 10-15% of human and mouse enhancers fall outside these regions and will not be mapped. If you wish to align regions that are excluded by this filter, you can manually add the relevant syntenic region to the '.to_align' file.  
 
 
 ### Genome Alignment
