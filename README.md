@@ -136,7 +136,8 @@ This process takes between 10 seconds and a few minutes depending on your hardwa
 ## Whole-genome Alignment and Mapping
 
 > **NOTE:**  
-> Here, human/mouse whole-genome alignment is performed at hg38-mm10 syntenic intergenic loci to focus on sequence matches with high evolutionary and functional relevance. Approximately 10% of human and mouse enhancers fall outside these regions and will not be mapped.
+> The pipeline described in this section performs whole-genome alignment is limited to human-mouse syntenic intergenic loci to focus on sequence matches with high evolutionary and functional relevance. Approximately 10% of human and mouse enhancers fall outside these regions and will not be mapped.  
+
 
 ### Genome Alignment
 #### Pre-processing for Genome Alignment
