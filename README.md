@@ -259,6 +259,13 @@ If you wish to align regions that are excluded in the input syntenic regions, yo
 
 # Other
 ## Generating gkm-SVM genome background models for repeat masking.
+Here I describe how we can train gkm-SVM to learn background genomic sequences. To identify sequence patterns that are prevalent in genomic sequences (e.g., ATATATATATA), we train gkm-SVM on samples of genomic sequences vs randomly generated sequences (simply with P(A)=P(C)=P(G)=P(C)). An example output of this pipeline is: data/human_genomic_background_model_p_0.1.out (which you can download by running bash setup.sh)
+
+To train:
+<pre>
+cd etc/how_to_generate_genomic-background-models_for_gkm-SVM-repeat-masking/hg38/
+bash generate_genomic_background_model.sh
+</pre>
 
 
 
