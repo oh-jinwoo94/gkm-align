@@ -259,26 +259,30 @@ If you wish to align regions that are excluded in the input syntenic regions, yo
 
 # Other
 ## Generating gkm-SVM genome background models for repeat masking.
-In this section, I describe how to train gkm-SVM to learn background genomic sequences. The goal is to identify sequence patterns that are prevalent in genomic data (e.g., repetitive patterns like ATATATATATA). To achieve this, we train gkm-SVM using samples of genomic sequences against randomly generated sequences, where each base (A, C, G, T) is equally probable (P(A) = P(C) = P(G) = P(T)). An example output of this training process is the file `data/human_genomic_background_model_p_0.1.out`, which can be downloaded by ruinning `bash setup.sh`.
+In this section, I describe how to train gkm-SVM to learn background genomic sequences. The goal is to identify sequence patterns that are prevalent in genomic data (e.g., repetitive patterns like ATATATATATA). To achieve this, we train gkm-SVM using samples of genomic sequences against randomly generated sequences, where each base (A, C, G, T) is equally probable (P(A) = P(C) = P(G) = P(T)). 
 
-To train:
+### Example output: 
+The output of this training process is the file `data/human_genomic_background_model_p_0.1.out`, which can be downloaded by running `bash setup.sh`.
+
+To train the background model:
+
 <pre>
 cd etc/how_to_generate_genomic-background-models_for_gkm-SVM-repeat-masking/hg38/
-bash generate_genomic_background_model.sh 10 30000 0.1 
+bash generate_genomic_background_model.sh 10 30000 0.1
 </pre>
 
-For the results presented in the manuscript, we sampled as many genomic sequences as possible to minimize sampling noise. The parameter settings described above generate **10** independent gkm-SVM human genomic background models, which are then averaged to produce the final model. To build each background model, we sample **30,000** DNA sequences of length 300, which are used to train gkm-SVM against 30,000 randomly generated DNA sequences. The resulting k-mer weight vector (averaged across the 10 models) quantifies the prevalence of each k-mer in the genome. In gkm-align, this k-mer weight is used to score each base pair in the genome, where nucleotides with scores above a threshold are masked. We select a threshold that masks 10% (**0.1**) of the genome.
+For the results presented in the manuscript, we sampled as many genomic sequences as possible to minimize sampling noise. The **parameter settings** described above generate **10** independent gkm-SVM human genomic background models, which are then averaged to produce the final model. To build each background model, we sample **30,000** DNA sequences of length 300, which are used to train gkm-SVM against 30,000 randomly generated DNA sequences. The resulting k-mer weight vector (averaged across the 10 models) quantifies the prevalence of each k-mer in the genome. In gkm-align, this k-mer weight is used to score each base pair in the genome, where nucleotides with scores above a threshold are masked. We select a threshold that masks 10% (**0.1**) of the genome.
 
 
-NOTE: The sequence patterns that gkm-SVM is learning here are relatively simple and may not require the large number of training sequences used in this example (10 x 30,000). As we describe in the manuscript (Supp Fig. 14 in Oh and Beer, Nat Comm 2024), the background models for human and mouse genomes are quite similar, though some differences do exist. If you want to generate background models for other species but lack sufficient computing power, you could try reducing the training size (e.g., 10 → 5, 30,000 → 10,000) or averaging models from the human and mouse data. **However**, for optimal performance, we recommend generating species-specific background models with as many training sequences as possible.
+NOTE: The sequence patterns that gkm-SVM is learning here are relatively simple and may not require the large number of training sequences used in this example (10 x 30,000). As we describe in the manuscript (Supp Fig. 14 in Oh and Beer, Nat Comm 2024), the background models for human and mouse genomes are quite similar, although some differences exist. If you want to generate background models for other species but lack sufficient computing power, consider reducing training size (e.g., 10 → 5, 30,000 → 10,000) or averaging models from the human and mouse data. **However**, for optimal performance, we recommend generating species-specific background models with as many training sequences as possible.
 
 
-The above pipeline generates `human_genomic_background_model_p_0.1.out`. To test this model, run the following command line below. note that 
+The above pipeline generates `human_genomic_background_model_p_0.1.out`. To test this model, run the following command line below.
+ 
 <pre>
 ../../../bin/mask_fa files/test_hg38.fa ../../../data/human_genomic_background_model_p_0.1.out test_hg38_gkm-masked.fa
 </pre>
 
-Note that `mask_fa` is made just for this instruction. You don't need to use this code to mask on your own. It is done automatically when you run gkm-align. 
 
 <pre>
 >Before masking
@@ -288,6 +292,7 @@ CCTGGGTGACTGAGTGAGATCCTGTCTCAAAGAAAAATAAAAATAAAAAAAGTAATGTCACATGTGTAATCTTAATTTTT
 CCTGGGTGACTGAGTGAGATCCTGTCTCAaagaaaaataaaaataaaaaaaGTAATGTCACATGTGTAATCTTAatttttttcttcCCACCAACATTGCCAATTAAATTCCCACATTAAACTTTCTATAAGACAAataattttaATGTTACTTAAATGTGTACAAGAATGCCATAGTCCCCTTTGCAGAAATGTCATTTAAAACAGTACTCTTTCATACAATAATTTCTATGTTTCTAGTCTTACTTACtttctttctttctttctttcttttttttttgAGACAGAGTCTCGCCCTGTC
 </pre>
 
+Note: The `mask_fa` utility is designed specifically for this instruction. You do not need to manually mask sequences when using gkm-align. It automatically performs the masking step when you run the alignment.
 
 
 # Future
