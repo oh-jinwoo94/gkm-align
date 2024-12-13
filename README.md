@@ -13,6 +13,7 @@
         - [cell-type-specific model-weighted genome alignment](#cell-type-specific-model-weighted-genome-alignment)
     - [Genome-wide Mapping](#genome-wide-mapping)
 - [Other](#other)
+- [Future](#future)
 - [Software Updates](#update)
 
 # Introduction
@@ -256,13 +257,16 @@ This generates two files with the following suffixes: `.multiple_mapped` and `.m
 If you wish to align regions that are excluded in the input syntenic regions, you can manually add the relevant syntenic region to the `.to_align` file.
 
 
-
 # Other
-Although this README is sufficient for running gkm-align, it will be updated with additional information. Future updates will include, but are not limited to, instructions on the following:
+## Generating gkm-SVM genome background models for repeat masking.
+
+
+
+# Future
+Although this README is sufficient for running gkm-align, it will be updated with additional information by request. Future updates will include, but are not limited to, instructions on the following:
 
 - Generating quantitative catalogs of conserved enhancers annotated with various gapped-kmer-based conservation scores (provided in the [gkm-align website](https://beerlab.org/gkmalign/) under the "Tables of orthologous human/mouse enhancers..." section; e.g., [embryonic brain](https://beerlab.org/gkmalign/gkm-align_mapping/DHS_790_hg38_enhancers_h2m_unweighted.tsv)).
 
-- Generating gkm-SVM genome background models for repeat masking.
 - Generating posterior gkm-SVM kmer-weight files (for generating prediction values ranging from 0-1).
 - Generating gkm-align logo visualization (e.g., [Fig. 5C](https://www.nature.com/articles/s41467-024-50708-z#Fig5) of the manuscript).
 
