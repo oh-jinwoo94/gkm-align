@@ -6,3 +6,8 @@ src/*.o
 data/*
 examples/*
 !examples/**/*.sh
+
+
+# backup data
+etc/how_to_generate_genomic-background-models_for_gkm-SVM-repeat-masking/hg38/backup
+

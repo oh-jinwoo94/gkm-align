@@ -1,7 +1,7 @@
 CC = g++
 CFLAGS = -std=c++11 -Wall -Wextra -pedantic -pthread -mavx2 
 
-all: gkm_align  mask_fa compute_gkmsim binary_matrix_2_tsv visualize_mappings
+all: gkm_align  mask_fa compute_gkmsim binary_matrix_2_tsv visualize_mappings train_masker
 
 
 gkm_align:  gkm_align.o Matrix.o MatrixG_Computer.o Seq_Aligner.o   Mapper.o functions.o
@@ -54,6 +54,17 @@ visualize_mappings:  visualize_mappings.o Matrix.o MatrixG_Computer.o Seq_Aligne
 
 visualize_mappings.o: visualize_mappings.cpp header.h
 	$(CC) $(CFLAGS) -c visualize_mappings.cpp
+
+
+
+
+train_masker:  functions.o train_masker.o
+	$(CC) $(CFLAGS) train_masker.o functions.o -o train_masker
+	mv train_masker ../bin
+
+train_masker.o: train_masker.cpp header.h
+	$(CC) $(CFLAGS) -c train_masker.cpp
+
 
 clean:
 	rm -f *.o gkm_align 
