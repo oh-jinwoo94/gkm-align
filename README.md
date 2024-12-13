@@ -273,7 +273,8 @@ bash setup_gkmsvm.sh
 
 Then, train the background model by running the following script: 
 <pre>
-bash generate_genomic_background_model.sh 10 30000 0.1 # Details of the pipeline are provided within the script
+# Details of the pipeline are provided within the script
+bash generate_genomic_background_model.sh 10 30000 0.1 
 </pre>
 
 
