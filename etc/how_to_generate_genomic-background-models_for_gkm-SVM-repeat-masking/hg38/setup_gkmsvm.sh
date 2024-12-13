@@ -1,7 +1,9 @@
 #!/bin/sh
 
-#You can either use the lsgkm directory included here, or clone the gkm-SVM software package by running the following command:
-#git clone https://github.com/Dongwon-Lee/lsgkm.git
+
+# Download gkm-SVM software package by running the following command:
+# ** The lsgkm package is made by Dongwon Lee  **  Forked so that lsgkm update does not affect this pipeline.
+git clone https://github.com/oh-jinwoo94/lsgkm.git
 
 # compile 
 cd lsgkm/src
