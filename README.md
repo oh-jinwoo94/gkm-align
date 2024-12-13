@@ -265,9 +265,14 @@ In this section, I describe how to train gkm-SVM to learn background genomic seq
 The output of this training process is the file `data/human_genomic_background_model_p_0.1.out`, which can also be downloaded by running `bash setup.sh`.
 
 ### To train the background model:
-To train the model using gkm-SVM, navigate to the appropriate directory and run the script:
+First, navigate to the appropriate directory and set up lsgkm:
 <pre>
 cd etc/how_to_generate_genomic-background-models_for_gkm-SVM-repeat-masking/hg38/
+bash setup_gkmsvm.sh
+</pre>
+
+Then, train the background model by running: 
+<pre>
 bash generate_genomic_background_model.sh 10 30000 0.1
 </pre>
 
