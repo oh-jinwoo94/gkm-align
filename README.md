@@ -279,7 +279,8 @@ bash generate_genomic_background_model.sh 10 30000 0.1
 
 
 
-For the results presented in the manuscript, we sampled as many genomic sequences as possible to minimize sampling noise. The parameters specified above generate **10** independent gkm-SVM human genomic background models, which are then averaged to produce the final model. For each background model, we sample **30,000** DNA sequences of length 300 and train gkm-SVM against 30,000 randomly generated DNA sequences.
+For the results presented in the manuscript, we sampled as many genomic sequences as possible to minimize sampling noise. The parameters specified above generate **10** independent gkm-SVM human genomic background models, which are then averaged to produce the final model. Each background model is trained on **30,000** genomic DNA sequences of length 300, sampled from the human genome, against to 30,000 randomly generated DNA sequences (real biological sequences vs. synthetic sequences).
+
 
 The resulting kmer weight vector (averaged across the 10 models) quantifies the prevalence of each kmer in the genome. In gkm-align, this kmer weight is used to score each base pair in the genome, where nucleotides with scores above a certain threshold are masked. We select a threshold that masks 10% (**0.1**) of the genome.
 
