@@ -311,7 +311,7 @@ Note: The `mask_fa` utility is designed specifically for this instruction. You d
 
 
 # Future
-Although this README is sufficient for running gkm-align, it will be updated with additional information by request. Future updates will include, but are not limited to, instructions on the following:
+Although this README is sufficient for running gkm-align, it will be updated with additional information **by request**. Future updates will include, but are not limited to, instructions on the following:
 
 - Generating quantitative catalogs of conserved enhancers annotated with various gapped-kmer-based conservation scores (provided in the [gkm-align website](https://beerlab.org/gkmalign/) under the "Tables of orthologous human/mouse enhancers..." section; e.g., [embryonic brain](https://beerlab.org/gkmalign/gkm-align_mapping/DHS_790_hg38_enhancers_h2m_unweighted.tsv)).
 
