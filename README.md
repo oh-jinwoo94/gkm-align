@@ -279,7 +279,7 @@ The resulting kmer weight vector (averaged across the 10 models) quantifies the 
 ### Note for computational efficiency:
 The sequence patterns that gkm-SVM is learning here are relatively simple and may not require the large number of training sequences used in this example (10 x 30,000). As mentioned in the manuscript (Supp. Fig. 14 in Oh and Beer, Nat Comm 2024), the background models for human and mouse genomes are quite similar, although some differences exist.
 
-If you want to generate background models for other species but lack sufficient computing power, consider reducing the training size (e.g., 10 -> 5, 30,000 -> 10,000). Alternatively, you could use the human and mouse models, as the model you create will likely be similar to these. However, for optimal performance, we recommend generating species-specific background models using as many training sequences as possible.
+If you want to generate background models for other species but lack sufficient computing power, consider reducing the training size (e.g., 10 →  5, 30,000 →  10,000). Alternatively, you could use the human and mouse models, as the model you create will likely be similar to these. However, for optimal performance, we recommend generating species-specific background models using as many training sequences as possible.
 
 
 
