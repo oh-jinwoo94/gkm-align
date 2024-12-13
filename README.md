@@ -267,7 +267,7 @@ cd etc/how_to_generate_genomic-background-models_for_gkm-SVM-repeat-masking/hg38
 bash generate_genomic_background_model.sh 10 30000 0.1 
 </pre>
 
-For the results in  the manuscript, we sampled as many genomic sequences as possible to mimize the sampling noise. The above parameter settings first generate *10* independent gkm-SVM human genomic background models, which we average for the final model. 
+For the results in  the manuscript, we sampled as many genomic sequences as possible to mimize the sampling noise. The above parameter settings first generate **10** independent gkm-SVM human genomic background models, which we average for the final model. 
 
 
 
