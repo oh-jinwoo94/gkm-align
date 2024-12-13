@@ -259,13 +259,15 @@ If you wish to align regions that are excluded in the input syntenic regions, yo
 
 # Other
 ## Generating gkm-SVM genome background models for repeat masking.
-Here I describe how we can train gkm-SVM to learn background genomic sequences. To identify sequence patterns that are prevalent in genomic sequences (e.g., ATATATATATA), we train gkm-SVM on samples of genomic sequences vs randomly generated sequences (simply with P(A)=P(C)=P(G)=P(C)). An example output of this pipeline is: data/human_genomic_background_model_p_0.1.out (which you can download by running bash setup.sh)
+In this section, I describe how to train gkm-SVM to learn background genomic sequences. The goal is to identify sequence patterns that are prevalent in genomic data (e.g., repetitive patterns like ATATATATATA). To achieve this, we train gkm-SVM using samples of genomic sequences alongside randomly generated sequences, where each base (A, C, G, T) is equally probable (P(A) = P(C) = P(G) = P(T)). An example output of this training process is the file data/human_genomic_background_model_p_0.1.out, which can be downloaded by running bash setup.sh.
 
 To train:
 <pre>
 cd etc/how_to_generate_genomic-background-models_for_gkm-SVM-repeat-masking/hg38/
-bash generate_genomic_background_model.sh
+bash generate_genomic_background_model.sh 10 30000 0.1 
 </pre>
+
+For the results in  the manuscript, we sampled as many genomic sequences as possible to mimize the sampling noise. The above parameter settings first generate *10* independent gkm-SVM human genomic background models, which we average for the final model. 
 
 
 
