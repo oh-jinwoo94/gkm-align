@@ -271,10 +271,12 @@ cd etc/how_to_generate_genomic-background-models_for_gkm-SVM-repeat-masking/hg38
 bash setup_gkmsvm.sh
 </pre>
 
-Then, train the background model by running: 
+Then, train the background model by running the following script: 
 <pre>
-bash generate_genomic_background_model.sh 10 30000 0.1
+bash generate_genomic_background_model.sh 10 30000 0.1 # Details of the pipeline are provided within the script
 </pre>
+
+
 
 For the results presented in the manuscript, we sampled as many genomic sequences as possible to minimize sampling noise. The parameters specified above generate **10** independent gkm-SVM human genomic background models, which are then averaged to produce the final model. For each background model, we sample **30,000** DNA sequences of length 300 and train gkm-SVM against 30,000 randomly generated DNA sequences.
 
