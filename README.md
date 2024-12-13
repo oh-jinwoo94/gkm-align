@@ -13,9 +13,9 @@
         - [cell-type-specific model-weighted genome alignment](#cell-type-specific-model-weighted-genome-alignment)
     - [Genome-wide Mapping](#genome-wide-mapping)
 - [Other](#other)
-  - [Generating gkm-SVM genome background models for repeat masking](#generate-background-model)  
+  - [Generating gkm-SVM genomic background models](#generating-gkm-svm-genomic-background-models)  
 - [Future](#future)
-- [Software Updates](#update)
+- [Software Updates](#software-update)
 
 # Introduction
 gkm-align is a whole-genome alignment algorithm designed to map distal enhancers conserved between distant mammals (e.g., human and mouse). gkm-align discovers orthologous enhancers by identifying alignment paths with maximal similarity in gapped-kmer compositions along syntenic loci. gkm-align's performance can further be enhanced by incorporating conserved enhancer vocabularies obtained using gkm-SVM sequence models trained on enhancers. 
@@ -259,7 +259,7 @@ If you wish to align regions that are excluded in the input syntenic regions, yo
 
 
 # Other
-## Generating gkm-SVM genome background models for repeat masking
+## Generating gkm-SVM genomic background models
 In this section, I describe how to train gkm-SVM to learn background genomic sequences. The goal is to identify sequence patterns that are prevalent in genomic data (e.g., repetitive patterns like ATATATATATA). To achieve this, we train gkm-SVM using samples of genomic sequences against randomly generated sequences, where each base (A, C, G, T) is equally probable (P(A) = P(C) = P(G) = P(T)).
 
 ### Example output: 
