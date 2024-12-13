@@ -13,6 +13,7 @@
         - [cell-type-specific model-weighted genome alignment](#cell-type-specific-model-weighted-genome-alignment)
     - [Genome-wide Mapping](#genome-wide-mapping)
 - [Other](#other)
+  - [Generating gkm-SVM genome background models for repeat masking](#generate-background-model)  
 - [Future](#future)
 - [Software Updates](#update)
 
@@ -258,7 +259,7 @@ If you wish to align regions that are excluded in the input syntenic regions, yo
 
 
 # Other
-## Generating gkm-SVM genome background models for repeat masking.
+## Generating gkm-SVM genome background models for repeat masking
 In this section, I describe how to train gkm-SVM to learn background genomic sequences. The goal is to identify sequence patterns that are prevalent in genomic data (e.g., repetitive patterns like ATATATATATA). To achieve this, we train gkm-SVM using samples of genomic sequences against randomly generated sequences, where each base (A, C, G, T) is equally probable (P(A) = P(C) = P(G) = P(T)).
 
 ### Example output: 
