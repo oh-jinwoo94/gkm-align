@@ -1,3 +1,4 @@
+# extended version of logo_shared_gkmer.py; used to generate Fig 5C.
 import logomaker
 import numpy as np
 import pandas as pd
