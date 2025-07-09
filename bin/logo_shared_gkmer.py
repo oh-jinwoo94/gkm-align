@@ -1,3 +1,6 @@
+# For generating gkm-align mapping visuaslization (e.g, Fig 5C of Oh & Beer Nature comm 2024)
+# Upon request on "Issues", I will give more details on how to run this script. 
+
 import logomaker
 import pandas as pd
 import sys
