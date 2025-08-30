@@ -2,15 +2,16 @@
 - [Introduction](#introduction)
 - [System Requirements](#system-requirements)
 - [Installation](#installation)
+- [Testing](#testing)
 - [Running gkm-align](#running-gkm-align)
   - [Local Sequence Alignment and Mapping](#local-sequence-alignment-and-mapping)
     - [Example: HBB Locus Control Region](#example-hbb-locus-control-region)
     - [Example: FADS Gene Cluster Loci](#example-fads-gene-cluster-loci)
   - [Whole-genome Alignment and Mapping](#whole-genome-alignment-and-mapping)
     - [Genome Alignment](#genome-alignment)
-        - [Pre-processing for genome alignment](#pre-processing-for-genome-alignment)
-        - [cell-type-independent unweighted genome alignment](#cell-type-independent-unweighted-genome-alignment)
-        - [cell-type-specific model-weighted genome alignment](#cell-type-specific-model-weighted-genome-alignment)
+      - [Pre-processing for genome alignment](#pre-processing-for-genome-alignment)
+      - [Cell-type-independent unweighted genome alignment](#cell-type-independent-unweighted-genome-alignment)
+      - [Cell-type-specific model-weighted genome alignment](#cell-type-specific-model-weighted-genome-alignment)
     - [Genome-wide Mapping](#genome-wide-mapping)
 - [Other](#other)
   - [Generating gkm-SVM genomic background models](#generating-gkm-svm-genomic-background-models)  
@@ -18,7 +19,11 @@
 - [Software Updates](#software-update)
 
 # Introduction
-gkm-align is a whole-genome alignment algorithm designed to map distal enhancers conserved between distant mammals (e.g., human and mouse). gkm-align discovers orthologous enhancers by identifying alignment paths with maximal similarity in gapped-kmer compositions along syntenic loci. gkm-align's performance can further be enhanced by incorporating conserved enhancer vocabularies obtained using gkm-SVM sequence models trained on enhancers. 
+gkm-align is a whole-genome alignment algorithm designed to map distal enhancers conserved between distant mammals (e.g., human and mouse). It discovers orthologous enhancers by identifying alignment paths with maximal similarity in gapped-kmer compositions along syntenic loci. Performance can be enhanced by incorporating conserved enhancer vocabularies obtained using gkm-SVM sequence models trained on enhancers.
+
+**Two main modes:**
+- **Alignment mode (-t 1)**: Performs interspecies sequence alignment (similar to LASTZ)
+- **Mapping mode (-t 2)**: Maps sequences based on alignment results (similar to liftover) 
 
 Please cite the following paper if you use gkm-align:
 
@@ -27,23 +32,21 @@ Please cite the following paper if you use gkm-align:
 Also, visit the [gkm-align webpage](https://beerlab.org/gkmalign/) to find useful resource files for running gkm-align. 
 
 # System Requirements
-gkm-align software is built for Linux-based operating systems (such as Red Hat, CentOS, and Rocky Linux, etc.).
-The package has been tested on the following system:
-* Rocky Linux release 8.8 (Green Obsidian).
+gkm-align is designed for Linux-based operating systems (Red Hat, CentOS, Rocky Linux, etc.).
+**Tested on:** Rocky Linux release 8.8 (Green Obsidian)
 
-gkm-align uses SIMD parallel computation and requires either AVX2 or SSE2 support:
-- AVX2 support: Maximum lmer length = 32 
-- SSE2 support: Maximum lmer length = 16
+**SIMD Requirements:**
+- **AVX2 support**: Maximum lmer length = 32
+- **SSE2 support**: Maximum lmer length = 16
 
-To check SIMD support on your system:
-- For AVX2: `lscpu | grep avx2`
-- For SSE2: `lscpu | grep sse2`
+**Check your system's SIMD support:**
+- AVX2: `lscpu | grep avx2`
+- SSE2: `lscpu | grep sse2`
 
-The software automatically detects your system's SIMD capabilities during compilation and will compile regardless of SIMD support. However, SIMD is only employed for sequence alignment. Therefore:
-- **-t 1 (genome alignment)**: Requires AVX2 or SSE2 support
-- **-t 2 (enhancer mapping)**: Can be used without SIMD support using precomputed genome alignment output files (e.g., [hg38-mm10_unweighted.coord](https://beerlab.org/gkmalign/hg38-mm10_unweighted.coord))
+**Without SIMD support:** You can only use mapping mode (-t 2) with precomputed genome alignment files (e.g., [hg38-mm10_unweighted.coord](https://beerlab.org/gkmalign/hg38-mm10_unweighted.coord))
 
-If you try to use -t 1 without SIMD support, the software will exit with a clear error message during argument parsing. 
+**Note:** Attempting to use alignment mode (-t 1) without SIMD support will result in an error during argument parsing.
+
  
 # Installation
 First, download the source code using the following command line:
@@ -59,7 +62,20 @@ The script **1)** compiles gkm-align and **2)** downloads gkm-SVM genomic backgr
 
 Additionally, if you press y (recommended for following the tutorial more easily), **3)** hg38 and mm10 genomes will be downloaded to the 'data/' directory (approximately 6 gigabytes).
 
-The entire process takes less than 3 minutes. 
+
+# Testing
+To verify that gkm-align is working correctly, you can run the built-in test:
+
+<pre>
+cd test
+bash test_hbb_lcr.sh
+</pre>
+
+This test will:
+1. Download required files (background models and specific chromosomes)
+2. Run gkm-align to align loci and map enhancers
+3. Compare output with expected results
+4. Report success or failure
 
 # Running gkm-align
 ## Local sequence alignment and mapping 
