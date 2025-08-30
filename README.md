@@ -31,6 +31,8 @@ Please cite the following paper if you use gkm-align:
 
 Also, visit the [gkm-align webpage](https://beerlab.org/gkmalign/) to find useful resource files for running gkm-align. 
 
+> **Note:** You can now use gkm-align through our Python wrapper. Install with `pip install gkmalign` and use it in Python scripts. See the [gkm-align Python repository](https://github.com/oh-jinwoo94/gkmalign-python) for detailed instructions and examples.
+> 
 # System Requirements
 gkm-align is designed for Linux-based operating systems (Red Hat, CentOS, Rocky Linux, etc.).
 **Tested on:** Rocky Linux release 8.8 (Green Obsidian)
