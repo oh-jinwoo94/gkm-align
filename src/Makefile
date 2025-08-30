@@ -8,8 +8,8 @@ ifeq ($(OS_CHECK),Linux)
     NOSIMD_CFLAGS = -std=c++11 -Wall -Wextra -pedantic -pthread
 
     # Try to compile with AVX2 first, then SSE2, then no SIMD
-    AVX2_TEST = $(shell echo 'int main() { __m256i x; return 0; }' | g++ -x c++ -mavx2 -o /dev/null - 2>/dev/null && echo "AVX2" || echo "SSE2")
-    SSE2_TEST = $(shell echo 'int main() { __m128i x; return 0; }' | g++ -x c++ -msse2 -o /dev/null - 2>/dev/null && echo "SSE2" || echo "NOSIMD")
+    AVX2_TEST = $(shell echo 'int main() { __m256i x; return 0; }' | g++ -mavx2 -o /dev/null - 2>/dev/null && echo "AVX2" || echo "SSE2")
+    SSE2_TEST = $(shell echo 'int main() { __m128i x; return 0; }' | g++ -msse2 -o /dev/null - 2>/dev/null && echo "SSE2" || echo "NOSIMD")
 
     ifeq ($(AVX2_TEST),AVX2)
         CFLAGS = $(AVX2_CFLAGS)
