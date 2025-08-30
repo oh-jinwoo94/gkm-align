@@ -32,8 +32,8 @@ The package has been tested on the following system:
 * Rocky Linux release 8.8 (Green Obsidian).
 
 gkm-align uses SIMD parallel computation and requires either AVX2 or SSE2 support:
-- **AVX2 support**: Maximum lmer length = 32 (recommended for best performance)
-- **SSE2 support**: Maximum lmer length = 16 (fallback option)
+- AVX2 support: Maximum lmer length = 32 
+- SSE2 support: Maximum lmer length = 16
 
 To check SIMD support on your system:
 - For AVX2: `lscpu | grep avx2`
