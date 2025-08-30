@@ -31,7 +31,19 @@ gkm-align software is built for Linux-based operating systems (such as Red Hat, 
 The package has been tested on the following system:
 * Rocky Linux release 8.8 (Green Obsidian).
 
-gkm-align uses SIMD parallel computation and requires AVX2 support (to check availability, use: 'lscpu | grep avx2'). However, SIMD is only employed for sequence alignment. Therefore, the software can still be used without AVX2 if are using precomputed genome alignment output files (e.g., [hg38-mm10_unweighted.coord](https://beerlab.org/gkmalign/hg38-mm10_unweighted.coord)) for mapping conserved enhancers. For example, the -t 1 option requires AVX2, but the -t 2 option can be used without it. 
+gkm-align uses SIMD parallel computation and requires either AVX2 or SSE2 support:
+- **AVX2 support**: Maximum lmer length = 32 (recommended for best performance)
+- **SSE2 support**: Maximum lmer length = 16 (fallback option)
+
+To check SIMD support on your system:
+- For AVX2: `lscpu | grep avx2`
+- For SSE2: `lscpu | grep sse2`
+
+The software automatically detects your system's SIMD capabilities during compilation and will compile regardless of SIMD support. However, SIMD is only employed for sequence alignment. Therefore:
+- **-t 1 (genome alignment)**: Requires AVX2 or SSE2 support
+- **-t 2 (enhancer mapping)**: Can be used without SIMD support using precomputed genome alignment output files (e.g., [hg38-mm10_unweighted.coord](https://beerlab.org/gkmalign/hg38-mm10_unweighted.coord))
+
+If you try to use -t 1 without SIMD support, the software will exit with a clear error message during argument parsing. 
  
 # Installation
 First, download the source code using the following command line:
@@ -73,7 +85,7 @@ mkdir output_files
 
 **2)** **Aligning** human and mouse HBB-LCRs. 
 <pre>
-../../bin/gkm_align  -t 1  HBB.to_align -d ../../data/genomes/ -g masker_models.txt   -p 50 -o output_files -n HBB_LCR_mm10-hg38
+../../bin/gkm_align  -t 1 -d ../../data/genomes/ -g masker_models.txt -p 50 -o output_files -n HBB_LCR_mm10-hg38 HBB.to_align
 </pre>
   * **'-t 1 HBB.to_align'**: Specifies that gkm-align is in "align" mode and uses the input file HBB.to_align, which contains the genomic coordinates for both human and mouse HBB Locus Control Regions (LCRs)
   * **'-d ../../data/genomes'**: Specifiies directory containing the genome data files for human (hg38) and mouse (mm10). These directories should contain chromosome sequence files (e.g., chr1.fa, chr2.fa).
@@ -85,7 +97,7 @@ This step generates 'output_files/HBB_LCR_mm10-hg38.coord', which is used as an 
   
 **3)** **Mapping** mouse HBB-LCR enhancers to human. 
 <pre>
-../../bin/gkm_align  -t 2 -c output_files/HBB_LCR_mm10-hg38.coord  HBB_LCR_enhancers_mm10.bed -q mm10 -m -o output_files -n HBB_LCR_enhancers_mm10_mapped_to_hg38
+../../bin/gkm_align  -t 2 -c output_files/HBB_LCR_mm10-hg38.coord -q mm10 -m -o output_files -n HBB_LCR_enhancers_mm10_mapped_to_hg38 HBB_LCR_enhancers_mm10.bed
 </pre>
   * **'-t 2 -c output_files/HBB_LCR_mm10-hg38.coord'**: Specifies that gkm-align is in "mapping" mode and uses the output from the alignment step (-t 1) as the coordinate mapping file.
   * **'HBB_LCR_enhancers_mm10.bed'**: Input file containing the mm10 coordinates of mouse HBB-LCR enhancers.
@@ -116,7 +128,7 @@ bash run_gkmalign.sh
 'run_gkmalign.sh' in this example is almost identical to the version in the previous HBB-LCR example. 
 For example, the 'run_gkmalign.sh' script contains the following command lnes:
 <pre>
-../../bin/gkm_align  -t 1  FADS_loci.to_align -d ../../data/genomes/ -g masker_models.txt   -p 50 -o output_files -n FADS_loci_mm10-hg38 -G
+../../bin/gkm_align  -t 1 -d ../../data/genomes/ -g masker_models.txt -p 50 -o output_files -n FADS_loci_mm10-hg38 -G FADS_loci.to_align
 </pre>
  * Adding '-G' option outputs matrix G (binary) to an output directory specified by -o, for each line in the input file with '.to_align' suffix. Output matrix G file is named automatically based on the genomic ranges from which the matrix was computed. 
 
@@ -191,7 +203,7 @@ bash run_gkmalign.sh subset_human_mouse_WG_syntenic_intergenic_loci.to_align
 The [shell script](examples/whole_genome/run_gkmalign.sh) first generates masker_models.txt, which contains file paths to gkm-SVM genomic background models for human and mouse. These files are downloaded to data/ when setting up gkm-align (using bash setup.sh). The script then runs gkm-align on the syntenic blocks with the following command:
 
 <pre>
-../../bin/gkm_align  -t 1  human_mouse_WG_syntenic_intergenic_loci.to_align -d ../../data/genomes/ -g masker_models.txt   -p 50 -o output_files -n hg38-mm10_unweighted -G
+../../bin/gkm_align  -t 1 -d ../../data/genomes/ -g masker_models.txt -p 50 -o output_files -n hg38-mm10_unweighted -G human_mouse_WG_syntenic_intergenic_loci.to_align
 </pre>
 
 This command line will generate '[**hg38-mm10_unweighted.coord**](https://beerlab.org/gkmalign/hg38-mm10_unweighted.coord)'.
@@ -211,7 +223,7 @@ The first step is to download the relevant sequence models. For example, to perf
 After downloading the model files, you can run enhancer-model-weighted gkm-align using the '-W' option. For example, to run embryonic-brain-weighted alignment with a model weight of c=0.5, include '-W,0.5,sequence_model_files.txt', where each line of '[sequence_model_files.txt](examples/whole_genome/sequence_model_files.txt)' specifies the file path to the enhancer models downloaded in the previous step.
 
 <pre>
-../../bin/gkm_align -t 1 -g masker_models.txt -d /mnt/data0/joh27/genomes/ subset_human_mouse_WG_syntenic_intergenic_loci.to_align -W 0.5,sequence_model_files.txt -p 50 -o output_files/ -n hg38-mm10_enhancer-model-weighted_DHS_790_hg38-DHS_97_mm10_c-0.5
+../../bin/gkm_align -t 1 -g masker_models.txt -d /mnt/data0/joh27/genomes/ -W 0.5,sequence_model_files.txt -p 50 -o output_files/ -n hg38-mm10_enhancer-model-weighted_DHS_790_hg38-DHS_97_mm10_c-0.5 subset_human_mouse_WG_syntenic_intergenic_loci.to_align
 </pre>
 
 The pipeline described above can be executed with the following command:
@@ -242,7 +254,7 @@ awk '{print $1"\t"$2"\t"$3"\t"$1":"$2"-"$3}' DHS_790_hg38_300_noproms_nc30.bed >
 To map human embryonic brain enhancers to the mouse genome using [hg38-mm10_unweighted.coord](https://beerlab.org/gkmalign/hg38-mm10_unweighted.coord), run the following command line: 
 
 <pre>
-../../bin/gkm_align  -t 2  human_brain_enhancers.bed  -c hg38-mm10_unweighted.coord -q hg38 -m -o output_files -n human_brain_enhancers_mapped_to_mm10
+../../bin/gkm_align  -t 2 -c hg38-mm10_unweighted.coord -q hg38 -m -o output_files -n human_brain_enhancers_mapped_to_mm10 human_brain_enhancers.bed
 </pre>
  
 This generates two files with the following suffixes: `.multiple_mapped` and `.multiple_not_mapped`. These file formats are designed to match the output file formats of LiftOver. Similarly, using `-u` option (which filters out duplicate mappings) generates `unique_mapped` and `.unique_not_mapped`. However, we recommend the `-m` option to obtain the full range of interspecies mappings, as gkm-align provides conservation metrics for evaluating each mapping. 

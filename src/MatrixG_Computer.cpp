@@ -32,8 +32,18 @@ MatrixG_Computer::MatrixG_Computer(int lmer_length,
 
     // SIMD vectorization: obtain all subseqs of size l
     // v[i] = seq[i:i+l] + pads
-    string pad1(32-l, '>'); // 32 for AVX2, 16 for SSE
-    string pad2(32-l, '<');
+    #ifdef __AVX2__
+        string pad1(32-l, '>'); // 32 for AVX2
+        string pad2(32-l, '<');
+    #elif defined(__SSE2__)
+        string pad1(16-l, '>'); // 16 for SSE2
+        string pad2(16-l, '<');
+    #elif defined(__NOSIMD__)
+        // No SIMD support - this code path should not be reached for -t 1
+        // as it's blocked in argument parsing
+        string pad1(0, '>');
+        string pad2(0, '<');
+    #endif
     for(unsigned int i = 0; i<seq1.length() - l + 1; i++){
 	    seq1_sv_a.push_back(seq1.substr(i, l) +  pad1);
 	    seq1_sv_b.push_back(seq1.substr(i, l) +  pad2);
@@ -96,17 +106,36 @@ float MatrixG_Computer::subseqs_matrix(vector<char*> &seq1, vector<char*> &seq2,
                                       int start_j,
                                       int end_j) {
     int tot = 0;
-    __m256i s1, s2, ceq;
     int match;
-    for (int i = start_i; i <= end_i - l + 1; i++) {
-        for (int j = start_j; j <= end_j - l + 1; j++) {
-            s1 =  _mm256_loadu_si256((__m256i*)(seq1[i]));
-            s2 =  _mm256_loadu_si256((__m256i*)(seq2[j]));
-            ceq = _mm256_cmpeq_epi8(s1, s2);
-            match = __builtin_popcount(_mm256_movemask_epi8(ceq));
-            tot += shared_gkm[l - match];
+    
+    #ifdef __AVX2__
+        __m256i s1, s2, ceq;
+        for (int i = start_i; i <= end_i - l + 1; i++) {
+            for (int j = start_j; j <= end_j - l + 1; j++) {
+                s1 =  _mm256_loadu_si256((__m256i*)(seq1[i]));
+                s2 =  _mm256_loadu_si256((__m256i*)(seq2[j]));
+                ceq = _mm256_cmpeq_epi8(s1, s2);
+                match = __builtin_popcount(_mm256_movemask_epi8(ceq));
+                tot += shared_gkm[l - match];
+            }
         }
-    }
+    #elif defined(__SSE2__)
+        __m128i s1, s2, ceq;
+        for (int i = start_i; i <= end_i - l + 1; i++) {
+            for (int j = start_j; j <= end_j - l + 1; j++) {
+                s1 =  _mm_loadu_si128((__m128i*)(seq1[i]));
+                s2 =  _mm_loadu_si128((__m128i*)(seq2[j]));
+                ceq = _mm_cmpeq_epi8(s1, s2);
+                match = __builtin_popcount(_mm_movemask_epi8(ceq));
+                tot += shared_gkm[l - match];
+            }
+        }
+    #elif defined(__NOSIMD__)
+        // No SIMD support - this code path should not be reached for -t 1
+        // as it's blocked in argument parsing
+        cout << "Error: SIMD support required for sequence alignment" << endl;
+        exit(1);
+    #endif
  
     return static_cast<float>(tot);
 } // end of method
