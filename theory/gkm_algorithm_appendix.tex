@@ -255,7 +255,7 @@ where $P_{M}$ and $P_{H}$ are  gkm-SVM enhancer prediction functions ($P: sequen
  \end{align*}
  Further, by computing gkm-SVM predictions on every kmers, we can quantify regulatory importance of each kmers (default kmer-width = 11; e.g., CCATGGCAACC: top RFX binding motif for brain enhancers). Gkm-SVM weight of a kmer sequence $k_{mer}$ is computed as:
  \begin{align*}
-     w_{k_{mer}} = pred(k_{mer}) = \sum_{S \in SV} \alpha_S <g(k_{mer}),g(S)> \tag{Eq.7}
+     w_{k_{mer}} = pred(k_{mer}) = \sum_{S \in SV} \alpha_S <g(k_{mer}),g(S)> \tag{Eq.9}
  \end{align*}
 
 Pre-computed gkm-SVM kmer weights ($w_{kmer}$) can be used to efficiently compute gkm-SVM prediction score for sequence $X$ by its kmer weight sum.
@@ -266,9 +266,9 @@ Pre-computed gkm-SVM kmer weights ($w_{kmer}$) can be used to efficiently comput
      &=\sum_{k_{mer} \in X} \sum_{S \in SV} \alpha_{S}\frac{g(k_{mer})\cdot g(S)}{|g(X)||g(S)|} \\
      &=\frac{|g(k_{mer})|}{|g(X)|}\sum_{k_{mer} \in X} \sum_{S \in SV} \alpha_{S}\frac{g(k_{mer})\cdot g(S)}{|g(k_{mer})||g(S)|} \\
      &=\frac{|g(k_{mer})|}{|g(X)|} \sum_{k_{mer} \in X} \sum_{S \in SV} \alpha_{S}<g(k_{mer}),g(S))> \tag{use Eq.2 for $|g(k_{mer})|, |g(X)|$} \\
-     &=\frac{\sqrt{\binom{l}{k}}}{\sqrt{(|X|-l+1)^2\binom{l}{k}}} \sum_{k_{mer} \in X} \sum_{S \in SV} \alpha_{S}<g(k_{mer}),g(S))>  \tag{use Eq.7 for $w_{k_{mer}}$; $|X|=w$}\\
+     &=\frac{\sqrt{\binom{l}{k}}}{\sqrt{(|X|-l+1)^2\binom{l}{k}}} \sum_{k_{mer} \in X} \sum_{S \in SV} \alpha_{S}<g(k_{mer}),g(S))>  \tag{use Eq.9 for $w_{k_{mer}}$; $|X|=w$}\\
      &=\frac{1}{w-l+1} \sum_{k_{mer}\in X}w_{k_{mer}} \tag{$w$,$l$ are constants in gkm-align}\\
-     &\propto \sum_{k_{mer}\in X}w_{k_{mer}} \tag{Eq.8}
+     &\propto \sum_{k_{mer}\in X}w_{k_{mer}} \tag{Eq.10}
  \end{align*}
 
   \subsection{Probabilistic interpretation and normalization of gkm-SVM prediction}
@@ -279,7 +279,7 @@ Pre-computed gkm-SVM kmer weights ($w_{kmer}$) can be used to efficiently comput
  \end{align*}
 Assuming that priors for finding positive and negative sequences are equal, we compute posterior gkm-SVM prediction score of a given sequence X with
  \begin{align*}
-     &P_{gkm}(X) = P(X\in X_{pos}|pred(X))= \frac{P_{(+)}}{P_{(+)} + P_{(-)}} \in [0,1], \tag{Eq.9} 
+     &P_{gkm}(X) = P(X\in X_{pos}|pred(X))= \frac{P_{(+)}}{P_{(+)} + P_{(-)}} \in [0,1], \tag{Eq.11} 
 \end{align*}
 where
 \begin{align*}
