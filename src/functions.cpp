@@ -728,8 +728,9 @@ vector<float> invert_vector(vector<float> v){
 
 vector<float> elem_prod_vectors(vector<float> v1, vector<float> v2){
 	vector<float> prod(v1.size());
-	for(unsigned int i; i<prod.size(); i++){
+	for(unsigned int i = 0; i<prod.size(); i++){
 		prod[i] = v1[i]*v2[i];
 	}
 	return prod;
 }
+
