@@ -108,8 +108,8 @@ int main(int argc, char *argv[]) {
     // load maskers, if provided
     unordered_map<string, float> masker_weights_1;
     unordered_map<string, float> masker_weights_2;
-    float mthreshold_1;
-    float mthreshold_2;
+    float mthreshold_1 = 0;
+    float mthreshold_2 = 0;
     if(rmfile_name != "NULL"){
 	ifstream rm_file (rmfile_name);
         string rmodel_fname1;
@@ -396,4 +396,5 @@ vector<float> avg_deltaSVM(string& seq, unordered_map<string, float>& kmer_weigh
     }
     return bp_scores;
 }
+
 
