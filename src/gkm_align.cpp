@@ -261,7 +261,7 @@ int main(int argc, char *argv[]) {
 
         const float mthreshold_1 = load_weights_threshold(masker_weights_1, rmodel_fname1);
 	const float mthreshold_2 = load_weights_threshold(masker_weights_2, rmodel_fname2);
-
+        cout << "Masker model loading completed" << endl;
 
 	tuple<int, float, float, float, float, unsigned int> post_stat_1;
 	unordered_map<string, float> kmer_weights_1; // encoding reg vocab

@@ -138,9 +138,10 @@ class MatrixG_Computer{  // computes and stores matrix values  <seq1, seq2>
 
         void compute_matrix_rows(vector<int> rows);
 
-        // Used by the faster version of compute full matrix()
-	float compute_sliding_matrix(int row, int col, int*** piece_container);
-        
+        // Used by the faster version of compute full matrix() 
+        // Now takes a flat buffer and the buffer height for modulo arithmetic
+        float compute_sliding_matrix(int row, int col, vector<int>& piece_buffer, int buf_height); 
+
         tuple<vector<float>, vector<float>> gkmsvm_predict_posterior(const unordered_map<string, float>& kmer_to_weight_1,
                                                              float mu_pos_1, float var_pos_1, float mu_neg_1, float var_neg_1,
                                                              const unordered_map<string, float>& kmer_to_weight_2,

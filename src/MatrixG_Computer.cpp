@@ -29,6 +29,20 @@ MatrixG_Computer::MatrixG_Computer(int lmer_length,
         exit(1);
     }
 
+    // 1. Calculate the exact number of k-mers we are about to create
+    size_t n_kmers_1 = seq1.length() - l + 1;
+    size_t n_kmers_2 = seq2.length() - l + 1;
+
+    // 2. Reserve memory so the vectors never resize
+    seq1_sv_a.reserve(n_kmers_1);
+    seq1_pv_a.reserve(n_kmers_1);
+    seq1_sv_b.reserve(n_kmers_1);
+    seq1_pv_b.reserve(n_kmers_1);
+    
+    seq2_sv_a.reserve(n_kmers_2);
+    seq2_pv_a.reserve(n_kmers_2);
+    seq2_sv_b.reserve(n_kmers_2);
+    seq2_pv_b.reserve(n_kmers_2);
 
     // SIMD vectorization: obtain all subseqs of size l
     // v[i] = seq[i:i+l] + pads
@@ -175,68 +189,120 @@ Matrix& MatrixG_Computer::compute_full_matrix(){
 
 }
 
-
+// Refactored version for modern C++ style (prev was C-style manual memory mangement)
+// was inefficient in memory management
 // compute matrix by row. Useful for multithreading
 void MatrixG_Computer::compute_matrix_rows(vector<int> rows){
+// NOTE: 'rows' must be contiguous
 
-    if(slide>=l){ // faster version. But it uses lots of memory, so we need further memory optimization by freeing/allocating memory wisely
-        int*** piece_container = new int **[pm_dim_1];
-        for(unsigned int i = 0; i<rows.size(); i++){
+    if(slide>=l){ // faster version.
+        // A. allocate one flat buffer (no fragmentation, no new/delete loop)
+        // use window/slide as the rolling buffer height
+        int buf_height = window / slide;
+        
+        // tot size = (buff height) * (matrix width) * (4 types: center, right, down, both)
+        // init with -1
+        std::vector<int> piece_buffer(buf_height * pm_dim_2 * 4, -1);
+
+        for(unsigned int i = 0; i < rows.size(); i++){
             int row = rows[i];
-            //--------------- memory handling------------------ ////
-            if(i == 0){ // memory handling: initialize and allocate PM rows
-                for(int a = 0; a < window/slide; a++) {
-                    piece_container[row + a] = new int *[pm_dim_2];
-                    for(int b = 0; b<pm_dim_2; b++) {
-                        piece_container[row + a][b] = new int[4];
-                        for(int c = 0; c<4; c++){
-                            piece_container[row + a][b][c] = -1;
-                        }
-                    }
-                }
 
-            } else{ // memory handling: allocate next row in piece-container and free the row that will no longer be used
-                piece_container[row + window/slide - 1] = new int *[pm_dim_2];
-                for(int b = 0; b<pm_dim_2; b++) {
-                    piece_container[row + window/slide - 1][b] = new int[4];
-                    for(int c = 0; c<4; c++){
-                        piece_container[row + window/slide - 1][b][c] = -1;
-                    }
-                }
-
-                for(int j=0; j<pm_dim_2; j++){
-                    delete[] piece_container[row - 1][j];
-                }
-                delete[] piece_container[row - 1];
+            // B. delete the old row that fell out of the window
+            // instead of delete[], we simply reset its values to -1 so it can be overwritten safely.
+            int old_row = row - 1;
+            if (old_row >= 0) {
+                // calculate which slice of the circular buffer corresponds to the old row
+                int local_r = old_row % buf_height; 
+                
+                // calc the exact range in the 1d vector
+                size_t start_idx = local_r * pm_dim_2 * 4;
+                size_t end_idx = start_idx + (pm_dim_2 * 4);
+                
+                // reset this slice to -1
+                std::fill(piece_buffer.begin() + start_idx, piece_buffer.begin() + end_idx, -1);
             }
-            // -------------------actual computation----------------//
-            
-            for(int j = 0; j<km_dim_2; j++){ 
-                K(row, j) = compute_sliding_matrix(row,j, piece_container);
-            }
-            // ------------------------------------------------------//
 
-            //memory handling: if last row, free all the remaining elements
-            if(i==rows.size()-1){
-                for(int r = row; r<row+window/slide; r++){
-                    for(int c=0; c<pm_dim_2; c++){
-                        delete[] piece_container[r][c];
-                    }
-                    delete[] piece_container[r];
-                }
+            // C. compute
+            for(int j = 0; j < km_dim_2; j++){ 
+                // pass the flat buffer and the buffer height for modulo math
+                K(row, j) = compute_sliding_matrix(row, j, piece_buffer, buf_height);
             }
         }
-        delete[] piece_container;
     } else {
+        // fallback for slide < l
         for(auto row : rows) {
             float kern;
             for(int j = 0; j<km_dim_2; j++){
                 kern = subseqs_matrix(seq1_pv_a, seq2_pv_b, slide*row, slide*row + window-1, slide*j, slide*j+window-1);
-		K(row,j) = kern / (v1_norm[row] * v2_norm[j]);  
+                K(row,j) = kern / (v1_norm[row] * v2_norm[j]);  
             }
         }
     }
 }
+
+
+// old version version (C style, manual memory management) -- this is inefficient. 
+// compute matrix by row. Useful for multithreading
+//void MatrixG_Computer::compute_matrix_rows(vector<int> rows){
+//
+//    if(slide>=l){ // faster version. But it uses lots of memory, so we need further memory optimization by freeing/allocating memory wisely
+//        int*** piece_container = new int **[pm_dim_1];
+//        for(unsigned int i = 0; i<rows.size(); i++){
+//            int row = rows[i];
+//            //--------------- memory handling------------------ ////
+//            if(i == 0){ // memory handling: initialize and allocate PM rows
+//                for(int a = 0; a < window/slide; a++) {
+//                    piece_container[row + a] = new int *[pm_dim_2];
+//                    for(int b = 0; b<pm_dim_2; b++) {
+//                        piece_container[row + a][b] = new int[4];
+//                        for(int c = 0; c<4; c++){
+//                            piece_container[row + a][b][c] = -1;
+//                        }
+//                    }
+//                }
+//
+//            } else{ // memory handling: allocate next row in piece-container and free the row that will no longer be used
+//                piece_container[row + window/slide - 1] = new int *[pm_dim_2];
+//                for(int b = 0; b<pm_dim_2; b++) {
+//                    piece_container[row + window/slide - 1][b] = new int[4];
+//                    for(int c = 0; c<4; c++){
+//                        piece_container[row + window/slide - 1][b][c] = -1;
+//                    }
+//                }
+//
+//                for(int j=0; j<pm_dim_2; j++){
+//                    delete[] piece_container[row - 1][j];
+//                }
+//                delete[] piece_container[row - 1];
+//            }
+//            // -------------------actual computation----------------//
+//            
+//            for(int j = 0; j<km_dim_2; j++){ 
+//                K(row, j) = compute_sliding_matrix(row,j, piece_container);
+//            }
+//            // ------------------------------------------------------//
+//
+//            //memory handling: if last row, free all the remaining elements
+//            if(i==rows.size()-1){
+//                for(int r = row; r<row+window/slide; r++){
+//                    for(int c=0; c<pm_dim_2; c++){
+//                        delete[] piece_container[r][c];
+//                    }
+//                    delete[] piece_container[r];
+//                }
+//            }
+//        }
+//        delete[] piece_container;
+//    } else {
+//        for(auto row : rows) {
+//            float kern;
+//            for(int j = 0; j<km_dim_2; j++){
+//                kern = subseqs_matrix(seq1_pv_a, seq2_pv_b, slide*row, slide*row + window-1, slide*j, slide*j+window-1);
+//		K(row,j) = kern / (v1_norm[row] * v2_norm[j]);  
+//            }
+//        }
+//    }
+//}
 
 
 // elements for computing matrix by sliding. 
@@ -265,27 +331,35 @@ int MatrixG_Computer::compute_piece(int pm_coord_1, int pm_coord_2, string piece
 } // end of method
 
 
-
-
+// Refactored version for modern C++  style (more efficient memory handling)
 // no redundant computation in sliding.
-// compute row vector of the matrix matrix whose index in specified by curr_row variable. 
-float MatrixG_Computer::compute_sliding_matrix(int row, int col, int*** piece_container){
+// compute row vector of the matrix matrix whose index in specified by curr_row variable.
+float MatrixG_Computer::compute_sliding_matrix(int row, int col, vector<int>& piece_buffer, int buf_height){
 
-    float kern = 0; 
-    // now start row matrix computationi
+    float kern = 0;
+    // now start row matrix computation
     int pm_coord_1;
     int pm_coord_2;
     for (int a = 0; a < window / slide; a++) {
         for (int b = 0; b < window / slide; b++) {
             pm_coord_1 = row + a;
             pm_coord_2 = col + b;
-            // pieces for each piece matrix elements. Use reference to update
-            // the
-            // target, not a copy.
-            int &center = piece_container[pm_coord_1][pm_coord_2][0];
-            int &right = piece_container[pm_coord_1][pm_coord_2][1];
-            int &down = piece_container[pm_coord_1][pm_coord_2][2];
-            int &both = piece_container[pm_coord_1][pm_coord_2][3];
+
+            // --- INDEX MATH START ---
+            // map 3D coordinates [row][col][type] to 1D index
+            // A. Wrap row index using modulo (circular buffer)
+            int local_row = pm_coord_1 % buf_height;
+
+            // B. Flatten coordinates: (Row * Width * 4) + (Col * 4)
+            size_t idx = (local_row * pm_dim_2 * 4) + (pm_coord_2 * 4);
+
+            // C. Get references to the 4 types (center, right, down, both)
+            int &center = piece_buffer[idx + 0];
+            int &right  = piece_buffer[idx + 1];
+            int &down   = piece_buffer[idx + 2];
+            int &both   = piece_buffer[idx + 3];
+            // --- INDEX MATH END ---
+
             if (b == (window / slide - 1) && a < window / slide - 1) { // last column but not last row. box
                                           // with down arrow
                 if (center < 0) {
@@ -337,14 +411,95 @@ float MatrixG_Computer::compute_sliding_matrix(int row, int col, int*** piece_co
                 kern += right;
 
                 if (both < 0) {
-                    both = compute_piece(pm_coord_1, pm_coord_2, "both"); 
+                    both = compute_piece(pm_coord_1, pm_coord_2, "both");
                 }
                 kern += both;
             }
         }
     }
     return kern / (v1_norm[row] * v2_norm[col]);
-} // end of method
+}
+
+
+// old version (C-style) with low memory handling efficiency 
+// no redundant computation in sliding.
+// compute row vector of the matrix matrix whose index in specified by curr_row variable. 
+//float MatrixG_Computer::compute_sliding_matrix(int row, int col, int*** piece_container){
+
+//    float kern = 0; 
+    // now start row matrix computationi
+//    int pm_coord_1;
+//    int pm_coord_2;
+//    for (int a = 0; a < window / slide; a++) {
+//        for (int b = 0; b < window / slide; b++) {
+//            pm_coord_1 = row + a;
+//            pm_coord_2 = col + b;
+//            // pieces for each piece matrix elements. Use reference to update
+//            // the
+//            // target, not a copy.
+//            int &center = piece_container[pm_coord_1][pm_coord_2][0];
+//            int &right = piece_container[pm_coord_1][pm_coord_2][1];
+//            int &down = piece_container[pm_coord_1][pm_coord_2][2];
+//            int &both = piece_container[pm_coord_1][pm_coord_2][3];
+//            if (b == (window / slide - 1) && a < window / slide - 1) { // last column but not last row. box
+//                                          // with down arrow
+//                if (center < 0) {
+//                    center = compute_piece(pm_coord_1, pm_coord_2, "center");
+//                }
+//                kern += center;
+//
+//                if (down < 0) {
+//                    down = compute_piece(pm_coord_1, pm_coord_2, "down");
+//                }
+//                kern += down;
+//
+//            } else if (a == (window / slide - 1) &&
+//                           b < window / slide -
+//                                   1) { // last row but not last column. box
+//                                    // with right arrow
+ //               if (center < 0) {
+ //                   center = compute_piece(pm_coord_1, pm_coord_2, "center");
+ //               }
+ //               kern += center;
+
+//                if (right < 0) {
+//                    right = compute_piece(pm_coord_1, pm_coord_2, "right");
+//                }
+//                kern += right;
+//
+//           } else if (a == (window / slide - 1) &&
+//                           b == (window / slide -
+//                                     1)) { // last row and column. box with no arrow
+//                if (center < 0) {
+//                    center = compute_piece(pm_coord_1, pm_coord_2, "center");
+//                }
+//                kern += center;
+//
+//            } else { // box with both right and down arrow
+//                if (center < 0) {
+//                    center = compute_piece(pm_coord_1, pm_coord_2, "center");
+//                }
+//                kern += center;
+//
+//                if (down < 0) {
+//                    down = compute_piece(pm_coord_1, pm_coord_2, "down");
+//                }
+//                kern += down;
+//
+//                if (right < 0) {
+//                    right = compute_piece(pm_coord_1, pm_coord_2, "right");
+//                }
+//                kern += right;
+//
+//                if (both < 0) {
+//                    both = compute_piece(pm_coord_1, pm_coord_2, "both"); 
+//                }
+//               kern += both;
+//            }
+ //       }
+  //  }
+//    return kern / (v1_norm[row] * v2_norm[col]);
+//} // end of method
 
 
 
