@@ -33,7 +33,8 @@ Also, visit the [gkm-align webpage](https://beerlab.org/gkmalign/) to find usefu
 
 # System Requirements
 gkm-align is designed for **Linux** (Red Hat, CentOS, Ubuntu, etc.) and **macOS** (Apple Silicon).
-**Tested on:** Rocky Linux release 8.8 (Green Obsidian) and macOS Sonoma (Apple M3 Pro).
+
+**Tested on:** Rocky Linux release 8.8 (Green Obsidian) and macOS Sequoia (Apple M3 Pro).
 
 **SIMD Requirements:**
 * **AVX2 support** (Intel/AMD): Maximum lmer length = 32
