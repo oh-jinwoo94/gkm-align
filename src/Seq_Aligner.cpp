@@ -158,15 +158,12 @@ Seq_Aligner::backtrack(float indel) {
             dots.insert(dots.begin(), dot);
             --i;
             --j;
-            num_match++;
 
         } else if (indel1) {
             --i;
-            num_skip++;
 
         } else if (indel2) {
             --j;
-            num_skip++;
 
         } else { // for debug.
             cout << "Unexpected event (debug needed)" << endl;
