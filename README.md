@@ -33,6 +33,7 @@ Also, visit the [gkm-align webpage](https://beerlab.org/gkmalign/) to find usefu
 
 # System Requirements
 **Supported OS:** Linux (CentOS, Ubuntu, Rocky Linux, etc.) and macOS (Apple Silicon).
+
 **Tested on:** Rocky Linux 8.8 and macOS Sequoia (Apple M3 Pro).
 
 ### Hardware Acceleration (SIMD)
