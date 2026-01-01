@@ -2,15 +2,16 @@
 - [Introduction](#introduction)
 - [System Requirements](#system-requirements)
 - [Installation](#installation)
+- [Testing](#testing)
 - [Running gkm-align](#running-gkm-align)
   - [Local Sequence Alignment and Mapping](#local-sequence-alignment-and-mapping)
     - [Example: HBB Locus Control Region](#example-hbb-locus-control-region)
     - [Example: FADS Gene Cluster Loci](#example-fads-gene-cluster-loci)
   - [Whole-genome Alignment and Mapping](#whole-genome-alignment-and-mapping)
     - [Genome Alignment](#genome-alignment)
-        - [Pre-processing for genome alignment](#pre-processing-for-genome-alignment)
-        - [cell-type-independent unweighted genome alignment](#cell-type-independent-unweighted-genome-alignment)
-        - [cell-type-specific model-weighted genome alignment](#cell-type-specific-model-weighted-genome-alignment)
+      - [Pre-processing for genome alignment](#pre-processing-for-genome-alignment)
+      - [Cell-type-independent unweighted genome alignment](#cell-type-independent-unweighted-genome-alignment)
+      - [Cell-type-specific model-weighted genome alignment](#cell-type-specific-model-weighted-genome-alignment)
     - [Genome-wide Mapping](#genome-wide-mapping)
 - [Other](#other)
   - [Generating gkm-SVM genomic background models](#generating-gkm-svm-genomic-background-models)  
@@ -18,7 +19,11 @@
 - [Software Updates](#software-update)
 
 # Introduction
-gkm-align is a whole-genome alignment algorithm designed to map distal enhancers conserved between distant mammals (e.g., human and mouse). gkm-align discovers orthologous enhancers by identifying alignment paths with maximal similarity in gapped-kmer compositions along syntenic loci. gkm-align's performance can further be enhanced by incorporating conserved enhancer vocabularies obtained using gkm-SVM sequence models trained on enhancers. 
+gkm-align is a whole-genome alignment algorithm designed to map distal enhancers conserved between distant mammals (e.g., human and mouse). It discovers orthologous enhancers by identifying alignment paths with maximal similarity in gapped-kmer compositions along syntenic loci. Performance can be enhanced by incorporating conserved enhancer vocabularies obtained using gkm-SVM sequence models trained on enhancers.
+
+Two main modes:
+- Alignment mode (-t 1): Performs interspecies sequence alignment (similar to LASTZ)
+- Mapping mode (-t 2): Maps sequences based on alignment results (similar to liftover) 
 
 Please cite the following paper if you use gkm-align:
 
@@ -27,11 +32,21 @@ Please cite the following paper if you use gkm-align:
 Also, visit the [gkm-align webpage](https://beerlab.org/gkmalign/) to find useful resource files for running gkm-align. 
 
 # System Requirements
-gkm-align software is built for Linux-based operating systems (such as Red Hat, CentOS, and Rocky Linux, etc.).
-The package has been tested on the following system:
-* Rocky Linux release 8.8 (Green Obsidian).
+gkm-align is designed for Linux-based operating systems (Red Hat, CentOS, Rocky Linux, etc.).
+**Tested on:** Rocky Linux release 8.8 (Green Obsidian)
 
-gkm-align uses SIMD parallel computation and requires AVX2 support (to check availability, use: 'lscpu | grep avx2'). However, SIMD is only employed for sequence alignment. Therefore, the software can still be used without AVX2 if are using precomputed genome alignment output files (e.g., [hg38-mm10_unweighted.coord](https://beerlab.org/gkmalign/hg38-mm10_unweighted.coord)) for mapping conserved enhancers. For example, the -t 1 option requires AVX2, but the -t 2 option can be used without it. 
+**SIMD Requirements:**
+- **AVX2 support**: Maximum lmer length = 32
+- **SSE2 support**: Maximum lmer length = 16
+
+**Check your system's SIMD support:**
+- AVX2: `lscpu | grep avx2`
+- SSE2: `lscpu | grep sse2`
+
+**Without SIMD support:** You can only use mapping mode (-t 2) with precomputed genome alignment files (e.g., [hg38-mm10_unweighted.coord](https://beerlab.org/gkmalign/hg38-mm10_unweighted.coord))
+
+**Note:** Attempting to use alignment mode (-t 1) without SIMD support will result in an error during argument parsing.
+
  
 # Installation
 First, download the source code using the following command line:
@@ -47,7 +62,20 @@ The script **1)** compiles gkm-align and **2)** downloads gkm-SVM genomic backgr
 
 Additionally, if you press y (recommended for following the tutorial more easily), **3)** hg38 and mm10 genomes will be downloaded to the 'data/' directory (approximately 6 gigabytes).
 
-The entire process takes less than 3 minutes. 
+
+# Testing
+To verify that gkm-align is working correctly, you can run the built-in test:
+
+<pre>
+cd test
+bash test_hbb_lcr.sh
+</pre>
+
+This test will:
+1. Download required files (background models and specific chromosomes)
+2. Run gkm-align to align loci and map enhancers
+3. Compare output with expected results
+4. Report success or failure
 
 # Running gkm-align
 ## Local sequence alignment and mapping 
@@ -73,7 +101,7 @@ mkdir output_files
 
 **2)** **Aligning** human and mouse HBB-LCRs. 
 <pre>
-../../bin/gkm_align  -t 1  HBB.to_align -d ../../data/genomes/ -g masker_models.txt   -p 50 -o output_files -n HBB_LCR_mm10-hg38
+../../bin/gkm_align  -t 1 -d ../../data/genomes/ -g masker_models.txt -p 50 -o output_files -n HBB_LCR_mm10-hg38 HBB.to_align
 </pre>
   * **'-t 1 HBB.to_align'**: Specifies that gkm-align is in "align" mode and uses the input file HBB.to_align, which contains the genomic coordinates for both human and mouse HBB Locus Control Regions (LCRs)
   * **'-d ../../data/genomes'**: Specifiies directory containing the genome data files for human (hg38) and mouse (mm10). These directories should contain chromosome sequence files (e.g., chr1.fa, chr2.fa).
@@ -85,7 +113,7 @@ This step generates 'output_files/HBB_LCR_mm10-hg38.coord', which is used as an 
   
 **3)** **Mapping** mouse HBB-LCR enhancers to human. 
 <pre>
-../../bin/gkm_align  -t 2 -c output_files/HBB_LCR_mm10-hg38.coord  HBB_LCR_enhancers_mm10.bed -q mm10 -m -o output_files -n HBB_LCR_enhancers_mm10_mapped_to_hg38
+../../bin/gkm_align  -t 2 -c output_files/HBB_LCR_mm10-hg38.coord -q mm10 -m -o output_files -n HBB_LCR_enhancers_mm10_mapped_to_hg38 HBB_LCR_enhancers_mm10.bed
 </pre>
   * **'-t 2 -c output_files/HBB_LCR_mm10-hg38.coord'**: Specifies that gkm-align is in "mapping" mode and uses the output from the alignment step (-t 1) as the coordinate mapping file.
   * **'HBB_LCR_enhancers_mm10.bed'**: Input file containing the mm10 coordinates of mouse HBB-LCR enhancers.
@@ -116,7 +144,7 @@ bash run_gkmalign.sh
 'run_gkmalign.sh' in this example is almost identical to the version in the previous HBB-LCR example. 
 For example, the 'run_gkmalign.sh' script contains the following command lnes:
 <pre>
-../../bin/gkm_align  -t 1  FADS_loci.to_align -d ../../data/genomes/ -g masker_models.txt   -p 50 -o output_files -n FADS_loci_mm10-hg38 -G
+../../bin/gkm_align  -t 1 -d ../../data/genomes/ -g masker_models.txt -p 50 -o output_files -n FADS_loci_mm10-hg38 -G FADS_loci.to_align
 </pre>
  * Adding '-G' option outputs matrix G (binary) to an output directory specified by -o, for each line in the input file with '.to_align' suffix. Output matrix G file is named automatically based on the genomic ranges from which the matrix was computed. 
 
@@ -191,7 +219,7 @@ bash run_gkmalign.sh subset_human_mouse_WG_syntenic_intergenic_loci.to_align
 The [shell script](examples/whole_genome/run_gkmalign.sh) first generates masker_models.txt, which contains file paths to gkm-SVM genomic background models for human and mouse. These files are downloaded to data/ when setting up gkm-align (using bash setup.sh). The script then runs gkm-align on the syntenic blocks with the following command:
 
 <pre>
-../../bin/gkm_align  -t 1  human_mouse_WG_syntenic_intergenic_loci.to_align -d ../../data/genomes/ -g masker_models.txt   -p 50 -o output_files -n hg38-mm10_unweighted -G
+../../bin/gkm_align  -t 1 -d ../../data/genomes/ -g masker_models.txt -p 50 -o output_files -n hg38-mm10_unweighted -G human_mouse_WG_syntenic_intergenic_loci.to_align
 </pre>
 
 This command line will generate '[**hg38-mm10_unweighted.coord**](https://beerlab.org/gkmalign/hg38-mm10_unweighted.coord)'.
@@ -211,7 +239,7 @@ The first step is to download the relevant sequence models. For example, to perf
 After downloading the model files, you can run enhancer-model-weighted gkm-align using the '-W' option. For example, to run embryonic-brain-weighted alignment with a model weight of c=0.5, include '-W,0.5,sequence_model_files.txt', where each line of '[sequence_model_files.txt](examples/whole_genome/sequence_model_files.txt)' specifies the file path to the enhancer models downloaded in the previous step.
 
 <pre>
-../../bin/gkm_align -t 1 -g masker_models.txt -d /mnt/data0/joh27/genomes/ subset_human_mouse_WG_syntenic_intergenic_loci.to_align -W 0.5,sequence_model_files.txt -p 50 -o output_files/ -n hg38-mm10_enhancer-model-weighted_DHS_790_hg38-DHS_97_mm10_c-0.5
+../../bin/gkm_align -t 1 -g masker_models.txt -d /mnt/data0/joh27/genomes/ -W 0.5,sequence_model_files.txt -p 50 -o output_files/ -n hg38-mm10_enhancer-model-weighted_DHS_790_hg38-DHS_97_mm10_c-0.5 subset_human_mouse_WG_syntenic_intergenic_loci.to_align
 </pre>
 
 The pipeline described above can be executed with the following command:
@@ -242,7 +270,7 @@ awk '{print $1"\t"$2"\t"$3"\t"$1":"$2"-"$3}' DHS_790_hg38_300_noproms_nc30.bed >
 To map human embryonic brain enhancers to the mouse genome using [hg38-mm10_unweighted.coord](https://beerlab.org/gkmalign/hg38-mm10_unweighted.coord), run the following command line: 
 
 <pre>
-../../bin/gkm_align  -t 2  human_brain_enhancers.bed  -c hg38-mm10_unweighted.coord -q hg38 -m -o output_files -n human_brain_enhancers_mapped_to_mm10
+../../bin/gkm_align  -t 2 -c hg38-mm10_unweighted.coord -q hg38 -m -o output_files -n human_brain_enhancers_mapped_to_mm10 human_brain_enhancers.bed
 </pre>
  
 This generates two files with the following suffixes: `.multiple_mapped` and `.multiple_not_mapped`. These file formats are designed to match the output file formats of LiftOver. Similarly, using `-u` option (which filters out duplicate mappings) generates `unique_mapped` and `.unique_not_mapped`. However, we recommend the `-m` option to obtain the full range of interspecies mappings, as gkm-align provides conservation metrics for evaluating each mapping. 
@@ -322,7 +350,12 @@ Although this README is sufficient for running gkm-align, it will be updated wit
 Regardless, all necessary information required for performing these analyses is included in the [manuscript](https://www.nature.com/articles/s41467-024-50708-z). Mathematical details of the gkm-align algorithm are provided on pages 41 to 48 of the Supplementary Information document of the manuscript. 
 
 # Software Updates
-
+---
+## 2025-12-31
+- **Major Architecture & Stability Update**:
+  - **Memory Refactor**: Replaced manual `new`/`delete` loops and triple-pointer logic (`int***`) with a flattened 1D `std::vector` rolling buffer. This eliminates heap fragmentation and improves CPU cache locality during high-throughput alignment.
+  - **Segfault Prevention**: Implemented `reserve()` logic for k-mer string vectors to prevent pointer invalidation. Stored pointers (`char*`) now remain stable throughout the object's lifetime.
+  - **Optimization & SIMD**: Updated Makefile with `-O3` flags and automatic hardware detection. The system now supports **AVX2**, **SSE2**, or **non-SIMD** fallbacks, enabling significant speedups (5x–10x) on modern CPUs.
 ---
 ## 2024-12-1
 - **Minor update**: gkm-align (option `-t 2`) generates `.mapped` and `.not_mapped` files, similar to LiftOver. The format of the `.not_mapped` file has been updated to provide more detailed information on why certain elements did not map.

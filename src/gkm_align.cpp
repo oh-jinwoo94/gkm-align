@@ -174,6 +174,34 @@ int main(int argc, char *argv[]) {
             exit(1);
         }
 
+        // Validate lmer length constraints
+        if (lmer_length > window_width) {
+            cout << "Error: lmer length (" << lmer_length << ") cannot be larger than window width (" << window_width << ")" << endl;
+            help();
+            exit(1);
+        }
+
+        // Check SIMD support and validate lmer length
+        #ifdef __AVX2__
+            if (lmer_length > 32) {
+                cout << "Error: lmer length (" << lmer_length << ") cannot be larger than 32 for AVX2 SIMD support" << endl;
+                help();
+                exit(1);
+            }
+        #elif defined(__SSE2__)
+            if (lmer_length > 16) {
+                cout << "Error: lmer length (" << lmer_length << ") cannot be larger than 16 for SSE2 SIMD support" << endl;
+                help();
+                exit(1);
+            }
+        #elif defined(__NOSIMD__)
+            cout << "Error: -t 1 (genome alignment) requires SIMD support (AVX2 or SSE2)" << endl;
+            cout << "This system does not support SIMD instructions." << endl;
+            cout << "You can still use -t 2 (enhancer mapping) with precomputed alignment files." << endl;
+            help();
+            exit(1);
+        #endif
+
 
         cout << "\n-- Parameters --" << endl;
         cout << "insertion/deletion penalty: " << indel << endl;
@@ -233,7 +261,7 @@ int main(int argc, char *argv[]) {
 
         const float mthreshold_1 = load_weights_threshold(masker_weights_1, rmodel_fname1);
 	const float mthreshold_2 = load_weights_threshold(masker_weights_2, rmodel_fname2);
-
+        cout << "Masker model loading completed" << endl;
 
 	tuple<int, float, float, float, float, unsigned int> post_stat_1;
 	unordered_map<string, float> kmer_weights_1; // encoding reg vocab

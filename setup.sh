@@ -1,5 +1,28 @@
 #!/bin/sh
 
+# Check OS first - only allow Linux
+OS_CHECK=$(uname -s)
+if [ "$OS_CHECK" != "Linux" ]; then
+    echo "Error: This software is designed for Linux systems only."
+    echo "Detected OS: $OS_CHECK"
+    echo "Please use a Linux system with x86/x64 architecture."
+    exit 1
+fi
+
+echo "Linux system detected. Proceeding with compilation..."
+echo "Checking SIMD support..."
+echo "This software requires either AVX2 or SSE2 SIMD support."
+echo "Checking for AVX2 support first, falling back to SSE2 if needed..."
+
+# Check if we can compile with at least SSE2 (optional check)
+if ! g++ -msse2 -x c++ -o /dev/null - <<< 'int main() { __m128i x; return 0; }' 2>/dev/null; then
+    echo "Warning: This system does not support SSE2 SIMD instructions."
+    echo "gkm-align will compile but -t 1 (genome alignment) will not be available."
+    echo "-t 2 (enhancer mapping) will still work with precomputed alignment files."
+    echo "Proceeding with compilation..."
+else
+    echo "SIMD support confirmed. All options will be available."
+fi
 
 # compile gkm-align
 cd src

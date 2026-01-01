@@ -18,18 +18,20 @@ void help(){
             cout << " ========================================================================================================\n" << endl;
             cout << "Usage: " <<endl;
             cout << "                  (1) for genome alignment (-t 1):" << endl;
-	    cout << "                          ./gkm_align -t 1 -d <genomes> -g <genome_background_models.txt> <input: loci.2align>\n" << endl;
+	    cout << "                          ./gkm_align -t 1 -d <genomes> -g <genome_background_models.txt> <input: loci.to_align>\n" << endl;
             cout << "                  (2) for enhancer mapping (-t 2):" << endl;
-	    cout << "                          ./gkm_align -t 2 -c <alignment_output.coord> -m <input: enhancers.bed> \n" << endl;
+	    cout << "                          ./gkm_align -t 2 -c <alignment_output.coord> -q <query_genome> -m <input: enhancers.bed> \n" << endl;
 
 
             cout << "Software arguments & options" << endl;
             cout << "(1) for genome alignment (-t 1): " << endl;
-	    cout << "  input argument      [required] 2align containing interspecies syntenic loci to align." << endl;
             cout << "  -d <string>         [required] directory containing hg38/ and mm10/" <<endl;
             cout << "                                 (or other genomes of interest containing .fasta files for each chromosomes)" << endl;
-            cout << "  -g <string>         [required] .txt containing file names for a genome background model for each species\n" << endl;
+            cout << "  -g <string>         [required] .txt containing file names for a genome background model for each species" << endl;
+            cout << "  input argument      [required] .to_align containing interspecies syntenic loci to align.\n" << endl;
             cout << "  -l <int>            Gapped-kmer width (default: 11; e.g., -TGA-TCAT--)" << endl;
+            cout << "                      - must be smaller than or equal to window width (-w)" << endl;
+            cout << "                      - maximum: 32 for AVX2, 16 for SSE2" << endl;
             cout << "  -k <int>            Number of non-gapped positions in the gapped kmers (default: 7; e.g., -TGA-TCAT--)" << endl;
             cout << "                      - must be smaller than or equal to l." << endl;
             cout << "  -w <int>            Width of the sliding windows (default: 300)" << endl;
@@ -45,9 +47,9 @@ void help(){
 	    cout << "                      Provide -O to ignore existing gkm-matrices\n" << endl;
 
             cout << "(2) for enhancer mapping (-t 2): " << endl;
-            cout << "  input argument      [required] .bed containing query enhancers to map." << endl;
             cout << "  -c <string>         [required] .coord output file from -t 1 genome alignment" << endl;
-            cout << "  -q <string>         [required] query genome (e.g., hg38 for mapping human enhancers to the mouse genome) \n" << endl;
+            cout << "  -q <string>         [required] query genome (e.g., hg38 for mapping human enhancers to the mouse genome)" << endl;
+            cout << "  input argument      [required] .bed containing query enhancers to map.\n" << endl;
             cout << "  -m or -u            [required] either -m or -u must be provided. " << endl;
 	    cout << "                                 -m: allows mapping enhancers to multiple elements." <<endl;
 	    cout << "                                 -u: restrict to unique mapping. \n" << endl; 
@@ -726,8 +728,9 @@ vector<float> invert_vector(vector<float> v){
 
 vector<float> elem_prod_vectors(vector<float> v1, vector<float> v2){
 	vector<float> prod(v1.size());
-	for(unsigned int i; i<prod.size(); i++){
+	for(unsigned int i = 0; i<prod.size(); i++){
 		prod[i] = v1[i]*v2[i];
 	}
 	return prod;
 }
+

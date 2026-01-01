@@ -1,71 +1,90 @@
-CC = g++
-CFLAGS = -std=c++11 -Wall -Wextra -pedantic -pthread -mavx2 
+# Use CXX for C++ compilers (Standard convention)
+CXX = g++
 
-all: gkm_align  mask_fa compute_gkmsim binary_matrix_2_tsv visualize_mappings train_masker
+# 1. CRITICAL: Added -O3 for performance
+# 2. Changed CFLAGS to CXXFLAGS (Standard for C++)
+COMMON_FLAGS = -std=c++11 -Wall -Wextra -pedantic -pthread -O3
+BIN_DIR = ../bin
 
+# OS Check
+OS_CHECK = $(shell uname -s)
+ifneq ($(OS_CHECK),Linux)
+    $(error This software is designed for Linux systems only.)
+endif
 
-gkm_align:  gkm_align.o Matrix.o MatrixG_Computer.o Seq_Aligner.o   Mapper.o functions.o
-	$(CC) $(CFLAGS) gkm_align.o Matrix.o  MatrixG_Computer.o Seq_Aligner.o  Mapper.o functions.o -o gkm_align
-	mv gkm_align ../bin
-gkm_align.o: gkm_align.cpp header.h
-	$(CC) $(CFLAGS) -c gkm_align.cpp
+# --- SIMD Detection ---
+# Note: This detects the BUILD machine's CPU. 
+# If you run this on a cluster node with AVX2, the binary might crash 
+# if moved to an older node without AVX2.
+HAS_AVX2 := $(shell lscpu 2>/dev/null | grep -q avx2 && echo 1)
+HAS_SSE2 := $(shell lscpu 2>/dev/null | grep -q sse2 && echo 1)
 
-Matrix.o: Matrix.cpp header.h
-	$(CC) $(CFLAGS) -c Matrix.cpp
+ifeq ($(HAS_AVX2),1)
+    CXXFLAGS = $(COMMON_FLAGS) -mavx2
+    SIMD_DEFINE = -D__AVX2__
+    MSG = AVX2 (Fastest)
+else ifeq ($(HAS_SSE2),1)
+    CXXFLAGS = $(COMMON_FLAGS) -msse2
+    SIMD_DEFINE = -D__SSE2__
+    MSG = SSE2 (Fallback)
+else
+    CXXFLAGS = $(COMMON_FLAGS)
+    SIMD_DEFINE = -D__NOSIMD__
+    MSG = No SIMD (Slowest)
+endif
 
-MatrixG_Computer.o: MatrixG_Computer.cpp header.h
-	$(CC) $(CFLAGS) -c MatrixG_Computer.cpp
+# --- Targets ---
 
-Seq_Aligner.o: Seq_Aligner.cpp header.h
-	$(CC) $(CFLAGS) -c Seq_Aligner.cpp
+# Define all final binaries with their full paths
+TARGETS = $(BIN_DIR)/gkm_align \
+          $(BIN_DIR)/mask_fa \
+          $(BIN_DIR)/compute_gkmsim \
+          $(BIN_DIR)/binary_matrix_2_tsv \
+          $(BIN_DIR)/visualize_mappings \
+          $(BIN_DIR)/train_masker
 
-Mapper.o: Mapper.cpp header.h
-	$(CC) $(CFLAGS) -c Mapper.cpp
+# Object files needed for the main aligner
+ALIGN_OBJS = gkm_align.o Matrix.o MatrixG_Computer.o Seq_Aligner.o Mapper.o functions.o
 
-functions.o: functions.cpp header.h
-	$(CC) $(CFLAGS) -c functions.cpp
+all: info directory $(TARGETS)
 
+info:
+	@echo "----------------------------------------"
+	@echo "Building for Linux with $(MSG) support"
+	@echo "CXXFLAGS: $(CXXFLAGS)"
+	@echo "----------------------------------------"
 
-mask_fa:  mask_fa.o functions.o
-	$(CC) $(CFLAGS) mask_fa.o functions.o -o mask_fa
-	mv mask_fa ../bin
-mask_fa.o: mask_fa.cpp header.h
-	$(CC) $(CFLAGS) -c mask_fa.cpp
+# Ensure ../bin exists safely
+directory:
+	@mkdir -p $(BIN_DIR)
 
-binary_matrix_2_tsv:  binary_matrix_2_tsv.o Matrix.o functions.o
-	$(CC) $(CFLAGS) binary_matrix_2_tsv.o functions.o Matrix.o -o binary_matrix_2_tsv
-	mv binary_matrix_2_tsv ../bin
+# --- Pattern Rules (Reduces Spaghetti Code) ---
 
-binary_matrix_2_tsv.o: binary_matrix_2_tsv.cpp header.h
-	$(CC) $(CFLAGS) -c binary_matrix_2_tsv.cpp
+# This one rule handles ALL .cpp -> .o compilation
+# Added header.h as a dependency for everything (safest bet for this project)
+%.o: %.cpp header.h
+	$(CXX) $(CXXFLAGS) $(SIMD_DEFINE) -c $< -o $@
 
-compute_gkmsim:  compute_gkmsim.o
-	$(CC) $(CFLAGS) compute_gkmsim.o -o compute_gkmsim
-	mv compute_gkmsim ../bin
+# --- Linking Rules ---
 
+$(BIN_DIR)/gkm_align: $(ALIGN_OBJS)
+	$(CXX) $(CXXFLAGS) $^ -o $@
 
+$(BIN_DIR)/mask_fa: mask_fa.o functions.o
+	$(CXX) $(CXXFLAGS) $^ -o $@
 
-compute_gkmsim.o: compute_gkmsim.cpp header.h
-	$(CC) $(CFLAGS) -c compute_gkmsim.cpp
+$(BIN_DIR)/binary_matrix_2_tsv: binary_matrix_2_tsv.o Matrix.o functions.o
+	$(CXX) $(CXXFLAGS) $^ -o $@
 
-visualize_mappings:  visualize_mappings.o Matrix.o MatrixG_Computer.o Seq_Aligner.o  functions.o
-	$(CC) $(CFLAGS) visualize_mappings.o  Matrix.o  MatrixG_Computer.o Seq_Aligner.o  functions.o  -o visualize_mappings
-	mv visualize_mappings ../bin
+$(BIN_DIR)/compute_gkmsim: compute_gkmsim.o
+	$(CXX) $(CXXFLAGS) $^ -o $@
 
-visualize_mappings.o: visualize_mappings.cpp header.h
-	$(CC) $(CFLAGS) -c visualize_mappings.cpp
+$(BIN_DIR)/visualize_mappings: visualize_mappings.o Matrix.o MatrixG_Computer.o Seq_Aligner.o functions.o
+	$(CXX) $(CXXFLAGS) $^ -o $@
 
+$(BIN_DIR)/train_masker: train_masker.o functions.o
+	$(CXX) $(CXXFLAGS) $^ -o $@
 
-
-
-train_masker:  functions.o train_masker.o
-	$(CC) $(CFLAGS) train_masker.o functions.o -o train_masker
-	mv train_masker ../bin
-
-train_masker.o: train_masker.cpp header.h
-	$(CC) $(CFLAGS) -c train_masker.cpp
-
-
+# Clean now cleans the objects AND the binaries in ../bin
 clean:
-	rm -f *.o gkm_align 
-
+	rm -f *.o $(TARGETS)
