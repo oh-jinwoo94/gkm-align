@@ -1,36 +1,39 @@
-# Use CXX for C++ compilers (Standard convention)
+# Makefile
 CXX = g++
-
-# 1. CRITICAL: Added -O3 for performance
-# 2. Changed CFLAGS to CXXFLAGS (Standard for C++)
 COMMON_FLAGS = -std=c++11 -Wall -Wextra -pedantic -pthread -O3
 BIN_DIR = ../bin
 
-# OS Check
-OS_CHECK = $(shell uname -s)
-ifneq ($(OS_CHECK),Linux)
-    $(error This software is designed for Linux systems only.)
-endif
+# --- OS & Architecture Detection ---
+UNAME_S := $(shell uname -s)
+UNAME_M := $(shell uname -m)
 
-# --- SIMD Detection ---
-# Note: This detects the BUILD machine's CPU. 
-# If you run this on a cluster node with AVX2, the binary might crash 
-# if moved to an older node without AVX2.
+# 1. Detect Hardware Features
+# Linux uses lscpu; Mac (Darwin) implies hardware based on arch
 HAS_AVX2 := $(shell lscpu 2>/dev/null | grep -q avx2 && echo 1)
 HAS_SSE2 := $(shell lscpu 2>/dev/null | grep -q sse2 && echo 1)
+IS_ARM64 := $(shell echo $(UNAME_M) | grep -q 'arm64' && echo 1)
 
+# 2. Set Flags
 ifeq ($(HAS_AVX2),1)
+    # Standard Intel/AMD Server
     CXXFLAGS = $(COMMON_FLAGS) -mavx2
     SIMD_DEFINE = -D__AVX2__
-    MSG = AVX2 (Fastest)
+    MSG = AVX2 (Intel/AMD)
 else ifeq ($(HAS_SSE2),1)
+    # Older Intel
     CXXFLAGS = $(COMMON_FLAGS) -msse2
     SIMD_DEFINE = -D__SSE2__
-    MSG = SSE2 (Fallback)
+    MSG = SSE2 (Intel Fallback)
+else ifeq ($(IS_ARM64),1)
+    # Apple Silicon (M1/M2/M3) or AWS Graviton
+    CXXFLAGS = $(COMMON_FLAGS)
+    SIMD_DEFINE = -D__ARM_NEON
+    MSG = ARM NEON (Apple Silicon)
 else
+    # Ancient Hardware
     CXXFLAGS = $(COMMON_FLAGS)
     SIMD_DEFINE = -D__NOSIMD__
-    MSG = No SIMD (Slowest)
+    MSG = No SIMD
 endif
 
 # --- Targets ---

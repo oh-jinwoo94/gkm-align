@@ -32,20 +32,30 @@ Please cite the following paper if you use gkm-align:
 Also, visit the [gkm-align webpage](https://beerlab.org/gkmalign/) to find useful resource files for running gkm-align. 
 
 # System Requirements
-gkm-align is designed for Linux-based operating systems (Red Hat, CentOS, Rocky Linux, etc.).
-**Tested on:** Rocky Linux release 8.8 (Green Obsidian)
+**Supported OS:** Linux (CentOS, Ubuntu, Rocky Linux, etc.) and macOS (Apple Silicon).
 
-**SIMD Requirements:**
-- **AVX2 support**: Maximum lmer length = 32
-- **SSE2 support**: Maximum lmer length = 16
+**Tested on:** Rocky Linux 8.8 and macOS Sequoia (Apple M3 Pro).
 
-**Check your system's SIMD support:**
-- AVX2: `lscpu | grep avx2`
-- SSE2: `lscpu | grep sse2`
+### Hardware Acceleration (SIMD)
+gkm-align automatically detects your CPU architecture (AVX2, SSE2, or ARM NEON) to optimize alignment speed.
 
-**Without SIMD support:** You can only use mapping mode (-t 2) with precomputed genome alignment files (e.g., [hg38-mm10_unweighted.coord](https://beerlab.org/gkmalign/hg38-mm10_unweighted.coord))
+**Note on Parameter Limits:**
+Your hardware determines the maximum gapped-kmer length (`-l`) you can use:
+* **Most Laptops (Apple Silicon / Older Intel):** Supports `-l` up to **16**.
+* **Modern Servers (Intel/AMD with AVX2):** Supports `-l` up to **32**.
 
-**Note:** Attempting to use alignment mode (-t 1) without SIMD support will result in an error during argument parsing.
+*Note: The default length is 11, which works on all supported systems.*
+
+<details>
+<summary><strong>Click here to manually check your hardware support</strong></summary>
+
+If you need to verify which instruction set your CPU supports:
+* **Linux:** `lscpu | grep -E "avx2|sse2"`
+* **macOS:** `sysctl -a | grep neon`
+
+**Troubleshooting:**
+If your system lacks SIMD support entirely (rare), you can only use mapping mode (`-t 2`). Attempting alignment mode (`-t 1`) will result in an error.
+</details>
 
  
 # Installation

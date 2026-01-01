@@ -46,7 +46,6 @@ Seq_Aligner::Seq_Aligner(Matrix* G, vector<float>* ann_vector_1, vector<float>* 
   K(km_dim_1, km_dim_2),
   DM(dm_dim_1, dm_dim_2, numeric_limits<float>::infinity()),
   rel_strand_loc(rel_strand_loc),
-  wF(wF),
   type(2),
   ID_2align(ID_2align)
 
@@ -139,8 +138,6 @@ Seq_Aligner::backtrack(float indel) {
 
     tuple<int, int> dot;
 
-    int num_match = 0;
-    int num_skip = 0;
     while (i > 0 || j > 0) {
         // Boolean values that encode which 'directions' are possible
         bool match = ((i > 0 && j > 0) &&
@@ -161,15 +158,12 @@ Seq_Aligner::backtrack(float indel) {
             dots.insert(dots.begin(), dot);
             --i;
             --j;
-            num_match++;
 
         } else if (indel1) {
             --i;
-            num_skip++;
 
         } else if (indel2) {
             --j;
-            num_skip++;
 
         } else { // for debug.
             cout << "Unexpected event (debug needed)" << endl;
@@ -213,7 +207,6 @@ Seq_Aligner::dots_to_coords(
     vector<tuple<int, int, string, string,string>> coords;
     tuple<int, int, string, string, string> coord;
     int i; int j; string Gval; string aV_elem_1 = "."; string aV_elem_2 = ".";
-    tuple<float,float> vals;
     for (auto &dot : dots) {
         i = get<0>(dot); j = get<1>(dot);
         if(rel_strand_loc == "same_strand"){

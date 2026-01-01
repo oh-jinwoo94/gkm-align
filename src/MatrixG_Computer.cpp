@@ -49,7 +49,7 @@ MatrixG_Computer::MatrixG_Computer(int lmer_length,
     #ifdef __AVX2__
         string pad1(32-l, '>'); // 32 for AVX2
         string pad2(32-l, '<');
-    #elif defined(__SSE2__)
+    #elif defined(__SSE2__) || defined(__ARM_NEON)
         string pad1(16-l, '>'); // 16 for SSE2
         string pad2(16-l, '<');
     #elif defined(__NOSIMD__)
@@ -141,6 +141,19 @@ float MatrixG_Computer::subseqs_matrix(vector<char*> &seq1, vector<char*> &seq2,
                 s2 =  _mm_loadu_si128((__m128i*)(seq2[j]));
                 ceq = _mm_cmpeq_epi8(s1, s2);
                 match = __builtin_popcount(_mm_movemask_epi8(ceq));
+                tot += shared_gkm[l - match];
+            }
+        }
+    #elif defined(__ARM_NEON)
+        uint8x16_t s1, s2, ceq, masked;
+        const uint8x16_t ones = vdupq_n_u8(1); // Vector of 1s
+        for (int i = start_i; i <= end_i - l + 1; i++) {
+            for (int j = start_j; j <= end_j - l + 1; j++) {
+                s1 = vld1q_u8((const uint8_t*)seq1[i]);
+                s2 = vld1q_u8((const uint8_t*)seq2[j]);
+                ceq = vceqq_u8(s1, s2);
+                masked = vandq_u8(ceq, ones);
+                match = vaddlvq_u8(masked);
                 tot += shared_gkm[l - match];
             }
         }

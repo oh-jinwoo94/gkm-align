@@ -9,7 +9,7 @@ mkdir output_files
 
 
 # align FADS locus. -G option outputs matrix G containing pairwise sequence similarity (gkm-sim matrix)
-../../bin/gkm_align  -t 1  FADS_loci.to_align -d ../../data/genomes/ -g masker_models.txt   -p 50 -o output_files -n FADS_loci_mm10-hg38 -G
+../../bin/gkm_align  -t 1 -d ../../data/genomes/ -g masker_models.txt   -p 50 -o output_files -n FADS_loci_mm10-hg38 -G FADS_loci.to_align 
 
 
 

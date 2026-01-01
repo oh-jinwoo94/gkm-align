@@ -20,7 +20,10 @@
 #include <immintrin.h>
 #elif defined(__SSE2__)
 #include <emmintrin.h>
+#elif defined(__ARM_NEON) 
+#include <arm_neon.h>
 #endif
+
 using namespace std; 
 
 
@@ -239,7 +242,6 @@ class Seq_Aligner{
 	Matrix K;
         Matrix DM; // dynamic matrix 
         string rel_strand_loc;
-        float wF;
 	int type;
 	float mean;
 	float var;
