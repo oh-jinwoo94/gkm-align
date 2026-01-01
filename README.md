@@ -32,20 +32,22 @@ Please cite the following paper if you use gkm-align:
 Also, visit the [gkm-align webpage](https://beerlab.org/gkmalign/) to find useful resource files for running gkm-align. 
 
 # System Requirements
-gkm-align is designed for Linux-based operating systems (Red Hat, CentOS, Rocky Linux, etc.).
-**Tested on:** Rocky Linux release 8.8 (Green Obsidian)
+gkm-align is designed for **Linux** (Red Hat, CentOS, Ubuntu, etc.) and **macOS** (Apple Silicon).
+**Tested on:** Rocky Linux release 8.8 (Green Obsidian) and macOS Sonoma (Apple M3 Pro).
 
 **SIMD Requirements:**
-- **AVX2 support**: Maximum lmer length = 32
-- **SSE2 support**: Maximum lmer length = 16
+* **AVX2 support** (Intel/AMD): Maximum lmer length = 32
+* **SSE2 support** (Intel/AMD): Maximum lmer length = 16
+* **ARM NEON support** (Apple Silicon): Maximum lmer length = 16
 
 **Check your system's SIMD support:**
-- AVX2: `lscpu | grep avx2`
-- SSE2: `lscpu | grep sse2`
+* **Linux:** `lscpu | grep -E "avx2|sse2"`
+* **macOS:** `sysctl -a | grep neon`
 
-**Without SIMD support:** You can only use mapping mode (-t 2) with precomputed genome alignment files (e.g., [hg38-mm10_unweighted.coord](https://beerlab.org/gkmalign/hg38-mm10_unweighted.coord))
+**Without SIMD support:**
+You can only use mapping mode (`-t 2`) with precomputed genome alignment files (e.g., [hg38-mm10_unweighted.coord](https://beerlab.org/gkmalign/hg38-mm10_unweighted.coord)).
 
-**Note:** Attempting to use alignment mode (-t 1) without SIMD support will result in an error during argument parsing.
+**Note:** Attempting to use alignment mode (`-t 1`) without SIMD support (AVX2, SSE2, or NEON) will result in an error during argument parsing.
 
  
 # Installation
