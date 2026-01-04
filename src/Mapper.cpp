@@ -7,120 +7,86 @@ Mapper::Mapper(string cfile_name, string qbuild, vector<string> qchrom_list) {
     check_file(cfile_name);
     ifstream cfile(cfile_name);
 
-    // format
-    // >	1   mm10    chr7    103847958       103886990       hg38    chr11   5267504 5306699 same_strand
-    // 103847958       5267504 0.0378858
-    // 103847978       5267524 0.0334759
-
-    // chain_id build1 build1_chr range_start range_end build2 build2_chr range_start range_end dir
-
-
-    // save the alignment result (build_to_build.coord) into a map
-    // Partition by chromosome, and sort by position for each chroms.
-
-    // for chain info line
-    string trash;
-    string chain_id;
-    string build1;
-    string build1_chr;
-    int build1_start;
-    int build1_end;
-    string build2;
-    string build2_chr;
-    int build2_start;
-    int build2_end;
-    string rel_strand;
-   
-
-    // for coordinate lines 
-    int coord1; 
-    int coord2;
-    string cons_vals; // for unweighted alignment, one float. For weighted, three floats
-
-    string qchrom; 
-
     string line;
-    bool skip = true; 
+    
+    // cache - pointer to the vector we are currently filling.
+    vector<tuple<int, int, string>>* current_coords = nullptr;
+
+    // temporary variables for parsing header
+    string trash, chain_id, build1, build1_chr, build2, build2_chr, rel_strand;
+    int build1_start, build1_end, build2_start, build2_end;
+    string qchrom;
+    
+    // Parsing state
+    bool skip = true;
 
     while (getline(cfile, line)) {
-        istringstream ss(line);
-        if(line[0] == '>'){ // new chain
-	    skip = true; 
-            ss >> trash >> chain_id >>build1 >> build1_chr >> build1_start >> build1_end
+        if (line.empty()) continue;
+
+        if (line[0] == '>') { // header line 
+            istringstream ss(line);
+            ss >> trash >> chain_id >> build1 >> build1_chr >> build1_start >> build1_end
                >> build2 >> build2_chr >> build2_start >> build2_end >> rel_strand;
 
-            if(build1 == qbuild){
-                qdim = 0;
-                qbuild = build1;
-                tbuild = build2;
-                qchrom = build1_chr; 
-           } else if(build2 == qbuild){
-                qdim = 1;
-                qbuild = build2;
-                tbuild = build1;
-                qchrom = build2_chr;
+            if (build1 == qbuild) {
+                qdim = 0; qbuild = build1; tbuild = build2; qchrom = build1_chr;
+            } else if (build2 == qbuild) {
+                qdim = 1; qbuild = build2; tbuild = build1; qchrom = build2_chr;
             } else {
                 cout << "ERROR: " << qbuild << " does not match any of the builds in the input chain file" << endl;
                 exit(1);
             }
- 
-            if(find(qchrom_list.begin(), qchrom_list.end(), qchrom) != qchrom_list.end()){ // chain lies in query relevant chromosmes
-	        skip = false; 
-            // fill in chrom_to_cinfo
-                if(qdim == 0){
-                    if (chrom_to_cinfo.find(build1_chr) == chrom_to_cinfo.end()){
-                        chrom_to_cinfo[build1_chr] = {make_tuple(chain_id, build1_start, build1_end)};
-                    } else {
-                        (chrom_to_cinfo[build1_chr]).push_back(make_tuple(chain_id, build1_start, build1_end));
-                    }
 
+            if (find(qchrom_list.begin(), qchrom_list.end(), qchrom) != qchrom_list.end()) {
+                skip = false;
+                
+                // Update Metadata
+                if (qdim == 0) {
+                    chrom_to_cinfo[build1_chr].emplace_back(chain_id, build1_start, build1_end);
                     chainID_to_tchrom[chain_id] = build2_chr;
-
                 } else {
-                    if (chrom_to_cinfo.find(build2_chr) == chrom_to_cinfo.end()){
-                        chrom_to_cinfo[build2_chr] = {make_tuple(chain_id, build2_start, build2_end)};
-                    } else {
-                        (chrom_to_cinfo[build2_chr]).push_back(make_tuple(chain_id, build2_start, build2_end));
-                    }
+                    chrom_to_cinfo[build2_chr].emplace_back(chain_id, build2_start, build2_end);
                     chainID_to_tchrom[chain_id] = build1_chr;
                 }
-	    }
 
-        // fill in chainID_to_coords. for coords, first dimension is the query dimension.
-        } else {
-		//v1: gkmsim; v2,v3: gkm-SVM.  for unweighted, v2,v3=.,.
-		string v1;
-		string v2; 
-		string v3;
-	    if(!skip){
-                ss >> coord1 >> coord2  >> v1 >> v2 >> v3;
-		cons_vals = v1 + "\t" + v2 + "\t" + v3;
-                if(qdim == 0){
-                    if(chainID_to_coords.find(chain_id) == chainID_to_coords.end()){
-                        chainID_to_coords[chain_id] = {make_tuple(coord1, coord2, cons_vals)};
-                    } else{
-                        (chainID_to_coords[chain_id]).push_back(make_tuple(coord1, coord2, cons_vals)); 
-                    }            
+                // POINTER CACHE: Set the pointer to the current vector
+                current_coords = &chainID_to_coords[chain_id];
+                
+            } else {
+                skip = true;
+                current_coords = nullptr; 
+            }
+
+        } else { // coordinate lines
+            if (!skip && current_coords != nullptr) {
+                const char* p = line.c_str();
+                char* end_ptr;
+
+                // fast integer parsing
+                int c1 = strtol(p, &end_ptr, 10);
+                p = end_ptr;
+                int c2 = strtol(p, &end_ptr, 10);
+                
+                // fast string capture (rest of line)
+                while (*end_ptr && isspace(*end_ptr)) end_ptr++;
+                string cons_vals(end_ptr); 
+
+                if (qdim == 0) {
+                    current_coords->emplace_back(c1, c2, cons_vals);
                 } else {
-                    if(chainID_to_coords.find(chain_id) == chainID_to_coords.end()){
-                        chainID_to_coords[chain_id] = {make_tuple(coord2, coord1, cons_vals)};
-                    } else{
-                        (chainID_to_coords[chain_id]).push_back(make_tuple(coord2, coord1, cons_vals));
-                    }
-
+                    current_coords->emplace_back(c2, c1, cons_vals);
                 }
-	    }
+            }
         }
     }
-
-    // now, sort coords for each chain. sort by query coordinate
+    
+    // sort logic
     for(auto& item : chainID_to_coords){
         auto& coords = item.second;
         sort(coords.begin(), coords.end(),
              [](const tuple<int, int, string> &a, const tuple<int, int, string> &b) -> bool {
                 return get<0>(a) < get<0>(b);
         });
-        
     }
     cfile.close();
 }

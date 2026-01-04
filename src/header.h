@@ -8,6 +8,8 @@
 #include <unordered_map>
 #include <string>
 #include <tuple>
+#include <cstdlib>
+#include <cctype>
 #include <cmath>
 #include <list>
 #include <limits>
