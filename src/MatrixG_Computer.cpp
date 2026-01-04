@@ -191,6 +191,23 @@ float MatrixG_Computer::subseqs_matrix(vector<char> &seq1, vector<char> &seq2,
                 tot += shared_gkm[l - match];
             }
         }
+    #elif defined(__ARM_NEON)
+        uint8x16_t s1, s2, ceq, masked;
+        const uint8x16_t ones = vdupq_n_u8(1); // Vector of 1s to mask the popcount
+        for (int i = start_i; i <= end_i - l + 1; i++) {
+            const char* p1 = &seq1[i * entry_size];
+            for (int j = start_j; j <= end_j - l + 1; j++) {
+                const char* p2 = &seq2[j * entry_size];
+
+                s1 = vld1q_u8((const uint8_t*)p1);
+                s2 = vld1q_u8((const uint8_t*)p2);
+                ceq = vceqq_u8(s1, s2);       
+                masked = vandq_u8(ceq, ones); 
+                match = vaddlvq_u8(masked);   
+                
+                tot += shared_gkm[l - match];
+            }
+        }
     #elif defined(__NOSIMD__)
         // No SIMD support - this code path should not be reached for -t 1
         // as it's blocked in argument parsing
@@ -277,7 +294,10 @@ void MatrixG_Computer::compute_matrix_rows(vector<int> rows){
         for(auto row : rows) {
             float kern;
             for(int j = 0; j<km_dim_2; j++){
-                kern = subseqs_matrix(seq1_pv_a, seq2_pv_b, slide*row, slide*row + window-1, slide*j, slide*j+window-1);
+                kern = subseqs_matrix(seq1_sv_a, seq2_sv_b, 
+                                      slide*row, slide*row + window-1, 
+                                      slide*j, slide*j+window-1);
+                
                 K(row,j) = kern * (v1_inv_norm[row] * v2_inv_norm[j]);  
             }
         }
