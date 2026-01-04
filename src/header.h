@@ -96,10 +96,6 @@ public:
     vector<size_t> dims();
     float compute_mean();
     float compute_var();
-    void weigh_rows_by_vect(vector<float> v);
-    void weigh_cols_by_vect(vector<float> v);
-    void rowwise_avgdotproduct_matrices(vector<vector<float>> M1, vector<vector<float>> M2, string rel_strand_loc);
-    void rowwise_pcorr_matrices(vector<vector<float>> M1, vector<vector<float>> M2, float max_filter, string rel_strand_loc);
     int save_matrix(string fname);
     int save_matrix_tsv(string fname);
 private:

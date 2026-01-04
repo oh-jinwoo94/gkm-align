@@ -1,8 +1,6 @@
 #include "header.h"
 
 
-
-
 // constructor
 Matrix::Matrix(size_t nr, size_t nc): n_rows(nr),  n_cols(nc),  data(nr * nc)
 {}
@@ -60,97 +58,6 @@ float Matrix::compute_var(){
     return var;
 }
 
-void Matrix::weigh_rows_by_vect(vector<float> v){
-    if(v.size() != n_rows){
-	    cout << "dimension mismatch in weigh_rows_by_vect" << endl;
-	    exit(1);
-    }
-    for (size_t i = 0; i < n_rows; i++) {
-        for (size_t j = 0; j < n_cols; j++) {
-            data[i * n_cols + j] *= v[i];
-        }
-    }
-}
-
-void Matrix::weigh_cols_by_vect(vector<float> v){
-    if(v.size() != n_cols){
-            cout << "dimension mismatch in weigh_cols_by_vect" << endl;
-            exit(1);
-    }
-    for (size_t j = 0; j < n_cols; j++) {
-        for (size_t i = 0; i < n_rows; i++) {
-            data[i * n_cols + j] *= v[j];
-        }
-    }
-}
-
-
-
-
-void Matrix::rowwise_avgdotproduct_matrices(vector<vector<float>> M1, vector<vector<float>> M2, string rel_strand_loc){
-    if(M1.size() != n_rows || M2.size() != n_cols){
-        cout << "dimension mismatch" << endl;
-        exit(1);
-    }else{
-
-	float dp;
-	unsigned int N;
-        vector<float> p1; vector<float> p2; 
-        for(unsigned int i = 0 ; i < n_rows; i++){
-            p1 = M1[i];
-            for(unsigned int j = 0; j < n_cols; j++){
-                if(rel_strand_loc == "same_strand"){
-                    p2 = M2[j];
-                }else{
-                    p2 = M2[M2.size()-1-j];
-                }
-
-		N = p1.size(); 
-		dp = 0;
-		for(unsigned int k = 0; k < N; k++){
-			dp = dp + p1[k]*p2[k];
-		}
-                data[i*n_cols + j] = dp / N;
-            }
-        }
-    }
-}
-
-
-// row-wise corr (using pearson corr) between two (max-filtered) matrices
-void Matrix::rowwise_pcorr_matrices(vector<vector<float>> M1, vector<vector<float>> M2, float max_filter, string rel_strand_loc){
-    if(M1.size() != n_rows || M2.size() != n_cols){
-        cout << "dimension mismatch" << endl;
-        exit(1);
-    }else{
-
-	vector<float> p1; vector<float> p2; float max1; float max2;
-        for(unsigned int i = 0 ; i < n_rows; i++){
-	    p1 = M1[i];
-            for(unsigned int j = 0; j < n_cols; j++){
-		if(rel_strand_loc == "same_strand"){
-		    p2 = M2[j];
-		}else{
-		    p2 = M2[M2.size()-1-j];
-		}
-
-                max1 = *max_element(begin(p1), end(p1));
-                max2 = *max_element(begin(p2), end(p2));
-
-                float filter1 = 0 ; float filter2 = 0;
-                if(max1>max_filter){
-                    filter1 = 1;
-                }
-                if(max2>max_filter){
-                    filter2 = 1;
-                }
-
-                data[i*n_cols + j] = (pcorr(p1, p2) + 1 ) /2 * filter1 * filter2;
-            }
-        }
-    }
-}
- 
 
 
 // save matrix in binary format 
