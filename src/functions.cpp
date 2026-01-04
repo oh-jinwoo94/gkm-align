@@ -5,6 +5,30 @@
 const vector<char> ATGC = {'A', 'T', 'G', 'C'};
 const unordered_map<char,char> comp = {{'A', 'T'}, {'T', 'A'}, {'G', 'C'}, {'C', 'G'}};
 
+// helper funciton: parses a line "KMER   VALUE"
+// returns true if successful, false if line is empty/malformed
+inline bool parse_kmer_line(const string& line, string& kmer, float& weight) {
+    // skip empty lines or comments
+    if (line.empty() || line[0] == '#') return false;
+
+    // find separator (space or tab)
+    size_t split_pos = line.find_first_of(" \t");
+    if (split_pos == string::npos) return false;
+
+    // extract kmer
+    kmer = line.substr(0, split_pos);
+
+    // parse float (C-style)
+    // point to the character after the kmer
+    const char* p_start = line.c_str() + split_pos;
+    char* p_end;
+    weight = strtof(p_start, &p_end);
+
+    // check if strtof actually parsed a number (p_end moved)
+    return (p_start != p_end);
+}
+
+
 void help(){
 	    cout << endl <<endl <<endl;;
             cout << " ========================================================================================================" <<endl;
@@ -243,62 +267,59 @@ pair<string, string> generate_regions_to_align(string gdir, string build1, strin
 }
 
 // regular weight file
-void load_weights(unordered_map<string, float> &kmer_weights,
-                  string fname) {
-
+void load_weights(unordered_map<string, float> &kmer_weights, string fname) {
     check_file(fname);
     kmer_weights.clear();
+
     ifstream wfile(fname);
-    string kmer;
+    string line, kmer;
     float weight;
-    string line;
+
     while (getline(wfile, line)) {
-        std::istringstream ss(line);
-        ss >> kmer >> weight;
-        kmer_weights[kmer] = weight;
+        if (parse_kmer_line(line, kmer, weight)) {
+            kmer_weights[kmer] = weight;
+        }
     }
     wfile.close();
 }
 
-tuple<int, float, float, float, float, unsigned int> load_post_weights(unordered_map<string, float> &kmer_weights,
-                  string fname) {
-        // format:
-	// w	300
-        // mu_pos  -0.4698601590268965
-        // var pos 0.0002796103768422355
-       // mu_neg  -0.5784510419876551
-        // var_neg 0.0010991364946907067
-        // CCCCGATATAC     -0.6253484
-
+tuple<int, float, float, float, float, unsigned int> load_post_weights(unordered_map<string, float> &kmer_weights, string fname) {
     check_file(fname);
     kmer_weights.clear();
     ifstream wfile(fname);
-    cout << fname << endl;
-    string kmer;
+    cout << "Loading model: " << fname << endl;
+
+    string line, kmer, trash;
     float weight;
-    string line;
-    int pred_width; float mu_pos; float var_pos; float mu_neg; float var_neg;
-    unsigned int k;
-    string trash;
+    int pred_width = 0; 
+    float mu_pos = 0, var_pos = 0, mu_neg = 0, var_neg = 0;
+    unsigned int k = 0;
+    
     int i = 0;
     while (getline(wfile, line)) {
-	std::istringstream ss(line);
-	if(i==0){ss >> trash >> pred_width;}
-	if(i == 1){ss >> trash >> mu_pos;}
-	else if(i == 2){ss >> trash >> var_pos;}
-	else if(i == 3){ss >> trash >> mu_neg;}
-	else if(i == 4){ss >> trash >> var_neg;}
-	else{
-            ss >> kmer >> weight;
-            kmer_weights[kmer] = weight;
-	    if(i==5){k = kmer.size();}
-	}
-	i++;
+        if(line.empty()) continue;
+
+        // header logic 
+        if (i < 5) {
+            istringstream ss(line);
+            if(i == 0) ss >> trash >> pred_width;
+            else if(i == 1) ss >> trash >> mu_pos;
+            else if(i == 2) ss >> trash >> var_pos;
+            else if(i == 3) ss >> trash >> mu_neg;
+            else if(i == 4) ss >> trash >> var_neg;
+        } 
+        // Body Logic (The common part)
+        else {
+            if (parse_kmer_line(line, kmer, weight)) {
+                 kmer_weights[kmer] = weight;
+                 if(i == 5) k = kmer.size();
+            }
+        }
+        i++;
     }
     wfile.close();
     return make_tuple(pred_width, mu_pos, var_pos, mu_neg, var_neg, k);
 }
-
 
 // this is for Masker. has both kmer weights and a threshold value. 
 // format: 
@@ -308,36 +329,35 @@ tuple<int, float, float, float, float, unsigned int> load_post_weights(unordered
 // AAAAAAAAAAA     1.6789377
 // ATATATATATA     1.5665055
 // ACACACACACA     1.208083756
-float load_weights_threshold(unordered_map<string, float> &kmer_weights,
-                  string fname) {
-
+float load_weights_threshold(unordered_map<string, float> &kmer_weights, string fname) {
     check_file(fname);
     kmer_weights.clear();
     ifstream wfile(fname);
-    string kmer;
-    string tmp;
+
+    string line, kmer;
     float weight;
-    float threshold;
-    string line;
-    int index = 0; 
+    float threshold = 0.0;
+    
+    // Header Logic (Specific to this function)
+    if (getline(wfile, line)) {
+        if (line[0] != '*') {
+             cout << "Error: First line must contain threshold (*)" << endl;
+             exit(1);
+        }
+        size_t last_space = line.find_last_of(' ');
+        if(last_space != string::npos) {
+            threshold = strtof(line.c_str() + last_space, nullptr);
+        }
+    }
+
+    // Body Logic (Uses the shared helper)
     while (getline(wfile, line)) {
-        std::istringstream ss(line);
+        // Note: parse_kmer_line handles empty checks, but we need to skip headers/comments manually if they differ
+        if (line[0] == '#') continue; 
 
-        if(index == 0 && (line[0]!='*')){
-            cout << "Wrong file format. First line must contain threshold information" << endl;
-            exit(0);
+        if (parse_kmer_line(line, kmer, weight)) {
+             kmer_weights[kmer] = weight;
         }
-
-        if(line[0] == '*'){
-            ss >> tmp >> tmp >> threshold; 
-        }else if(line[0] == '#'){
-            continue;
-        }else{
-            std::istringstream ss(line);
-            ss >> kmer >> weight;
-            kmer_weights[kmer] = weight;
-        }
-        index++;
     }
     wfile.close();
     return threshold; 

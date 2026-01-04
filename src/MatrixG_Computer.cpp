@@ -114,52 +114,64 @@ MatrixG_Computer::MatrixG_Computer(int lmer_length,
         }
     }
 
-
-    init_norm(v1_inv_norm, seq1_pv_a, seq1_pv_b, km_dim_1);
-    init_norm(v2_inv_norm, seq2_pv_a, seq2_pv_b, km_dim_2);
+    init_norm(v1_inv_norm, seq1_sv_a, seq1_sv_b, km_dim_1);
+    init_norm(v2_inv_norm, seq2_sv_a, seq2_sv_b, km_dim_2);
 } // end of constructor 1
 
 
 
 // computes list of vector norms for the denominator of
 // <s1,s2>/sqrt(<s1,s1>)*sqrt(<s2,s2>)
-void MatrixG_Computer::init_norm(vector<float> &inv_norm, vector<char*> &seq_v_a, vector<char*> &seq_v_b, 
+void MatrixG_Computer::init_norm(vector<float> &inv_norm, vector<char> &seq_v_a, vector<char> &seq_v_b, 
                                 int km_dim) {
     float val;
     float n;
 
-    // Reserve memory to prevent reallocations
     inv_norm.reserve(km_dim);
 
     for (int i = 0; i < km_dim; i++) {
+            // Uses flat vectors now
             val = subseqs_matrix(seq_v_a, seq_v_b, i*slide, i*slide + window - 1, i*slide, i*slide + window - 1);
-	    n = sqrt(val);
-	    // Safety check + Inversion
+            n = sqrt(val);
             if (n > 1e-9) {
                 inv_norm.push_back(1.0f / n);
             } else {
-                inv_norm.push_back(0.0f); // Handle zero-norm case safely
+                inv_norm.push_back(0.0f);
             }
     }
-} // end of method
+}
 
 
-
-
-// given subseq indices, compute <sub1, sub2>. To be uesd in compute_matrix
-float MatrixG_Computer::subseqs_matrix(vector<char*> &seq1, vector<char*> &seq2,
+float MatrixG_Computer::subseqs_matrix(vector<char> &seq1, vector<char> &seq2,
                                       int start_i, int end_i,
                                       int start_j,
                                       int end_j) {
     int tot = 0;
     int match;
-    
+
+    // 1. Define Entry Size locally (AVX2 = 32 bytes, SSE2 = 16 bytes)
+    //    This matches the padding logic in your constructor
+    #ifdef __AVX2__
+        const size_t entry_size = 32;
+    #elif defined(__SSE2__) || defined(__ARM_NEON)
+        const size_t entry_size = 16;
+    #else
+        const size_t entry_size = l; 
+    #endif
+
     #ifdef __AVX2__
         __m256i s1, s2, ceq;
         for (int i = start_i; i <= end_i - l + 1; i++) {
+            // calculate address directly from index
+            // CPU sees this linear pattern and prefetches data instantly
+            const char* p1 = &seq1[i * entry_size];
+            
             for (int j = start_j; j <= end_j - l + 1; j++) {
-                s1 =  _mm256_loadu_si256((__m256i*)(seq1[i]));
-                s2 =  _mm256_loadu_si256((__m256i*)(seq2[j]));
+                const char* p2 = &seq2[j * entry_size];
+
+                s1 =  _mm256_loadu_si256((__m256i*)p1);
+                s2 =  _mm256_loadu_si256((__m256i*)p2);
+                
                 ceq = _mm256_cmpeq_epi8(s1, s2);
                 match = __builtin_popcount(_mm256_movemask_epi8(ceq));
                 tot += shared_gkm[l - match];
@@ -168,24 +180,14 @@ float MatrixG_Computer::subseqs_matrix(vector<char*> &seq1, vector<char*> &seq2,
     #elif defined(__SSE2__)
         __m128i s1, s2, ceq;
         for (int i = start_i; i <= end_i - l + 1; i++) {
+            const char* p1 = &seq1[i * entry_size];
             for (int j = start_j; j <= end_j - l + 1; j++) {
-                s1 =  _mm_loadu_si128((__m128i*)(seq1[i]));
-                s2 =  _mm_loadu_si128((__m128i*)(seq2[j]));
+                const char* p2 = &seq2[j * entry_size];
+                
+                s1 =  _mm_loadu_si128((__m128i*)p1);
+                s2 =  _mm_loadu_si128((__m128i*)p2);
                 ceq = _mm_cmpeq_epi8(s1, s2);
                 match = __builtin_popcount(_mm_movemask_epi8(ceq));
-                tot += shared_gkm[l - match];
-            }
-        }
-    #elif defined(__ARM_NEON)
-        uint8x16_t s1, s2, ceq, masked;
-        const uint8x16_t ones = vdupq_n_u8(1); // Vector of 1s
-        for (int i = start_i; i <= end_i - l + 1; i++) {
-            for (int j = start_j; j <= end_j - l + 1; j++) {
-                s1 = vld1q_u8((const uint8_t*)seq1[i]);
-                s2 = vld1q_u8((const uint8_t*)seq2[j]);
-                ceq = vceqq_u8(s1, s2);
-                masked = vandq_u8(ceq, ones);
-                match = vaddlvq_u8(masked);
                 tot += shared_gkm[l - match];
             }
         }
@@ -195,12 +197,9 @@ float MatrixG_Computer::subseqs_matrix(vector<char*> &seq1, vector<char*> &seq2,
         cout << "Error: SIMD support required for sequence alignment" << endl;
         exit(1);
     #endif
- 
+
     return static_cast<float>(tot);
-} // end of method
-
-
-
+}
 
 // multithread computation
 Matrix& MatrixG_Computer::compute_full_matrix(){
@@ -353,28 +352,29 @@ void MatrixG_Computer::compute_matrix_rows(vector<int> rows){
 // elements for computing matrix by sliding. 
 int MatrixG_Computer::compute_piece(int pm_coord_1, int pm_coord_2, string piece_type) {
     if(piece_type == "center"){
-        return subseqs_matrix(seq1_pv_a, seq2_pv_b, pm_coord_1 * slide,
-                          (pm_coord_1 + 1) * slide - 1, pm_coord_2 * slide,
-                          (pm_coord_2 + 1) * slide - 1);
+        return subseqs_matrix(seq1_sv_a, seq2_sv_b, // <--- CHANGED TO sv
+                          pm_coord_1 * slide, (pm_coord_1 + 1) * slide - 1, 
+                          pm_coord_2 * slide, (pm_coord_2 + 1) * slide - 1);
+
     } else if(piece_type == "right") {
-        return subseqs_matrix(seq1_pv_a, seq2_pv_b, pm_coord_1 * slide, (pm_coord_1 + 1) * slide - 1,
-        (pm_coord_2 + 1) * slide - l + 1, (pm_coord_2 + 1) * slide + l - 2);
+        return subseqs_matrix(seq1_sv_a, seq2_sv_b, // <--- CHANGED TO sv
+                          pm_coord_1 * slide, (pm_coord_1 + 1) * slide - 1,
+                          (pm_coord_2 + 1) * slide - l + 1, (pm_coord_2 + 1) * slide + l - 2);
 
     } else if(piece_type == "down") {
-        return subseqs_matrix(seq1_pv_a, seq2_pv_b, (pm_coord_1 + 1) * slide - l + 1,
-                          (pm_coord_1 + 1) * slide + l - 2, pm_coord_2 * slide,
-                          (pm_coord_2 + 1) * slide - 1);
+        return subseqs_matrix(seq1_sv_a, seq2_sv_b, // <--- CHANGED TO sv
+                          (pm_coord_1 + 1) * slide - l + 1, (pm_coord_1 + 1) * slide + l - 2, 
+                          pm_coord_2 * slide, (pm_coord_2 + 1) * slide - 1);
+
     } else if (piece_type == "both") {
-        return subseqs_matrix(seq1_pv_a, seq2_pv_b,(pm_coord_1 + 1) * slide - l + 1,
-                                      (pm_coord_1 + 1) * slide + l - 2,
-                                      (pm_coord_2 + 1) * slide - l + 1,
-                                      (pm_coord_2 + 1) * slide + l - 2);
+        return subseqs_matrix(seq1_sv_a, seq2_sv_b, // <--- CHANGED TO sv
+                                      (pm_coord_1 + 1) * slide - l + 1, (pm_coord_1 + 1) * slide + l - 2,
+                                      (pm_coord_2 + 1) * slide - l + 1, (pm_coord_2 + 1) * slide + l - 2);
     } else {
         cout << "Debug required: unrecognized piece type: " << piece_type <<endl;
         return 0;
     }
-} // end of method
-
+}
 
 // Refactored version for modern C++  style (more efficient memory handling)
 // no redundant computation in sliding.

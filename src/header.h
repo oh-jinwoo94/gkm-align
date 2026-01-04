@@ -121,16 +121,13 @@ class MatrixG_Computer{  // computes and stores matrix values  <seq1, seq2>
 
 	// computes list of vector norms for the denominator of <s1,s2>/sqrt(<s1,s1>)*sqrt(<s2,s2>)
 	// seq_v_a and seq_v_b represent same genomic sequence but different pads for SIMD optimizaiton.
-	void init_norm(vector<float> &norm, vector<char*> &seq_v_a, vector<char*> &seq_v_b, int km_dim);
-
+        void init_norm(vector<float> &inv_norm, vector<char> &seq_v_a, vector<char> &seq_v_b, int km_dim);
         Matrix& compute_full_matrix();
 
 	// given subseq indices, compute <sub1, sub2>. To be uesd in compute_matrix method.  
 	// input is assumed to be all upper-case letters. 
         // thread_index is for multithreading (index of workers). Useful for accessing worker specific data in computing matrix
-	float subseqs_matrix(vector<char*> &s1, vector<char*> &s2,
-		int start_i, int end_i, int start_j, int end_j);
-
+        float subseqs_matrix(vector<char> &seq1, vector<char> &seq2, int start_i, int end_i, int start_j, int end_j);
 	int compute_piece(int pm_coord_1, int pm_coord_2, string piece_type);
 
         void compute_matrix_rows(vector<int> rows);
