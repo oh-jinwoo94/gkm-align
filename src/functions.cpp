@@ -300,48 +300,6 @@ tuple<int, float, float, float, float, unsigned int> load_post_weights(unordered
 }
 
 
-tuple<int, float, float, float, float, unsigned int> load_post_weights_to_matrix(unordered_map<string, vector<float>> &kmer_weight_matrix,
-                  string fname) {
-//w       300.0
-//mu_pos  0.3888576375783236
-//var_pos 0.0326371041453618
-//mu_neg  0.040440167715889916
-//var_neg 0.04457310205165671
-//AAAAAAAAAAA     1.5321328531827556
-
-
-    check_file(fname);
-    ifstream wfile(fname);
-    cout << fname << endl;
-    string kmer;
-    float weight;
-    string line;
-    int pred_width; float mu_pos; float var_pos; float mu_neg; float var_neg; 
-    int k;
-    string trash;
-    int i = 0;
-    while (getline(wfile, line)) {
-        std::istringstream ss(line);
-	if(i==0){ss >> trash >> pred_width;}
-        if(i == 1){ss >> trash >> mu_pos;}
-        else if(i == 2){ss >> trash >> var_pos;}
-        else if(i == 3){ss >> trash >> mu_neg;}
-        else if(i == 4){ss >> trash >> var_neg;}
-        else{
-            ss >> kmer >> weight;
-	    if(kmer_weight_matrix.find(kmer) == kmer_weight_matrix.end()){
-		kmer_weight_matrix[kmer] = {weight};
-	    }else{
-                kmer_weight_matrix[kmer].push_back(weight);
-	    }
-            if(i==5){k = kmer.size();}
-        }
-        i++;
-    }
-    wfile.close();
-    return make_tuple(pred_width,  mu_pos, var_pos, mu_neg, var_neg, k);
-}
-
 // this is for Masker. has both kmer weights and a threshold value. 
 // format: 
 // * threshold: 0.359557

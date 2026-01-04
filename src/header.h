@@ -44,11 +44,9 @@ string read_fa(string fa_fname, int start, int end);
 pair<string, string> generate_regions_to_align(string genome_dir, string build1, string build1_chr, int build1_start, int build1_end,
                                                string build2, string build2_chr, int build2_start, int build2_end,
                                                int window, int slide);
+
 void load_weights(unordered_map<string, float>& kmer_weights, string weight_fname);
 tuple<int, float, float, float, float, unsigned int> load_post_weights(unordered_map<string, float> &kmer_weights, string fname);
-tuple<int, float, float, float, float, unsigned int> load_post_weights_to_matrix(unordered_map<string, vector<float>> &kmer_weight_matrix,
-                  string fname);
-
 float load_weights_threshold(unordered_map<string, float>& kmer_weights, string weight_fname);
 
 
