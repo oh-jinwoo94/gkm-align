@@ -191,9 +191,10 @@ class MatrixG_Computer{  // computes and stores matrix values  <seq1, seq2>
         Matrix K; // matrix matrix
 
  
-	vector<float> v1_norm;
-	vector<float> v2_norm;
-
+	// vector<float> v1_norm;
+	// vector<float> v2_norm;
+        vector<float> v1_inv_norm; // 1/norm (saves computation time)
+        vector<float> v2_inv_norm;
 	string rel_strand_loc; // currently: same_strand, diff_strand. Later include RC=TRUE
 
 

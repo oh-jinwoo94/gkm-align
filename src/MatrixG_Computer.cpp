@@ -89,8 +89,8 @@ MatrixG_Computer::MatrixG_Computer(int lmer_length,
     }
 
 
-    init_norm(v1_norm, seq1_pv_a, seq1_pv_b, km_dim_1);
-    init_norm(v2_norm, seq2_pv_a, seq2_pv_b, km_dim_2);
+    init_norm(v1_inv_norm, seq1_pv_a, seq1_pv_b, km_dim_1);
+    init_norm(v2_inv_norm, seq2_pv_a, seq2_pv_b, km_dim_2);
 } // end of constructor 1
 
 
@@ -98,16 +98,23 @@ MatrixG_Computer::MatrixG_Computer(int lmer_length,
 
 // computes list of vector norms for the denominator of
 // <s1,s2>/sqrt(<s1,s1>)*sqrt(<s2,s2>)
-void MatrixG_Computer::init_norm(vector<float> &norm, vector<char*> &seq_v_a, vector<char*> &seq_v_b, 
+void MatrixG_Computer::init_norm(vector<float> &inv_norm, vector<char*> &seq_v_a, vector<char*> &seq_v_b, 
                                 int km_dim) {
     float val;
+    float n;
+
+    // Reserve memory to prevent reallocations
+    inv_norm.reserve(km_dim);
+
     for (int i = 0; i < km_dim; i++) {
             val = subseqs_matrix(seq_v_a, seq_v_b, i*slide, i*slide + window - 1, i*slide, i*slide + window - 1);
-            norm.push_back(val);
-    }
-
-    for (auto it = norm.begin(); it != norm.end(); it++) {
-        *it = sqrt(*it);
+	    n = sqrt(val);
+	    // Safety check + Inversion
+            if (n > 1e-9) {
+                inv_norm.push_back(1.0f / n);
+            } else {
+                inv_norm.push_back(0.0f); // Handle zero-norm case safely
+            }
     }
 } // end of method
 
@@ -247,7 +254,7 @@ void MatrixG_Computer::compute_matrix_rows(vector<int> rows){
             float kern;
             for(int j = 0; j<km_dim_2; j++){
                 kern = subseqs_matrix(seq1_pv_a, seq2_pv_b, slide*row, slide*row + window-1, slide*j, slide*j+window-1);
-                K(row,j) = kern / (v1_norm[row] * v2_norm[j]);  
+                K(row,j) = kern * (v1_inv_norm[row] * v2_inv_norm[j]);  
             }
         }
     }
@@ -430,7 +437,7 @@ float MatrixG_Computer::compute_sliding_matrix(int row, int col, vector<int>& pi
             }
         }
     }
-    return kern / (v1_norm[row] * v2_norm[col]);
+    return kern * (v1_inv_norm[row] * v2_inv_norm[col]);
 }
 
 
