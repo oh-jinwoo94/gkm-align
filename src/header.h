@@ -172,10 +172,16 @@ class MatrixG_Computer{  // computes and stores matrix values  <seq1, seq2>
 
 	// a and b differ in the type of pads (> or <) used. Pads are for filling up the __m128i.
 	// string vectors (vector of lmers in seq)
-	vector<string> seq1_sv_a; 
-	vector<string> seq2_sv_a;
-	vector<string> seq1_sv_b;
-        vector<string> seq2_sv_b;
+//	vector<string> seq1_sv_a; 
+//	vector<string> seq2_sv_a;
+//	vector<string> seq1_sv_b;
+//      vector<string> seq2_sv_b;
+
+        vector<char> seq1_sv_a; // flat buffer version
+        vector<char> seq1_sv_b;
+        vector<char> seq2_sv_a;
+        vector<char> seq2_sv_b;
+
 	// char* vector (pointing to the first letter of each lmers in seq_sv)
 	vector<char*> seq1_pv_a;
         vector<char*> seq2_pv_a;

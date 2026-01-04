@@ -33,46 +33,72 @@ MatrixG_Computer::MatrixG_Computer(int lmer_length,
     size_t n_kmers_1 = seq1.length() - l + 1;
     size_t n_kmers_2 = seq2.length() - l + 1;
 
-    // 2. Reserve memory so the vectors never resize
-    seq1_sv_a.reserve(n_kmers_1);
+    // 2. Reserve memory for the pointer vectors
     seq1_pv_a.reserve(n_kmers_1);
-    seq1_sv_b.reserve(n_kmers_1);
     seq1_pv_b.reserve(n_kmers_1);
-    
-    seq2_sv_a.reserve(n_kmers_2);
     seq2_pv_a.reserve(n_kmers_2);
-    seq2_sv_b.reserve(n_kmers_2);
     seq2_pv_b.reserve(n_kmers_2);
 
     // SIMD vectorization: obtain all subseqs of size l
-    // v[i] = seq[i:i+l] + pads
+
+    // determine padding
+    size_t pad_len;
     #ifdef __AVX2__
-        string pad1(32-l, '>'); // 32 for AVX2
-        string pad2(32-l, '<');
+        pad_len = 32 - l; 
+        char p1 = '>'; char p2 = '<';
     #elif defined(__SSE2__) || defined(__ARM_NEON)
-        string pad1(16-l, '>'); // 16 for SSE2
-        string pad2(16-l, '<');
-    #elif defined(__NOSIMD__)
-        // No SIMD support - this code path should not be reached for -t 1
-        // as it's blocked in argument parsing
-        string pad1(0, '>');
-        string pad2(0, '<');
+        pad_len = 16 - l;
+        char p1 = '>'; char p2 = '<';
+    #else
+        pad_len = 0;
+        char p1 = '>'; char p2 = '<';
     #endif
-    for(unsigned int i = 0; i<seq1.length() - l + 1; i++){
-	    seq1_sv_a.push_back(seq1.substr(i, l) +  pad1);
-	    seq1_sv_b.push_back(seq1.substr(i, l) +  pad2);
 
-	    seq1_pv_a.push_back( &((seq1_sv_a[i])[0]));
-            seq1_pv_b.push_back( &((seq1_sv_b[i])[0]));
+    // resize the sequence storage vectors
+    size_t entry_size = l + pad_len;
+    seq1_sv_a.resize(n_kmers_1 * entry_size);
+    seq1_sv_b.resize(n_kmers_1 * entry_size);
+    seq2_sv_a.resize(n_kmers_2 * entry_size);
+    seq2_sv_b.resize(n_kmers_2 * entry_size);
+
+    // fill sequence 1
+    for(unsigned int i = 0; i < n_kmers_1; i++){
+        size_t offset = i * entry_size;
+
+        // copy characters directly into the flat storage vector
+        for(int x = 0; x < l; x++) {
+            seq1_sv_a[offset + x] = seq1[i + x];
+            seq1_sv_b[offset + x] = seq1[i + x];
+        }
+
+        // add padding
+        for(size_t x = 0; x < pad_len; x++) {
+            seq1_sv_a[offset + l + x] = p1;
+            seq1_sv_b[offset + l + x] = p2;
+        }
+
+        // update the pointer vector (pv)
+        seq1_pv_a.push_back(&seq1_sv_a[offset]);
+        seq1_pv_b.push_back(&seq1_sv_b[offset]);
     }
-    for(unsigned int i = 0; i<seq2.length() - l + 1; i++){
-	    seq2_sv_a.push_back(seq2.substr(i, l) +  pad1);
-            seq2_sv_b.push_back(seq2.substr(i, l) +  pad2);
 
-	    seq2_pv_a.push_back( &((seq2_sv_a[i])[0]));
-            seq2_pv_b.push_back( &((seq2_sv_b[i])[0]));
+    // fill sequence 2
+    for(unsigned int i = 0; i < n_kmers_2; i++){
+        size_t offset = i * entry_size;
+
+        for(int x = 0; x < l; x++) {
+            seq2_sv_a[offset + x] = seq2[i + x];
+            seq2_sv_b[offset + x] = seq2[i + x];
+        }
+
+        for(size_t x = 0; x < pad_len; x++) {
+            seq2_sv_a[offset + l + x] = p1;
+            seq2_sv_b[offset + l + x] = p2;
+        }
+
+        seq2_pv_a.push_back(&seq2_sv_a[offset]);
+        seq2_pv_b.push_back(&seq2_sv_b[offset]);
     }
-
 
 
     // initializing 3-dimenasional array
@@ -92,7 +118,6 @@ MatrixG_Computer::MatrixG_Computer(int lmer_length,
     init_norm(v1_inv_norm, seq1_pv_a, seq1_pv_b, km_dim_1);
     init_norm(v2_inv_norm, seq2_pv_a, seq2_pv_b, km_dim_2);
 } // end of constructor 1
-
 
 
 
