@@ -273,9 +273,9 @@ Pre-computed gkm-SVM kmer weights ($w_{kmer}$) can be used to efficiently comput
 
   \subsection{Probabilistic interpretation and normalization of gkm-SVM prediction}
  One limitation of directly incorporating gkm-SVM predictions to \textit{gkm-align} is that these values are not bounded, limiting interpretable application for genome alignment. Instead, we transform the prediction values to range between 0 and 1 by computing the posterior probability that a sequence is an enhancer. This is done by computing gkm-SVM score distributions for enhancers and non-enhancers (i.e., positive and negative training sets used for gkm-SVM enhancer training; prediction scores computed with 5-fold cross validation)
- \begin{align*}
-     \mu_{(+)} &= E(pred(X_{pos})), \sigma^2_{(+)} = Var(pred(X_{pos}))\\
-     \mu_{(-)} &= E(pred(X_{neg})), \sigma^2_{(-)} = Var(pred(X_{neg}))
+\begin{align*}
+     &P_{(+)} = \frac{1}{\sqrt{2\pi \sigma_{(+)}^2}}\exp\left(-\frac{(pred(X)-\mu_{(+)})^2}{2\sigma_{(+)}^2}\right)\\ 
+     &P_{(-)} = \frac{1}{\sqrt{2\pi \sigma_{(-)}^2}}\exp\left(-\frac{(pred(X)-\mu_{(-)})^2}{2\sigma_{(-)}^2}\right)
  \end{align*}
 Assuming that priors for finding positive and negative sequences are equal, we compute posterior gkm-SVM prediction score of a given sequence X with
  \begin{align*}
