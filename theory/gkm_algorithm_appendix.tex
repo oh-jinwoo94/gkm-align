@@ -276,7 +276,7 @@ Pre-computed gkm-SVM kmer weights ($w_{kmer}$) can be used to efficiently comput
  \begin{align*}
      \mu_{(+)} &= E(pred(X_{pos})), \sigma^2_{(+)} = Var(pred(X_{pos}))\\
      \mu_{(-)} &= E(pred(X_{neg})), \sigma^2_{(-)} = Var(pred(X_{neg}))
-\begin{align*}
+\end{align*}
 Assuming that priors for finding positive and negative sequences are equal, we compute posterior gkm-SVM prediction score of a given sequence X with
  \begin{align*}
      &P_{gkm}(X) = P(X\in X_{pos}|pred(X))= \frac{P_{(+)}}{P_{(+)} + P_{(-)}} \in [0,1], \tag{Eq.11} 
