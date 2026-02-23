@@ -1,5 +1,6 @@
 # Table of Contents
 - [Introduction](#introduction)
+- [Algorithm and Mathematical Details](#algorithm-and-mathematical-details)
 - [System Requirements](#system-requirements)
 - [Installation](#installation)
 - [Testing](#testing)
@@ -30,6 +31,13 @@ Please cite the following paper if you use gkm-align:
 **Oh, J.W., Beer, M.A.** Gapped-kmer sequence modeling robustly identifies regulatory vocabularies and distal enhancers conserved between evolutionarily distant mammals. **Nature Communications** 15, 6464 (**2024**). https://doi.org/10.1038/s41467-024-50708-z
 
 Also, visit the [gkm-align webpage](https://beerlab.org/gkmalign/) to find useful resource files for running gkm-align. 
+
+# Algorithm and Mathematical Details
+The mathematical foundations of gkm-align are documented in the `theory/` directory:
+- **[PDF](https://github.com/oh-jinwoo94/gkm-align/raw/main/theory/gkm_align_algorithm_appendix.pdf)** — rendered document for reading
+- **[TeX source](https://github.com/oh-jinwoo94/gkm-align/raw/main/theory/gkm_algorithm_appendix.tex)** — for reuse and adaptation
+
+These notes correspond to pages 41–48 of the Supplementary Information in Oh and Beer, *Nature Communications* (2024).
 
 # System Requirements
 **Supported OS:** Linux (CentOS, Ubuntu, Rocky Linux, etc.) and macOS (Apple Silicon).
@@ -357,7 +365,7 @@ Although this README is sufficient for running gkm-align, it will be updated wit
 - Generating posterior gkm-SVM kmer-weight files (for generating prediction values ranging from 0-1).
 - Generating gkm-align logo visualization (e.g., [Fig. 5C](https://www.nature.com/articles/s41467-024-50708-z#Fig5) of the manuscript).
 
-Regardless, all necessary information required for performing these analyses is included in the [manuscript](https://www.nature.com/articles/s41467-024-50708-z). Mathematical details of the gkm-align algorithm are provided on pages 41 to 48 of the Supplementary Information document of the manuscript. 
+Regardless, all necessary information required for performing these analyses is included in the [manuscript](https://www.nature.com/articles/s41467-024-50708-z). 
 
 # Software Updates
 ---
