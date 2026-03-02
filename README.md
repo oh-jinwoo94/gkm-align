@@ -33,10 +33,7 @@ Please cite the following paper if you use gkm-align:
 Also, visit the [gkm-align webpage](https://beerlab.org/gkmalign/) to find useful resource files for running gkm-align. 
 
 # Algorithm and Mathematical Details
-The mathematical foundations of gkm-align are documented in the `theory/` directory:
-- **[PDF](https://github.com/oh-jinwoo94/gkm-align/raw/main/theory/gkm_align_algorithm_appendix.pdf)** 
-- **[TeX source](https://github.com/oh-jinwoo94/gkm-align/raw/main/theory/gkm_algorithm_appendix.tex)** 
-
+The mathematical foundations of gkm-align are documented in the `theory/` directory.
 These notes correspond to pages 41–48 of the Supplementary Information in Oh and Beer, *Nature Communications* (2024).
 
 # System Requirements
