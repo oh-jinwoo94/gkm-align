@@ -144,7 +144,7 @@ Details on other software options can be found by typing:
 ../../bin/gkm_align -h
 </pre>
 
-This process takes between 10 seconds and a few minutes depending on your hardware availability.
+This process takes between a few seconds and a minute depending on your hardware availability.
 
 ### Example: FADS Gene Cluster Loci
 In this section, we align the human and mouse FADS gene cluster loci. 
