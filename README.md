@@ -20,7 +20,9 @@
 - [Software Updates](#software-update)
 
 # Introduction
-gkm-align is a whole-genome alignment algorithm designed to map distal enhancers conserved between distant mammals (e.g., human and mouse). It discovers orthologous enhancers by identifying alignment paths with maximal similarity in gapped-kmer compositions along syntenic loci. Performance can be enhanced by incorporating conserved enhancer vocabularies obtained using gkm-SVM sequence models trained on enhancers.
+gkm-align is a whole-genome alignment algorithm designed to map distal enhancers conserved between distant mammals (e.g., human and mouse). It discovers orthologous enhancers by identifying alignment paths with maximal similarity in gapped-kmer compositions. Performance can be enhanced by incorporating conserved enhancer vocabularies obtained using gkm-SVM sequence models trained on enhancers.
+
+> **NOTE:** To minimize spurious alignments, the whole-genome alignment pipeline currently restricts alignment to human-mouse syntenic intergenic loci (see [Whole-genome Alignment](#whole-genome-alignment-and-mapping)). This is not a limitation of the gkm-align algorithm itself, but a deliberate preprocessing choice to improve mapping quality. Removing this filter would extend coverage to all genomic regions at the cost of increased alignment noise.
 
 Two main modes:
 - Alignment mode (-t 1): Performs interspecies sequence alignment (similar to LASTZ)
