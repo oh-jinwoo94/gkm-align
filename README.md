@@ -36,7 +36,7 @@ Also, visit the [gkm-align webpage](https://beerlab.org/gkmalign/) to find usefu
 
 # Algorithm and Mathematical Details
 The mathematical foundations of gkm-align are documented in the `theory/` directory.
-These notes correspond to pages 41–48 of the Supplementary Information in Oh and Beer, *Nature Communications* (2024).
+These notes correspond to pages 41–48 of the Supplementary Information in Oh and Beer, *Nature Communications* (2024). The supplementary document has minor typos and mistakes, which have been corrected in this Github version. 
 
 # System Requirements
 **Supported OS:** Linux (CentOS, Ubuntu, Rocky Linux, etc.) and macOS (Apple Silicon).
