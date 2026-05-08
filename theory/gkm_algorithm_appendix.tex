@@ -100,7 +100,7 @@ That is:
 \caption{\textbf{Supplementary Note Fig 2}: Gapped-kmer composition of a genomic window is equal to the sum of gapped-kmer composition of all its segments and its joint components. Diagram given for $w=100$ and $s=20$}
 \end{figure}
 
-Before considering gkm-composition of the above two representations, let's consider the following observation. Suppose $S=S_A ^\frown S_B$, where $w_A =|S_A|,w_B=|S_B|,s\geq l$. Then, $g(S) \geq g(S_A) + g(S_B)$ since $S$ contains not only  subsequences of A and B but also subsequences that are newly introduced by joining A and B together. Let's call such subsequence of $S$ as $joint(S_A,S_B)=S(w_A-l+1,2(l-1))$.
+Before considering gkm-composition of the above two representations, let's consider the following observation. Suppose $S=S_A ^\frown S_B$, where $w_A =|S_A|,w_B=|S_B|,s\geq l$. Then, $g(S) \geq g(S_A) + g(S_B)$ since $S$ contains not only  subsequences of A and B but also subsequences that are newly introduced by joining A and B together. Let's call such subsequence of $S$ as $joint(S_A,S_B)=S(w_A-l+2,2(l-1))$.
 Then
 \begin{align*}
 g(S)&=g(S_A^\frown S_B) \\
@@ -266,7 +266,7 @@ Pre-computed gkm-SVM kmer weights ($w_{kmer}$) can be used to efficiently comput
      &=\sum_{k_{mer} \in X} \sum_{S \in SV} \alpha_{S}\frac{g(k_{mer})\cdot g(S)}{|g(X)||g(S)|} \\
      &=\frac{|g(k_{mer})|}{|g(X)|}\sum_{k_{mer} \in X} \sum_{S \in SV} \alpha_{S}\frac{g(k_{mer})\cdot g(S)}{|g(k_{mer})||g(S)|} \\
      &=\frac{|g(k_{mer})|}{|g(X)|} \sum_{k_{mer} \in X} \sum_{S \in SV} \alpha_{S}<g(k_{mer}),g(S))> \tag{use Eq.2 for $|g(k_{mer})|, |g(X)|$} \\
-     &=\frac{\sqrt{\binom{l}{k}}}{\sqrt{(|X|-l+1)^2\binom{l}{k}}} \sum_{k_{mer} \in X} \sum_{S \in SV} \alpha_{S}<g(k_{mer}),g(S))>  \tag{use Eq.9 for $w_{k_{mer}}$; $|X|=w$}\\
+     &\approx\frac{\sqrt{\binom{l}{k}}}{\sqrt{(|X|-l+1)^2\binom{l}{k}}} \sum_{k_{mer} \in X} \sum_{S \in SV} \alpha_{S}<g(k_{mer}),g(S))>  \tag{use Eq.9 for $w_{k_{mer}}$; $|X|=w$}\\
      &=\frac{1}{w-l+1} \sum_{k_{mer}\in X}w_{k_{mer}} \tag{$w$,$l$ are constants in gkm-align}\\
      &\propto \sum_{k_{mer}\in X}w_{k_{mer}} \tag{Eq.10}
  \end{align*}
