@@ -202,7 +202,7 @@ Provided with matrix $G\in [0,1]^{m \times n}$ that contains pairwise sequence-s
 where $(i_{k+1}, j_{k+1}) - (i_k, j_k) \in \{(1,0), (0,1)\}$ indicates insertion or deletion events in $S_H$ or $S_M$ relative to each other.
 To find the most likely path that describes the evolutionary history between $S_H$ and $S_M$, we use a variant of the Smith-Waterman algorithm. To find the optimal path $P$, we score all possible paths satisfying (1-4) as follows:
 \begin{align*}
-f(P)= \sum_{q=1}^{|P|} G(P(i)) - \alpha \cdot I,
+f(P)= \sum_{q=1}^{|P|} G(P(q)) - \alpha \cdot I,
 \end{align*}
 where $I$ is the number of indel events in $P$.
 \begin{align*}
